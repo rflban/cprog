@@ -1,40 +1,31 @@
 #include <stdio.h>
 #include <math.h>
+#define INPUT_ERROR_M "Input error. Try again: "
+#define EOF_ERROR_M "Error. End of file was reached too early."
 
-double absolute(double num);
+double d_abs(double num);
+int double_input(double * number, char start_message[], char error_message[]);
 
-int main()
+int main(void)
 {
     double x;
     double eps;
     double s, d, f;
     double numenator, denominator, koef;
-    int rc;
-    char buf;
+    int input_state;
 
-    printf("Enter x: ");
-    while(((rc = scanf("%lf%c", &x, &buf)) != 2 && rc != EOF) || buf != '\n')
+    input_state = double_input(&x, "Enter x: ", INPUT_ERROR_M);
+    if (input_state == EOF)
     {
-        printf("Input error. Try again: ");
-
-        do
-        {
-            rc = scanf("%c", &buf);
-        }
-        while(rc != EOF && buf != '\n');
+        printf(EOF_ERROR_M);
+        return 0;
     }
 
-    buf = '3';
-    printf("Enter eps: ");
-    while(((rc = scanf("%lf%c", &eps, &buf)) != 2 && rc != EOF) || buf != '\n')
+    input_state = double_input(&eps, "Enter Epsilon: ", INPUT_ERROR_M);
+    if (input_state == EOF)
     {
-        printf("Input error. Try again: ");
-
-        do
-        {
-            rc = scanf("%c", &buf);
-        }
-        while(rc != EOF && buf != '\n');
+        printf(EOF_ERROR_M);
+        return 0;
     }
 
     s = 0;
@@ -42,7 +33,7 @@ int main()
     numenator = x;
     denominator = 1.0;
     koef = 1.0;
-    while(absolute(d) > eps)
+    while(d_abs(d) >= eps)
     {
         d = koef * numenator/denominator;
         s += d;
@@ -55,13 +46,35 @@ int main()
 
     printf("%.4lf\n", s);
     printf("%.4lf\n", f);
-    printf("%.4lf\n", absolute(s-f));
-    printf("%.4lf\n", absolute((s-f)/f));
+    printf("%.4lf\n", d_abs(s-f));
+    printf("%.4lf\n", d_abs((s-f)/f));
 
+    return 0;
 }
 
+int double_input(double * number, char start_message[], char error_message[])
+{
+    int rc;
+    char buf;
 
-double absolute(double num)
+    printf(start_message);
+    while(( ( rc = scanf("%lf%c", number, &buf) ) != 2 || buf != '\n') && rc != EOF)
+    {
+        printf(error_message);
+
+        do
+        {
+            rc = scanf("%c", &buf);
+        }
+        while(rc != EOF && buf != '\n');
+    }
+
+    if (rc == EOF)
+        return EOF;
+    return 0;
+}
+
+double d_abs(double num)
 {
     return num > 0 ? num : -num;
 }
