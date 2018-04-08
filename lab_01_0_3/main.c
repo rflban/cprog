@@ -1,4 +1,6 @@
 #include <stdio.h>
+#define KOEF_OF_BORNGARDT_INDEX 1.0/240.0
+#define CENTIMETERS_OF_METER 100.0
 
 /*
  * Вариант 0.
@@ -21,8 +23,8 @@ int main()
     printf("Enter m, h (by centimeters), t:\n");
     scanf("%lf%lf%lf", &m, &h, &t);
 
-    a1 = h*t/240;
-    h /= 100.0;
+    a1 = h*t * KOEF_OF_BORNGARDT_INDEX;
+    h /= CENTIMETERS_OF_METER;
     a2 = m/(h*h);
     printf("\n%.4lf %.4lf", a1, a2);
 
