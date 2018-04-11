@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #define NO_DATA_CODE -1
 
 int get_lenOfMaxMonotoneSeq(FILE * file, int * len);
