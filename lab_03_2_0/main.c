@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
 
 #define DATA_ERROR_CODE -1
 #define INPUT_ERROR_CODE -2
@@ -16,42 +18,44 @@ int main(int argc, char ** argv)
 
     if (argc != 2)
     {
-        fprintf(stdout, "Error. Wrong amount of arguments.");
+        fprintf(stderr, "Error. Wrong amount of arguments.");
         goto END;
     }
 
     file = fopen(argv[1], "r");
     if (!file)
     {
-        fprintf(stdout, "Error. File does not exist.");
+        fprintf(stderr, "Error. Could not open `%s`:\n%s.",
+                argv[1],
+                strerror(errno));
         goto END;
     }
 
     procces_rc = get_arithmetic_mean(file, &arithmetic_mean);
     if (procces_rc == DATA_ERROR_CODE)
     {
-        fprintf(stdout, "Error. No data.");
+        fprintf(stderr, "Error. No data.");
         goto FILE_CLOSING;
     }
     else if (procces_rc == INPUT_ERROR_CODE)
     {
-        fprintf(stdout, "Error. Wrong input data.");
+        fprintf(stderr, "Error. Wrong input data.");
         goto FILE_CLOSING;
     }
 
-    (void)fseek(file, 0, SEEK_SET); //rewind(file);
+    (void)fseek(file, 0, SEEK_SET);
 
     procces_rc = get_closest_to(file,
                                 arithmetic_mean,
                                 &closest_to_am);
     if (procces_rc == DATA_ERROR_CODE)
     {
-        fprintf(stdout, "Error. No data.");
+        fprintf(stderr, "Error. No data.");
         goto FILE_CLOSING;
     }
     else if (procces_rc == INPUT_ERROR_CODE)
     {
-        fprintf(stdout, "Error. Wrong input data.");
+        fprintf(stderr, "Error. Wrong input data.");
         goto FILE_CLOSING;
     }
 
