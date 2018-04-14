@@ -1,6 +1,10 @@
 #include <stdio.h>
 
-#define NO_DATA_CODE -1
+#define _RETURN_SUCCESS_ 0
+#define _RETURN_FAILURE_ -1
+
+#define _EXIT_SUCCESS_ 0
+#define _EXIT_NO_DATA_ -1
 
 int get_lenOfMaxMonotoneSeq(FILE * file, int * len);
 
@@ -8,28 +12,32 @@ int main(void)
 {
     int lenOfMaxMonotoneSeq;
     int procces_rc;
+	int return_code = _RETURN_SUCCESS_;
 
     procces_rc = get_lenOfMaxMonotoneSeq(stdin, &lenOfMaxMonotoneSeq);
-    if (procces_rc == 0)
+    if (procces_rc == _EXIT_SUCCESS_)
         fprintf(stdout,
                 "Lenght of max monotone sequence is %d.\n",
                 lenOfMaxMonotoneSeq);
-    else if (procces_rc == NO_DATA_CODE)
-        fprintf(stdout,
+    else if (procces_rc == _EXIT_NO_DATA_)
+	{
+		return_code = _RETURN_FAILURE_;
+        fprintf(stderr,
                 "Error. Not enougth data.");
-
-    return 0;
+	}
+				
+    return return_code;
 }
 
 int get_lenOfMaxMonotoneSeq(FILE * file, int * max_len)
 {
-    int return_code = 0;
+    int return_code = _EXIT_SUCCESS_;
     int num;
     int p_num;
     int len;
 
     if (fscanf(file, "%d", &num) != 1)
-        return_code = NO_DATA_CODE;
+        return_code = _EXIT_NO_DATA_;
     else
     {
         len = 0;
