@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #define _EXIT_SUCCES_ 0
+#define _EXIT_FAILURE_ -1
 
 int get_num_len(int num);
 int get_dig_by_pos(int num, int pos);
@@ -15,8 +16,18 @@ int main(void)
 	int number;
 	int number_len;
 	int max_mul = -1;
+	int rc = _EXIT_SUCCES_;
 	
+	printf("Enter number: ");
 	scanf("%d", &number);
+	
+	if (number <= 0)
+	{
+		rc = _EXIT_FAILURE_;
+		printf("Wrong data.");
+		goto END;
+	}
+	
 	number_len = get_num_len(number);
 	
 	for(int i = 0; i < number_len-1; i++)
@@ -29,7 +40,7 @@ int main(void)
 	
 	printf("%d", max_mul);
 	
-	return _EXIT_SUCCES_;
+	END: return rc;
 }
 
 int get_num_len(int num)
