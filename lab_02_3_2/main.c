@@ -1,4 +1,10 @@
 #include <stdio.h>
+
+#define _RETURN_SUCCESS_ 0
+#define _RETURN_FAILURE_ -1
+
+#define _EXIT_SUCCESS_ 0
+
 #define EPS 0.0001
 #define INPUT_ERROR_M "Input error. Try again: "
 #define EOF_ERROR_M "Error. End of file was reached too early."
@@ -20,35 +26,35 @@ int main(void)
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     input_state = double_input(&b, "Enter b: ", INPUT_ERROR_M);
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     input_state = double_input(&c, "Enter c: ", INPUT_ERROR_M);
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     input_state = double_input(&x, "Enter x: ", INPUT_ERROR_M);
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     input_state = double_input(&y, "Enter y: ", INPUT_ERROR_M);
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     result = get_pos(a, b, c, x, y);
@@ -60,7 +66,7 @@ int main(void)
     else
         printf("Point is lower than straight");
 
-    return 0;
+    return _RETURN_SUCCESS_;
 }
 
 double d_abs(double number)
@@ -75,10 +81,10 @@ int double_input(double * number, char start_message[], char error_message[])
     int rc;
     char buf;
 
-    printf(start_message);
+    printf("%s", start_message);
     while(( ( rc = scanf("%lf%c", number, &buf) ) != 2 || buf != '\n') && rc != EOF)
     {
-        printf(error_message);
+        printf("%s", error_message);
 
         do
         {
@@ -87,9 +93,9 @@ int double_input(double * number, char start_message[], char error_message[])
         while(rc != EOF && buf != '\n');
     }
 
-    if (rc == EOF)
-        return EOF;
-    return 0;
+    if (rc != EOF)
+        return _EXIT_SUCCESS_;
+    return rc;
 }
 
 double get_pos(double a, double b, double c, double x, double y)

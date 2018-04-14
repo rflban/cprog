@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <math.h>
+
+#define _RETURN_SUCCESS_ 0
+#define _RETURN_FAILURE_ -1
+
+#define _EXIT_SUCCESS_ 0
+
 #define INPUT_ERROR_M "Input error. Try again: "
 #define EOF_ERROR_M "Error. End of file was reached too early."
 
@@ -19,14 +25,14 @@ int main(void)
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     input_state = double_input(&eps, "Enter Epsilon: ", INPUT_ERROR_M);
     if (input_state == EOF)
     {
         printf(EOF_ERROR_M);
-        return 0;
+        return _RETURN_FAILURE_;
     }
 
     apr_f = aproximate_atan(x, eps);
@@ -37,7 +43,7 @@ int main(void)
     printf("%.4lf\n", d_abs(apr_f-f));
     printf("%.4lf\n", d_abs((apr_f-f)/f));
 
-    return 0;
+    return _RETURN_SUCCESS_;
 }
 
 int double_input(double * number, char start_message[], char error_message[])
@@ -45,10 +51,10 @@ int double_input(double * number, char start_message[], char error_message[])
     int rc;
     char buf;
 
-    printf(start_message);
+    printf("%s", start_message);
     while(( ( rc = scanf("%lf%c", number, &buf) ) != 2 || buf != '\n') && rc != EOF)
     {
-        printf(error_message);
+        printf("%s", error_message);
 
         do
         {
@@ -57,9 +63,9 @@ int double_input(double * number, char start_message[], char error_message[])
         while(rc != EOF && buf != '\n');
     }
 
-    if (rc == EOF)
-        return EOF;
-    return 0;
+    if (rc != EOF)
+        return _EXIT_SUCCESS_;
+    return rc;
 }
 
 double d_abs(double num)
@@ -74,6 +80,7 @@ double aproximate_atan(double x, double eps)
     double numenator = x;
     double denominator = 1.0;
     double koef = 1.0;
+	
     while(d_abs(d) >= eps)
     {
         d = koef * numenator/denominator;
