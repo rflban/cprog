@@ -1,0 +1,4 @@
+Ввод             Вывод
+3  4 8  2 7      Point is upper than straight
+-2 4 18 2 -7     Point is lower than straight
+1  1 0  0 0      Point belongs to straight
