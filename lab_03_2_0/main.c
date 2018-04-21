@@ -26,12 +26,12 @@ int main(int argc, char ** argv)
     double arithmetic_mean;
     double closest_to_am;
     int procces_rc;
-	int return_code = _RETURN_SUCCESS_;
+    int return_code = _RETURN_SUCCESS_;
 
     if (argc != 2)
     {
-		return_code = _RETURN_USAGE_ERROR_;
-		show_example();
+        return_code = _RETURN_USAGE_ERROR_;
+        show_example();
         fprintf(stderr, "Error. Wrong amount of arguments.");
         goto END;
     }
@@ -39,7 +39,7 @@ int main(int argc, char ** argv)
     file = fopen(argv[1], "r");
     if (!file)
     {
-		return_code = _RETURN_OPEN_ERROR_;
+        return_code = _RETURN_OPEN_ERROR_;
         fprintf(stderr, "Error. Could not open `%s`:\n%s.",
                 argv[1],
                 strerror(errno));
@@ -49,13 +49,13 @@ int main(int argc, char ** argv)
     procces_rc = get_arithmetic_mean(file, &arithmetic_mean);
     if (procces_rc == _EXIT_DATA_ERROR_)
     {
-		return_code = _EXIT_DATA_ERROR_;
+        return_code = _EXIT_DATA_ERROR_;
         fprintf(stderr, "Error. No data.");
         goto FILE_CLOSING;
     }
     else if (procces_rc == _EXIT_INPUT_ERROR_)
     {
-		return_code = _EXIT_INPUT_ERROR_;
+        return_code = _EXIT_INPUT_ERROR_;
         fprintf(stderr, "Error. Wrong input data.");
         goto FILE_CLOSING;
     }
@@ -67,13 +67,13 @@ int main(int argc, char ** argv)
                                 &closest_to_am);
     if (procces_rc == _EXIT_DATA_ERROR_)
     {
-		return_code = _EXIT_DATA_ERROR_;
+        return_code = _EXIT_DATA_ERROR_;
         fprintf(stderr, "Error. No data.");
         goto FILE_CLOSING;
     }
     else if (procces_rc == _EXIT_INPUT_ERROR_)
     {
-		return_code = _EXIT_INPUT_ERROR_;
+        return_code = _EXIT_INPUT_ERROR_;
         fprintf(stderr, "Error. Wrong input data.");
         goto FILE_CLOSING;
     }
@@ -91,7 +91,7 @@ int main(int argc, char ** argv)
 
 void show_example()
 {
-	printf("\nexample.exe <source_file>\n");
+    printf("\nexample.exe <source_file>\n");
 }
 
 double double_abs(double num)
