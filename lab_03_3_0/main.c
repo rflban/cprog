@@ -10,25 +10,28 @@
 #include <errno.h>
 #include <string.h>
 
-#define _RETURN_SUCCESS_ 0
-#define _RETURN_USAGE_ERROR_ -1
-#define _RETURN_OPEN_ERROR_ -2
+#define RETURN_SUCCESS_ 0
+#define RETURN_USAGE_ERROR_ -1
+#define RETURN_OPEN_ERROR_ -2
+#define RETURN_CLOSE_ERROR_ -3
+#define RETURN_SEEK_ERROR_ -4
+#define EXIT_SUCCESS_ 0
+#define EXIT_SEEK_ERROR_ -1
 
-#define _RAND_MIN -100
-#define _RAND_MAX 100
-#define _RANDSEQ_LEN 15
+#define N_RAND_MIN -100
+#define N_RAND_MAX 100
+#define RANDSEQ_LEN 15
 
 int randint(int a, int b);
 int compare(int num1, int num2);
 
-void get_number_by_pos(FILE * target, int * number, int pos);
-void put_number_by_pos(FILE * target, int * number, int pos);
+int get_number_by_pos(FILE * target, int * number, int pos);
+int put_number_by_pos(FILE * target, int * number, int pos);
 void create_object(FILE * target, int randmin, int randmax, int n);
 void print_object(FILE * target, FILE * output);
-void sort_object(FILE * target, FILE * output, int (* comp)(int, int));
+int sort_object(FILE * target, FILE * output, int (* comp)(int, int));
 
 void show_example();
-
 
 int main(int argc, char ** argv)
 {
@@ -36,13 +39,14 @@ int main(int argc, char ** argv)
     FILE * err_output = stderr;
     FILE * data_file;
     char * open_mode;
-	int return_code = _RETURN_SUCCESS_;
+    int proccess_rc;
+    int return_code = RETURN_SUCCESS_;
 
     srand(time(NULL));
 
     if (argc != 3)
     {
-		return_code = _RETURN_USAGE_ERROR_;
+        return_code = RETURN_USAGE_ERROR_;
         show_example();
         goto END;
     }
@@ -62,20 +66,31 @@ int main(int argc, char ** argv)
     data_file = fopen(argv[2], open_mode);
     if(data_file == NULL)
     {
-		return_code = _RETURN_OPEN_ERROR_;
+        return_code = RETURN_OPEN_ERROR_;
         fprintf(err_output, "Error. Could not open `%s`:\n%s",
                 argv[2], strerror(errno));
         goto END;
     }
 
     if (strcmp(argv[1], "create") == 0)
-        create_object(data_file, _RAND_MIN, _RAND_MAX, _RANDSEQ_LEN);
+        create_object(data_file, N_RAND_MIN, N_RAND_MAX, RANDSEQ_LEN);
     else if (strcmp(argv[1], "print") == 0)
         print_object(data_file, output);
     else if (strcmp(argv[1], "sort") == 0)
-        sort_object(data_file, output, &compare);
+    {
+        proccess_rc = sort_object(data_file, output, &compare);
+        if (proccess_rc == EXIT_SEEK_ERROR_)
+        {
+            return_code = RETURN_SEEK_ERROR_;
+            fprintf(err_output, "Error. Could not read this file");
+        }
+    }
 
-    fclose(data_file);
+    if (fclose(data_file) != 0)
+    {
+        return_code = RETURN_CLOSE_ERROR_;
+        fprintf(err_output, "Error. Could not close this file");
+    }
 
     END: return return_code;
 }
@@ -101,16 +116,26 @@ int compare(int num1, int num2)
     return 0;
 }
 
-void get_number_by_pos(FILE * target, int * number, int pos)
+int get_number_by_pos(FILE * target, int * number, int pos)
 {
-    (void)fseek(target, sizeof(*number)*pos, SEEK_SET);
-    fread(number, sizeof(*number), 1, target);
+    int proccess_rc;
+    
+    proccess_rc = fseek(target, sizeof(*number)*pos, SEEK_SET);
+    if (proccess_rc == 0)
+        fread(number, sizeof(*number), 1, target);
+    
+    return proccess_rc;
 }
 
-void put_number_by_pos(FILE * target, int * number, int pos)
+int put_number_by_pos(FILE * target, int * number, int pos)
 {
-    (void)fseek(target, sizeof(*number)*pos, SEEK_SET);
-    fwrite(number, sizeof(*number), 1, target);
+    int proccess_rc;
+    
+    proccess_rc = fseek(target, sizeof(*number)*pos, SEEK_SET);
+    if (proccess_rc == 0)
+        fwrite(number, sizeof(*number), 1, target);
+    
+    return proccess_rc;
 }
 
 void create_object(FILE * target, int randmin, int randmax, int n)
@@ -135,29 +160,57 @@ void print_object(FILE * target, FILE * output)
     }
 }
 
-void sort_object(FILE * target, FILE * output, int (* comp)(int, int))
+int sort_object(FILE * target, FILE * output, int (* comp)(int, int))
 {
     int n = 0;
-	int flag = 0;
-	int c_number, n_number;
-	
-	(void)fseek(target, 0, SEEK_END);
-	n = ftell(target) / sizeof(int);
+    int flag = 0;
+    int c_number, n_number;
+    int proccess_rc = EXIT_SUCCESS_;
+    
+    proccess_rc = fseek(target, 0, SEEK_END);
+    if (proccess_rc != 0)
+    {
+        proccess_rc = EXIT_SEEK_ERROR_;
+        goto END;
+    }
+    n = ftell(target) / sizeof(int);
 
     for (int j = 0; j < n-1; j++)
     {
         for (int i = 0; i < n-1; i++)
         {
-            get_number_by_pos(target, &c_number, i);
-            get_number_by_pos(target, &n_number, i+1);
+            proccess_rc = get_number_by_pos(target, &c_number, i);
+            if (proccess_rc != 0)
+            {
+                proccess_rc = EXIT_SEEK_ERROR_;
+                goto END;
+            }
+            proccess_rc = get_number_by_pos(target, &n_number, i+1);
+            if (proccess_rc != 0)
+            {
+                proccess_rc = EXIT_SEEK_ERROR_;
+                goto END;
+            }
             if ((*comp)(c_number, n_number))
             {
                 flag = 1;
-                put_number_by_pos(target, &n_number, i);
-                put_number_by_pos(target, &c_number, i+1);
+                proccess_rc = put_number_by_pos(target, &n_number, i);
+                if (proccess_rc != 0)
+                {
+                    proccess_rc = EXIT_SEEK_ERROR_;
+                    goto END;
+                }
+                proccess_rc = put_number_by_pos(target, &c_number, i+1);
+                if (proccess_rc != 0)
+                {
+                    proccess_rc = EXIT_SEEK_ERROR_;
+                    goto END;
+                }
             }
         }
         if (!flag)
             break;
     }
+    
+    END: return proccess_rc;
 }

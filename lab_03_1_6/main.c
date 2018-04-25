@@ -2,7 +2,6 @@
 
 #define RETURN_SUCCESS_ 0
 #define RETURN_FAILURE_ -1
-
 #define EXIT_SUCCESS_ 0
 #define EXIT_NO_DATA_ -1
 
