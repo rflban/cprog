@@ -54,7 +54,7 @@ int main(int argc, char ** argv)
         return_code = RETURN_INPUT_ERROR_;
         fprintf(err_output,
                 "\nIncorrect content of input file.\n");
-        goto END;
+        goto INPUT_FILE_CLOSING;
     }
     else if(proccess_rc == EXIT_ARRAY_OVERFLOW_)
     {
@@ -62,9 +62,10 @@ int main(int argc, char ** argv)
                 "\nArray was overflowed.\n");
     }
 
-    /*for(int i = 0; i < n; i++)
-        printf("%d\n", numbers[i]);*/
+    get_mentioned_max(numbers, numbers + n-1, &mentioned_max);
+    fprintf(output, "%d", mentioned_max);
 
+    INPUT_FILE_CLOSING:
     proccess_rc = fclose(input);
     if (proccess_rc == EOF)
     {
@@ -75,9 +76,6 @@ int main(int argc, char ** argv)
                 strerror(errno));
         goto END;
     }
-
-    get_mentioned_max(numbers, numbers + n-1, &mentioned_max);
-    fprintf(output, "%d", mentioned_max);
 
     END: return return_code;
 }
