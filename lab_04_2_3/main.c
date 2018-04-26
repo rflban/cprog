@@ -16,6 +16,8 @@ int is_armstrong(int number);
 int get_number_len(int number);
 int get_dig_by_pos(int number, int pos);
 int int_power(int base, int exponent);
+void get_armstrong_numbers(int * source_array, int len,
+                           int * target_array, int * t_len);
 
 
 int main(void)
@@ -24,7 +26,7 @@ int main(void)
     int array[MAX_ARRAY_LEN] = {};
     int array_len;
     int new_array[MAX_ARRAY_LEN] = {};
-    int new_array_len = 0;
+    int new_array_len;
     int proccess_rc;
 
     proccess_rc = array_filling(array, &array_len, MAX_INPUT_QUAN, "Array");
@@ -38,14 +40,7 @@ int main(void)
     printf("\nReceived array:\n");
     print_int_array(array, array_len);
 
-    for(int i = 0; i < array_len; i++)
-    {
-        if (array[i] > 0 && is_armstrong(array[i]))
-        {
-            new_array[new_array_len] = array[i];
-            new_array_len++;
-        }
-    }
+    get_armstrong_numbers(array, array_len, new_array, &new_array_len);
 
     if (new_array_len == 0)
     {
@@ -136,4 +131,19 @@ int is_armstrong(int number)
         check_number += int_power(get_dig_by_pos(number, i), number_len);
 
     return number == check_number;
+}
+
+void get_armstrong_numbers(int * source_array, int len,
+                           int * target_array, int * t_len)
+{
+    *t_len = 0;
+
+    for(int i = 0; i < len; i++)
+    {
+        if (source_array[i] > 0 && is_armstrong(source_array[i]))
+        {
+            target_array[*t_len] = source_array[i];
+            *t_len = *t_len + 1;
+        }
+    }
 }
