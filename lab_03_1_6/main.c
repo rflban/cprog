@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define RETURN_SUCCESS_ 0
 #define RETURN_FAILURE_ -1
@@ -6,6 +7,7 @@
 #define EXIT_NO_DATA_ -1
 
 int get_len_of_max_monotone_seq(FILE * file, int * len);
+void print_procces_error(int exit_code, FILE * err_output);
 
 int main(void)
 {
@@ -14,17 +16,13 @@ int main(void)
     int return_code = RETURN_SUCCESS_;
 
     procces_rc = get_len_of_max_monotone_seq(stdin, &len_of_max_monotone_seq);
-    if (procces_rc == EXIT_SUCCESS_)
-        fprintf(stdout,
-                "Lenght of max monotone sequence is %d.\n",
-                len_of_max_monotone_seq);
-    else if (procces_rc == EXIT_NO_DATA_)
-    {
-        return_code = RETURN_FAILURE_;
-        fprintf(stderr,
-                "Error. Not enougth data.");
-    }
-                
+    
+    print_procces_error(procces_rc, stderr);
+    
+    fprintf(stdout,
+            "Lenght of max monotone sequence is %d.\n",
+            len_of_max_monotone_seq);
+    
     return return_code;
 }
 
@@ -58,4 +56,16 @@ int get_len_of_max_monotone_seq(FILE * file, int * max_len)
     }
 
     return return_code;
+}
+
+void print_procces_error(int exit_code, FILE * err_output)
+{
+    switch (exit_code)
+    {        
+        case EXIT_NO_DATA_:
+            fprintf(err_output,
+                    "Error. Not enougth data.");
+            exit(RETURN_FAILURE_);
+            break;
+    }
 }

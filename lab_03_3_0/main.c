@@ -15,8 +15,13 @@
 #define RETURN_OPEN_ERROR_ -2
 #define RETURN_CLOSE_ERROR_ -3
 #define RETURN_SEEK_ERROR_ -4
+#define RETURN_INVALID_COMMAND_ -5
 #define EXIT_SUCCESS_ 0
-#define EXIT_SEEK_ERROR_ -1
+#define EXIT_USAGE_ERROR_ -1
+#define EXIT_OPEN_ERROR_ -2
+#define EXIT_CLOSE_ERROR_ -3
+#define EXIT_SEEK_ERROR_ -4
+#define EXIT_INVALID_COMMAND_ -5
 
 #define N_RAND_MIN -100
 #define N_RAND_MAX 100
@@ -27,10 +32,10 @@ int compare(int num1, int num2);
 
 int get_number_by_pos(FILE * target, int * number, int pos);
 int put_number_by_pos(FILE * target, int * number, int pos);
+int sort_object(FILE * target, FILE * output);
 void create_object(FILE * target, int randmin, int randmax, int n);
 void print_object(FILE * target, FILE * output);
-int sort_object(FILE * target, FILE * output, int (* comp)(int, int));
-
+void print_procces_error(int exit_code, FILE * err_output);
 void show_example();
 
 int main(int argc, char ** argv)
@@ -39,15 +44,13 @@ int main(int argc, char ** argv)
     FILE * err_output = stderr;
     FILE * data_file;
     char * open_mode;
-    int proccess_rc;
-    int return_code = RETURN_SUCCESS_;
+    int proccess_rc = 0;
 
     srand(time(NULL));
 
     if (argc != 3)
     {
-        return_code = RETURN_USAGE_ERROR_;
-        show_example();
+        proccess_rc = EXIT_USAGE_ERROR_;
         goto END;
     }
 
@@ -59,16 +62,14 @@ int main(int argc, char ** argv)
         open_mode = "rb+";
     else
     {
-        fprintf(err_output, "Error. Invalid command marker.");
+        proccess_rc = EXIT_INVALID_COMMAND_;
         goto END;
     }
 
     data_file = fopen(argv[2], open_mode);
     if(data_file == NULL)
     {
-        return_code = RETURN_OPEN_ERROR_;
-        fprintf(err_output, "Error. Could not open `%s`:\n%s",
-                argv[2], strerror(errno));
+        proccess_rc = EXIT_OPEN_ERROR_;
         goto END;
     }
 
@@ -77,22 +78,14 @@ int main(int argc, char ** argv)
     else if (strcmp(argv[1], "print") == 0)
         print_object(data_file, output);
     else if (strcmp(argv[1], "sort") == 0)
-    {
-        proccess_rc = sort_object(data_file, output, &compare);
-        if (proccess_rc == EXIT_SEEK_ERROR_)
-        {
-            return_code = RETURN_SEEK_ERROR_;
-            fprintf(err_output, "Error. Could not read this file");
-        }
-    }
+        proccess_rc = sort_object(data_file, output);
 
     if (fclose(data_file) != 0)
-    {
-        return_code = RETURN_CLOSE_ERROR_;
-        fprintf(err_output, "Error. Could not close this file");
-    }
+        proccess_rc = EXIT_CLOSE_ERROR_;
 
-    END: return return_code;
+    END:
+    print_procces_error(proccess_rc, err_output);
+    return RETURN_SUCCESS_;
 }
 
 void show_example()
@@ -160,7 +153,7 @@ void print_object(FILE * target, FILE * output)
     }
 }
 
-int sort_object(FILE * target, FILE * output, int (* comp)(int, int))
+int sort_object(FILE * target, FILE * output)
 {
     int n = 0;
     int flag = 0;
@@ -191,7 +184,7 @@ int sort_object(FILE * target, FILE * output, int (* comp)(int, int))
                 proccess_rc = EXIT_SEEK_ERROR_;
                 goto END;
             }
-            if ((*comp)(c_number, n_number))
+            if (compare(c_number, n_number))
             {
                 flag = 1;
                 proccess_rc = put_number_by_pos(target, &n_number, i);
@@ -213,4 +206,37 @@ int sort_object(FILE * target, FILE * output, int (* comp)(int, int))
     }
     
     END: return proccess_rc;
+}
+
+void print_procces_error(int exit_code, FILE * err_output)
+{
+    switch (exit_code)
+    {
+        case EXIT_USAGE_ERROR_: 
+            show_example();
+            fprintf(err_output, "Error. Wrong amount of arguments.");
+            exit(RETURN_USAGE_ERROR_);
+            break;
+            
+        case EXIT_OPEN_ERROR_:
+            fprintf(err_output, "Error. Could not open file:\n%s.",
+                    strerror(errno));
+            exit(RETURN_OPEN_ERROR_);
+            break;
+            
+        case EXIT_CLOSE_ERROR_:
+            fprintf(err_output, "File closing error");
+            exit(RETURN_CLOSE_ERROR_);
+            break;
+            
+        case EXIT_SEEK_ERROR_:
+            fprintf(err_output, "File reading error");
+            exit(RETURN_SEEK_ERROR_);
+            break;
+        
+        case EXIT_INVALID_COMMAND_:
+            fprintf(err_output, "Error. Invalid command marker.");
+            exit(RETURN_INVALID_COMMAND_);
+            break;
+    }
 }

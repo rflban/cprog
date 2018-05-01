@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 
@@ -12,11 +13,16 @@
 #define EXIT_SUCCESS_ 0
 #define EXIT_DATA_ERROR_ -1
 #define EXIT_INPUT_ERROR_ -2
+#define EXIT_USAGE_ERROR_ -3
+#define EXIT_OPEN_ERROR_ -4
+#define EXIT_CLOSE_ERROR_ -5
+#define EXIT_SEEK_ERROR_ -6
 
 int get_arithmetic_mean(FILE * file, double * arithmetic_mean);
 int get_closest_to(FILE * file, double compared_num, double * closest_to);
 double double_abs(double num);
 void show_example();
+void print_procces_error(int exit_code, FILE * err_output);
 
 int main(int argc, char ** argv)
 {
@@ -24,62 +30,33 @@ int main(int argc, char ** argv)
     double arithmetic_mean;
     double closest_to_am;
     int procces_rc;
-    int return_code = RETURN_SUCCESS_;
 
     if (argc != 2)
     {
-        return_code = RETURN_USAGE_ERROR_;
-        show_example();
-        fprintf(stderr, "Error. Wrong amount of arguments.");
-        return return_code;
+        procces_rc = EXIT_USAGE_ERROR_;
+        print_procces_error(procces_rc, stderr);
     }
 
     file = fopen(argv[1], "r");
     if (!file)
     {
-        return_code = RETURN_OPEN_ERROR_;
-        fprintf(stderr, "Error. Could not open `%s`:\n%s.",
-                argv[1],
-                strerror(errno));
-        return return_code;
+        procces_rc = EXIT_OPEN_ERROR_;
+        print_procces_error(procces_rc, stderr);
     }
 
     procces_rc = get_arithmetic_mean(file, &arithmetic_mean);
-    if (procces_rc == EXIT_DATA_ERROR_)
-    {
-        return_code = RETURN_DATA_ERROR_;
-        fprintf(stderr, "Error. No data.");
-        return return_code;
-    }
-    else if (procces_rc == EXIT_INPUT_ERROR_)
-    {
-        return_code = RETURN_INPUT_ERROR_;
-        fprintf(stderr, "Error. Wrong input data.");
-        return return_code;
-    }
+    print_procces_error(procces_rc, stderr);
 
     if (fseek(file, 0, SEEK_SET) != 0)
     {
-        fprintf(stderr, "File reading error");
-        return_code = RETURN_SEEK_ERROR_;
-        return return_code;
+        procces_rc = EXIT_SEEK_ERROR_;
+        print_procces_error(procces_rc, stderr);
     }
 
     procces_rc = get_closest_to(file,
                                 arithmetic_mean,
                                 &closest_to_am);
-    if (procces_rc == EXIT_DATA_ERROR_)
-    {
-        return_code = RETURN_DATA_ERROR_;
-        fprintf(stderr, "Error. No data.");
-        return return_code;
-    }
-    else if (procces_rc == EXIT_INPUT_ERROR_)
-    {
-        return_code = RETURN_INPUT_ERROR_;
-        fprintf(stderr, "Error. Wrong input data.");
-        return return_code;
-    }
+    print_procces_error(procces_rc, stderr);
 
     fprintf(stdout,
             "The closest to arithmetic "
@@ -89,12 +66,11 @@ int main(int argc, char ** argv)
 
     if (fclose(file) != 0)
     {
-        fprintf(stderr, "File closing error");
-        return_code = RETURN_CLOSE_ERROR_;
-        return return_code;
+        procces_rc = EXIT_CLOSE_ERROR_;
+        print_procces_error(procces_rc, stderr);
     }
 
-    return return_code;
+    return RETURN_SUCCESS_;
 }
 
 void show_example()
@@ -177,4 +153,43 @@ int get_closest_to(FILE * file, double compared_num, double * closest_to)
         return_code = EXIT_INPUT_ERROR_;
 
     return return_code;
+}
+
+void print_procces_error(int exit_code, FILE * err_output)
+{
+    switch (exit_code)
+    {        
+        case EXIT_DATA_ERROR_:
+            fprintf(err_output,
+                    "Error. Not enough data.");
+            exit(RETURN_DATA_ERROR_);
+            break;
+            
+        case EXIT_INPUT_ERROR_:
+            fprintf(err_output, "Error. Wrong input data.");
+            exit(RETURN_INPUT_ERROR_);
+            break;
+            
+        case EXIT_USAGE_ERROR_: 
+            show_example();
+            fprintf(err_output, "Error. Wrong amount of arguments.");
+            exit(RETURN_USAGE_ERROR_);
+            break;
+            
+        case EXIT_OPEN_ERROR_:
+            fprintf(err_output, "Error. Could not open file:\n%s.",
+                    strerror(errno));
+            exit(RETURN_OPEN_ERROR_);
+            break;
+            
+        case EXIT_CLOSE_ERROR_:
+            fprintf(err_output, "File closing error");
+            exit(RETURN_CLOSE_ERROR_);
+            break;
+            
+        case EXIT_SEEK_ERROR_:
+            fprintf(err_output, "File reading error");
+            exit(RETURN_SEEK_ERROR_);
+            break;
+    }
 }
