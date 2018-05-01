@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#define _RETURN_SUCCESS_ 0
-#define _RETURN_NO_DATA_ -1
+#define RETURN_SUCCESS_ 0
+#define RETURN_NO_DATA_ -1
 
-#define _EXIT_SUCCESS_ 0
-#define _EXIT_FAILURE_ -1
+#define EXIT_SUCCESS_ 0
+#define EXIT_FAILURE_ -1
 
 #define MAX_ARRAY_LEN 10
 #define MAX_INPUT_QUAN 10
@@ -22,7 +22,7 @@ void get_armstrong_numbers(int * source_array, int len,
 
 int main(void)
 {
-    int return_code = _RETURN_SUCCESS_;
+    int return_code = RETURN_SUCCESS_;
     int array[MAX_ARRAY_LEN] = {};
     int array_len;
     int new_array[MAX_ARRAY_LEN] = {};
@@ -30,10 +30,10 @@ int main(void)
     int proccess_rc;
 
     proccess_rc = array_filling(array, &array_len, MAX_INPUT_QUAN, "Array");
-    if (proccess_rc == _EXIT_FAILURE_)
+    if (proccess_rc == EXIT_FAILURE_)
     {
         printf("\nArray is empty.");
-        return_code = _RETURN_NO_DATA_;
+        return_code = RETURN_NO_DATA_;
         goto END;
     }
 
@@ -65,7 +65,7 @@ int array_filling(int * array, int * array_len,
                   int max_array_len, char * array_name)
 {
     int rc = 0;
-    int exit_code = _EXIT_FAILURE_;
+    int exit_code = EXIT_FAILURE_;
 
     if (max_array_len != 0)
         rc = 1;
@@ -78,7 +78,7 @@ int array_filling(int * array, int * array_len,
 
         if (rc == 1)
         {
-            exit_code = _EXIT_SUCCESS_;
+            exit_code = EXIT_SUCCESS_;
             *array_len += 1;
         }
     }
