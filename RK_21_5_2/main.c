@@ -1,9 +1,9 @@
-/* Задача 2. Вариант 5.
-Найти разницу между максимальным и минимальным числом 
-последовательности. Пример: 1 2 3 4 5 -> 5 - 1 -> 4
+/* Р—Р°РґР°С‡Р° 2. Р’Р°СЂРёР°РЅС‚ 5.
+РќР°Р№С‚Рё СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј Рё РјРёРЅРёРјР°Р»СЊРЅС‹Рј С‡РёСЃР»РѕРј
+РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё. РџСЂРёРјРµСЂ: 1 2 3 4 5 -> 5 - 1 -> 4
 
-Конец ввода обозначается символом конца файла или 
-любым другим нецифровым, кроме пробела или переноса строки.
+РљРѕРЅРµС† РІРІРѕРґР° РѕР±РѕР·РЅР°С‡Р°РµС‚СЃСЏ СЃРёРјРІРѕР»РѕРј РєРѕРЅС†Р° С„Р°Р№Р»Р° РёР»Рё
+Р»СЋР±С‹Рј РґСЂСѓРіРёРј РЅРµС†РёС„СЂРѕРІС‹Рј, РєСЂРѕРјРµ РїСЂРѕР±РµР»Р° РёР»Рё РїРµСЂРµРЅРѕСЃР° СЃС‚СЂРѕРєРё.
 */
 
 #include <stdio.h>
@@ -15,46 +15,46 @@ int get_min(int num1, int num2);
 
 int main(void)
 {
-	int max_num, min_num;
-	int f_max = 0, f_min = 0;
-	int cur_num;
-	
-	printf("Enter sequence: ");
-	while(scanf("%d", &cur_num) == 1)
-	{
-		if (0 == f_max)
-		{
-			f_max = 1;
-			max_num = cur_num;
-		}
-		else
-			max_num = get_max(cur_num, max_num);
-		
-		if (0 == f_min)
-		{
-			f_min = 1;
-			min_num = cur_num;
-		}
-		else
-			min_num = get_min(cur_num, min_num);
-	}
-	
-	if (f_max == 1 && f_min == 1)
-		printf("%d", (max_num-min_num));
-	
-	return _EXIT_SUCCES_;
+    int max_num, min_num;
+    int f_max = 0, f_min = 0;
+    int cur_num;
+
+    printf("Enter sequence: ");
+    while(scanf("%d", &cur_num) == 1)
+    {
+        if (0 == f_max)
+        {
+            f_max = 1;
+            max_num = cur_num;
+        }
+        else
+            max_num = get_max(cur_num, max_num);
+
+        if (0 == f_min)
+        {
+            f_min = 1;
+            min_num = cur_num;
+        }
+        else
+            min_num = get_min(cur_num, min_num);
+    }
+
+    if (f_max == 1 && f_min == 1)
+        printf("%d", (max_num-min_num));
+
+    return _EXIT_SUCCES_;
 }
 
 int get_max(int num1, int num2)
 {
-	if (num1 > num2)
-		return num1;
-	return num2;
+    if (num1 > num2)
+        return num1;
+    return num2;
 }
 
 int get_min(int num1, int num2)
 {
-	if (num1 < num2)
-		return num1;
-	return num2;
+    if (num1 < num2)
+        return num1;
+    return num2;
 }
