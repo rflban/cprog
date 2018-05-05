@@ -142,10 +142,9 @@ int get_closest_to(FILE * file, double compared_num, double * closest_to)
 
     while ((scan_rc = fscanf(file, "%lf", &num)) == 1)
     {
-        if (
-                double_abs(*closest_to - compared_num) >
-                double_abs(num - compared_num)
-           )
+        double exp0 = double_abs(*closest_to - compared_num);
+        double exp1 = double_abs(num - compared_num);
+        if (exp0 > exp1)
             *closest_to = num;
     }
 
@@ -158,35 +157,35 @@ int get_closest_to(FILE * file, double compared_num, double * closest_to)
 void print_procces_error(int exit_code, FILE * err_output)
 {
     switch (exit_code)
-    {        
+    {
         case EXIT_DATA_ERROR_:
             fprintf(err_output,
                     "Error. Not enough data.");
             exit(RETURN_DATA_ERROR_);
             break;
-            
+
         case EXIT_INPUT_ERROR_:
             fprintf(err_output, "Error. Wrong input data.");
             exit(RETURN_INPUT_ERROR_);
             break;
-            
-        case EXIT_USAGE_ERROR_: 
+
+        case EXIT_USAGE_ERROR_:
             show_example();
             fprintf(err_output, "Error. Wrong amount of arguments.");
             exit(RETURN_USAGE_ERROR_);
             break;
-            
+
         case EXIT_OPEN_ERROR_:
             fprintf(err_output, "Error. Could not open file:\n%s.",
                     strerror(errno));
             exit(RETURN_OPEN_ERROR_);
             break;
-            
+
         case EXIT_CLOSE_ERROR_:
             fprintf(err_output, "File closing error");
             exit(RETURN_CLOSE_ERROR_);
             break;
-            
+
         case EXIT_SEEK_ERROR_:
             fprintf(err_output, "File reading error");
             exit(RETURN_SEEK_ERROR_);
