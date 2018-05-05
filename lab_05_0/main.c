@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 
@@ -15,8 +16,9 @@
 #define MAX_ARRAY_LEN 100
 
 int read_array(FILE * target, int * fa, int * len);
-int get_mentioned_max(int * fa, int * la, int * m_max);
-void show_example(FILE * output);
+void get_mentioned_max(int * fa, int * la, int * m_max);
+void show_example(FILE* output);
+void close_file(FILE* file, FILE* err_output);
 
 
 int main(int argc, char ** argv)
@@ -32,20 +34,18 @@ int main(int argc, char ** argv)
 
     if (argc != 2)
     {
-        return_code = RETURN_USAGE_ERROR_;
         show_example(err_output);
-        goto END;
+        return RETURN_USAGE_ERROR_;
     }
 
     input = fopen(argv[1], "r");
     if (input == NULL)
     {
-        return_code = RETURN_OPEN_ERROR_;
         fprintf(err_output,
                 "\nError. Could not open `%s`:\n%s.\n",
                 argv[1],
                 strerror(errno));
-        goto END;
+        return RETURN_OPEN_ERROR_;
     }
 
     proccess_rc = read_array(input, numbers, &n);
@@ -54,7 +54,7 @@ int main(int argc, char ** argv)
         return_code = RETURN_INPUT_ERROR_;
         fprintf(err_output,
                 "\nIncorrect content of input file.\n");
-        goto INPUT_FILE_CLOSING;
+        close_file(input, err_output);
     }
     else if(proccess_rc == EXIT_ARRAY_OVERFLOW_)
     {
@@ -65,19 +65,22 @@ int main(int argc, char ** argv)
     get_mentioned_max(numbers, numbers + n-1, &mentioned_max);
     fprintf(output, "%d", mentioned_max);
 
-    INPUT_FILE_CLOSING:
-    proccess_rc = fclose(input);
+    close_file(input, err_output);
+
+    return RETURN_SUCCESS_;
+}
+
+void close_file(FILE* file, FILE* err_output)
+{
+    int proccess_rc = fclose(file);
     if (proccess_rc == EOF)
     {
-        return_code = RETURN_CLOSE_ERROR_;
         fprintf(err_output,
-                "\nError. Could not close `%s`:\n%s.\n",
-                argv[1],
+                "\nError. Could not close this file:\n%s.\n",
                 strerror(errno));
-        goto END;
-    }
 
-    END: return return_code;
+        exit(RETURN_CLOSE_ERROR_);
+    }
 }
 
 void show_example(FILE * output)
@@ -101,25 +104,24 @@ int read_array(FILE * target, int * fa, int * len)
         if (proccess_rc != 1)
         {
             return_code = EXIT_INPUT_ERROR_;
-            goto END;
+            return return_code;
         }
 
         if (pa - fa > MAX_ARRAY_LEN)
         {
             return_code = EXIT_ARRAY_OVERFLOW_;
             *len = MAX_ARRAY_LEN;
-            goto END;
+            return return_code;
         }
     }
 
     *len = pa - fa;
 
-    END: return return_code;
+    return return_code;
 }
 
-int get_mentioned_max(int * fa, int * la, int * m_max)
+void get_mentioned_max(int * fa, int * la, int * m_max)
 {
-    int return_code = EXIT_SUCCESS_;
     int flag = 0;
 
     for(int * pa1 = fa, * pa2 = la; pa2 - pa1 > 0; pa1++, pa2--)
@@ -130,6 +132,4 @@ int get_mentioned_max(int * fa, int * la, int * m_max)
             *m_max = *pa1 + *pa2;
         }
     }
-
-    return return_code;
 }
