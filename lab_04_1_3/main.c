@@ -1,18 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define RETURN_SUCCESS_ 0
-#define RETURN_NO_DATA_ -1
+#define RETURN_INPUT_ERROR_ -2
 
 #define EXIT_SUCCESS_ 0
-#define EXIT_FAILURE_ -1
+#define EXIT_EOF_ -1
+#define EXIT_FAILURE_ -2
 
 #define MAX_ARRAY_LEN 10
-#define MAX_INPUT_QUAN 10
 
-int array_filling(int * array, int * array_len,
-                  int max_array_len, char * array_name);
-int geom_mean_of_int_array(int * array, int array_len, double * geom_mean);
+int request_for_number(const char* const request_message, int* num);
+int array_filling(int* const array, int array_len, \
+                  const char* const array_name);
+int geom_mean_of_int_array(const int* const array, \
+                           int array_len, double* geom_mean);
+void print_input_exit_error(int input_exit_code);
 
 
 int main(void)
@@ -20,52 +24,68 @@ int main(void)
     int array[MAX_ARRAY_LEN] = {};
     int array_len;
     double geom_mean;
-    int return_code = RETURN_SUCCESS_;
-    int proccess_rc;
+    int process_rc;
 
-    proccess_rc = array_filling(array, &array_len, MAX_INPUT_QUAN, "Array");
-    if (proccess_rc == EXIT_FAILURE_)
+    process_rc = request_for_number("Enter array length: ", &array_len);
+    print_input_exit_error(process_rc);
+
+    if (array_len > MAX_ARRAY_LEN)
     {
-        printf("\nArray is empty.");
-        return_code = RETURN_NO_DATA_;
-        goto END;
+        printf("Array length overflow.\n"
+               "Array length was cutted to %d\n", MAX_ARRAY_LEN);
+        array_len = MAX_ARRAY_LEN;
     }
 
-    proccess_rc = geom_mean_of_int_array(array, array_len, &geom_mean);
-    if (proccess_rc == EXIT_SUCCESS_)
-        printf("\nGemetric mean of this array  is %.2lf", geom_mean);
-    else
-        printf("\nPositive numbers were not found.");
+    process_rc = array_filling(array, array_len, "Array");
+    print_input_exit_error(process_rc);
 
-    END: return return_code;
+    process_rc = geom_mean_of_int_array(array, array_len, &geom_mean);
+    if (process_rc == EXIT_SUCCESS_)
+        printf("Gemetric mean of this array  is %.2lf\n", geom_mean);
+    else
+        printf("Positive numbers were not found.\n");
+
+    return RETURN_SUCCESS_;
 }
 
-int array_filling(int * array, int * array_len,
-                  int max_array_len, char * array_name)
+int request_for_number(const char* const request_message, int* num)
 {
-    int rc = 0;
-    int exit_code = EXIT_FAILURE_;
+    int rc;
+    int exit_code = EXIT_SUCCESS_;
 
-    if (max_array_len != 0)
-        rc = 1;
+    printf("%s", request_message);
+    rc = scanf("%d", num);
 
-    *array_len = 0;
-    for(int i = 0; (i < max_array_len) && rc == 1; i++)
+    if (rc == EOF)
+        exit_code = EXIT_EOF_;
+    else if (rc != 1)
+        exit_code = EXIT_FAILURE_;
+
+    return exit_code;
+}
+
+int array_filling(int* const array, int array_len, \
+                  const char* const array_name)
+{
+    int rc;
+    int exit_code = EXIT_SUCCESS_;
+
+    for(int i = 0; (i < array_len) && (EXIT_SUCCESS_ == exit_code); i++)
     {
         printf("%s[%d]: ", array_name, i);
         rc = scanf("%d", &array[i]);
 
-        if (rc == 1)
-        {
-            exit_code = EXIT_SUCCESS_;
-            *array_len += 1;
-        }
+        if (rc == 0)
+            exit_code = EXIT_FAILURE_;
+        else if (rc == EOF)
+            exit_code = EXIT_EOF_;
     }
 
     return exit_code;
 }
 
-int geom_mean_of_int_array(int * array, int array_len, double * geom_mean)
+int geom_mean_of_int_array(const int* const array, \
+                           int array_len, double* geom_mean)
 {
     int exit_code = EXIT_SUCCESS_;
     int n = 0;
@@ -79,9 +99,25 @@ int geom_mean_of_int_array(int * array, int array_len, double * geom_mean)
         }
 
     if (n != 0)
-        *geom_mean = pow(mult, 1.0/n);
+        *geom_mean = exp(log(mult) * 1.0/n);//pow(mult, 1.0/n);
     else
         exit_code = EXIT_FAILURE_;
 
     return exit_code;
+}
+
+void print_input_exit_error(int input_exit_code)
+{
+    switch (input_exit_code)
+    {
+        case EXIT_EOF_:
+            printf("\nUnexpected EOF.\n\n");
+            exit(EOF);
+            break;
+
+        case EXIT_FAILURE_:
+            printf("\nInput Error.\n\n");
+            exit(RETURN_INPUT_ERROR_);
+            break;
+    }
 }
