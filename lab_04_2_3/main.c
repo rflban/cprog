@@ -10,17 +10,17 @@
 
 #define MAX_ARRAY_LEN 10
 
-void print_int_array(const int * const array, int array_len);
-int request_for_number(const char* const request_message, int* num);
-int array_filling(int* const array, int array_len, \
+void print_int_array(const int * const array, const int array_len);
+int request_for_number(const char* const request_message, int* const num);
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name);
-int is_armstrong(int number);
+int is_armstrong(const int number);
 int get_number_len(int number);
-int get_dig_by_pos(int number, int pos);
-int int_power(int base, int exponent);
-void get_armstrong_numbers(const int * const source_array, int len, \
-                           int * const target_array, int * t_len);
-void print_input_exit_error(int input_exit_code);
+int get_dig_by_pos(int number, const int pos);
+int int_power(const int base, int exponent);
+void get_armstrong_numbers(const int * const source_array, const int len, \
+                           int * const target_array, int* const t_len);
+void print_input_exit_error(int const input_exit_code);
 
 
 int main(void)
@@ -62,14 +62,14 @@ int main(void)
     return RETURN_SUCCESS_;
 }
 
-void print_int_array(const int * const array, int array_len)
+void print_int_array(const int * const array, const int array_len)
 {
     for(int i = 0; i < array_len; i++)
         printf("%d ", array[i]);
     printf("\n");
 }
 
-int request_for_number(const char* const request_message, int* num)
+int request_for_number(const char* const request_message, int* const num)
 {
     int rc;
     int exit_code = EXIT_SUCCESS_;
@@ -85,7 +85,7 @@ int request_for_number(const char* const request_message, int* num)
     return exit_code;
 }
 
-int array_filling(int* const array, int array_len, \
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name)
 {
     int rc;
@@ -105,7 +105,7 @@ int array_filling(int* const array, int array_len, \
     return exit_code;
 }
 
-int int_power(int base, int exponent)
+int int_power(const int base, int exponent)
 {
     int number = 1;
 
@@ -131,7 +131,7 @@ int get_number_len(int number)
     return n;
 }
 
-int get_dig_by_pos(int number, int pos)
+int get_dig_by_pos(int number, const int pos)
 {
     int d = 1;
 
@@ -141,7 +141,7 @@ int get_dig_by_pos(int number, int pos)
     return (number/d)%10;
 }
 
-int is_armstrong(int number)
+int is_armstrong(const int number)
 {
     int number_len = get_number_len(number);
     int check_number = 0;
@@ -152,8 +152,8 @@ int is_armstrong(int number)
     return number == check_number;
 }
 
-void get_armstrong_numbers(const int * const source_array, int len, \
-                           int * const target_array, int * t_len)
+void get_armstrong_numbers(const int * const source_array, const int len, \
+                           int * const target_array, int* const t_len)
 {
     *t_len = 0;
 
@@ -167,7 +167,7 @@ void get_armstrong_numbers(const int * const source_array, int len, \
     }
 }
 
-void print_input_exit_error(int input_exit_code)
+void print_input_exit_error(int const input_exit_code)
 {
     switch (input_exit_code)
     {
