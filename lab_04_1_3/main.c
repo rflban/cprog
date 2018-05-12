@@ -11,12 +11,12 @@
 
 #define MAX_ARRAY_LEN 10
 
-int request_for_number(const char* const request_message, int* num);
-int array_filling(int* const array, int array_len, \
+int request_for_number(const char* const request_message, int* const num);
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name);
 int geom_mean_of_int_array(const int* const array, \
-                           int array_len, double* geom_mean);
-void print_input_exit_error(int input_exit_code);
+                           const int array_len, double* const geom_mean);
+void print_input_exit_error(const int input_exit_code);
 
 
 int main(void)
@@ -48,7 +48,7 @@ int main(void)
     return RETURN_SUCCESS_;
 }
 
-int request_for_number(const char* const request_message, int* num)
+int request_for_number(const char* const request_message, int* const num)
 {
     int rc;
     int exit_code = EXIT_SUCCESS_;
@@ -64,7 +64,7 @@ int request_for_number(const char* const request_message, int* num)
     return exit_code;
 }
 
-int array_filling(int* const array, int array_len, \
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name)
 {
     int rc;
@@ -85,7 +85,7 @@ int array_filling(int* const array, int array_len, \
 }
 
 int geom_mean_of_int_array(const int* const array, \
-                           int array_len, double* geom_mean)
+                           const int array_len, double* const geom_mean)
 {
     int exit_code = EXIT_SUCCESS_;
     int n = 0;
@@ -106,7 +106,7 @@ int geom_mean_of_int_array(const int* const array, \
     return exit_code;
 }
 
-void print_input_exit_error(int input_exit_code)
+void print_input_exit_error(const int input_exit_code)
 {
     switch (input_exit_code)
     {
