@@ -10,16 +10,17 @@
 
 #define MAX_ARRAY_LEN 10
 
-void print_int_array(const int * const array, int array_len);
-void insert_int_array(int* const array, int number, int pos, int array_len);
-int request_for_number(const char* const request_message, int* num);
-int array_filling(int* const array, int array_len, \
+void print_int_array(const int * const array, const int array_len);
+void insert_int_array(int* const array, const int number, \
+                      const int pos, const int array_len);
+int request_for_number(const char* const request_message, int* const num);
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name);
 int reverse_int_number(int number);
 int get_number_len(int number);
 int get_dig_by_pos(int number, int pos);
-void insert_rev_numbers(int * const array, int * array_len);
-void print_input_exit_error(int input_exit_code);
+void insert_rev_numbers(int * const array, int * const array_len);
+void print_input_exit_error(int const input_exit_code);
 
 int main(void)
 {
@@ -51,14 +52,14 @@ int main(void)
     return RETURN_SUCCESS_;
 }
 
-void print_int_array(const int * const array, int array_len)
+void print_int_array(const int * const array, const int array_len)
 {
     for(int i = 0; i < array_len; i++)
         printf("%d ", array[i]);
     printf("\n");
 }
 
-int request_for_number(const char* const request_message, int* num)
+int request_for_number(const char* const request_message, int* const num)
 {
     int rc;
     int exit_code = EXIT_SUCCESS_;
@@ -74,7 +75,7 @@ int request_for_number(const char* const request_message, int* num)
     return exit_code;
 }
 
-int array_filling(int* const array, int array_len, \
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name)
 {
     int rc;
@@ -107,10 +108,13 @@ int reverse_int_number(int number)
     return reversed_number;
 }
 
-void insert_int_array(int* const array, int number, int pos, int array_len)
+void insert_int_array(int* const array, const int number, \
+                      const int pos, const int array_len)
 {
     for(int i = pos+1, temp = array[pos]; i < array_len+1; i++)
     {
+        if (MAX_ARRAY_LEN <= i)
+            break;
         array[i] ^= temp;
         temp ^= array[i];
         array[i] ^= temp;
@@ -142,7 +146,7 @@ int get_dig_by_pos(int number, int pos)
     return (number/d)%10;
 }
 
-void insert_rev_numbers(int * const array, int * array_len)
+void insert_rev_numbers(int * const array, int * const array_len)
 {
     for(int i = 0; i < *array_len; i++)
     {
@@ -158,7 +162,7 @@ void insert_rev_numbers(int * const array, int * array_len)
     }
 }
 
-void print_input_exit_error(int input_exit_code)
+void print_input_exit_error(int const input_exit_code)
 {
     switch (input_exit_code)
     {
