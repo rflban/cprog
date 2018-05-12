@@ -10,13 +10,12 @@
 
 #define MAX_ARRAY_LEN 10
 
-void gnome_sort(int * const array, int n, int comp(int , int));
-void print_int_array(const int * const array, int array_len);
-int request_for_number(const char* const request_message, int* num);
-int array_filling(int* const array, int array_len, \
+void gnome_sort(int * const array, const int n);
+void print_int_array(const int * const array, const int array_len);
+int request_for_number(const char* const request_message, int* const num);
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name);
-int comparator(int num1, int num2);
-void print_input_exit_error(int input_exit_code);
+void print_input_exit_error(int const input_exit_code);
 
 
 int main(void)
@@ -41,7 +40,7 @@ int main(void)
     printf("\nReceived array:\n");
     print_int_array(array, array_len);
 
-    gnome_sort(array, array_len, comparator);
+    gnome_sort(array, array_len);
 
     printf("Sorted array:\n");
     print_int_array(array, array_len);
@@ -49,14 +48,14 @@ int main(void)
     return RETURN_SUCCESS_;
 }
 
-void print_int_array(const int * const const array, int array_len)
+void print_int_array(const int * const array, const int array_len)
 {
     for(int i = 0; i < array_len; i++)
         printf("%d ", array[i]);
     printf("\n");
 }
 
-int request_for_number(const char* const request_message, int* num)
+int request_for_number(const char* const request_message, int* const num)
 {
     int rc;
     int exit_code = EXIT_SUCCESS_;
@@ -72,7 +71,7 @@ int request_for_number(const char* const request_message, int* num)
     return exit_code;
 }
 
-int array_filling(int* const array, int array_len, \
+int array_filling(int* const array, const int array_len, \
                   const char* const array_name)
 {
     int rc;
@@ -92,16 +91,11 @@ int array_filling(int* const array, int array_len, \
     return exit_code;
 }
 
-int comparator(int num1, int num2)
-{
-    return num1 > num2;
-}
-
-void gnome_sort(int * const array, int n, int comp(int, int))
+void gnome_sort(int * const array, const int n)
 {
     for(int i = 0; i < n; i++)
     {
-        if (i != 0 && comp(array[i-1], array[i]))
+        if (i != 0 && array[i-1] > array[i])
         {
             array[i-1] ^= array[i];
             array[i] ^= array[i-1];
@@ -112,7 +106,7 @@ void gnome_sort(int * const array, int n, int comp(int, int))
     }
 }
 
-void print_input_exit_error(int input_exit_code)
+void print_input_exit_error(int const input_exit_code)
 {
     switch (input_exit_code)
     {
