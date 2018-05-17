@@ -3,9 +3,9 @@
 #include <errno.h>
 #include <string.h>
 
-#include "l_file_control.h"
-#include "l_exit_control.h"
-#include "l_array_process.h"
+#include "file_control.h"
+#include "exit_control.h"
+#include "array_process.h"
 
 
 int main(int argc, char ** argv)

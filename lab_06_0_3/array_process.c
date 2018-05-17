@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "l_array_process.h"
-#include "l_exit_control.h"
+#include "array_process.h"
+#include "exit_control.h"
 
 
 int read_array(FILE * target, int * fa, int * len)

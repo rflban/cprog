@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "l_exit_control.h"
+#include "exit_control.h"
 
 
 void show_example(FILE * output)

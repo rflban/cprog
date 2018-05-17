@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "l_array_process.h"
+#include "array_process.h"
 
 void get_mentioned_max_test_1();
 void get_mentioned_max_test_2();

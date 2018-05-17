@@ -3,8 +3,8 @@
 #include <errno.h>
 #include <string.h>
 
-#include "l_file_control.h"
-#include "l_exit_control.h"
+#include "file_control.h"
+#include "exit_control.h"
 
 
 void close_file(FILE* file, FILE* err_output)
