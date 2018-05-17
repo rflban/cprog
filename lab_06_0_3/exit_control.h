@@ -1,3 +1,6 @@
+#ifndef EXIT_CONTROL_H
+#define EXIT_CONTROL_H
+
 #define RETURN_SUCCESS_ 0
 #define RETURN_USAGE_ERROR_ -1
 #define RETURN_OPEN_ERROR_ -2
@@ -10,3 +13,5 @@
 
 
 void show_example(FILE* output);
+
+#endif
