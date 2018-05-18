@@ -2,66 +2,249 @@
 
 #include "array_process.h"
 
-void get_mentioned_max_test_1();
-void get_mentioned_max_test_2();
-void get_mentioned_max_test_3();
+void test_get_mentioned_max_1();
+void test_get_mentioned_max_2();
+void test_get_mentioned_max_3();
+
+void test_read_array_1();
+void test_read_array_2();
+void test_read_array_3();
+
 
 int main(void)
 {
-    get_mentioned_max_test_1();
-    get_mentioned_max_test_2();
-    get_mentioned_max_test_3();
+    test_get_mentioned_max_1();
+    test_get_mentioned_max_2();
+    test_get_mentioned_max_3();
+
+    printf("\n");
+
+    test_read_array_1();
+    test_read_array_2();
+    test_read_array_3();
 
     return 0;
 }
 
-void get_mentioned_max_test_1()
+void test_get_mentioned_max_1()
 {
     int A[] = {1, 3, 4, 2, 25, 6, 7, 3, 1, 5, 6, 12};
-    int n = sizeof(A)/sizeof(A[0]);
-    int result;
+    int n = 12;
+    int received_result;
+    int expected_result = 28;
 
-    printf("Test 1 (get_mentioned_max).\n");
+    get_mentioned_max(A, A + n-1, &received_result);
+    if (expected_result == received_result)
+    {
+        printf("Test 1 (get_mentioned_max) was successed.\n");
+        return;
+    }
+
+    printf("Test 1 (get_mentioned_max) was failed.\n");
 
     printf("Initial array:\n");
     for (int i = 0; i < n; i++)
         printf("%d ", A[i]);
     printf("\n");
 
-    get_mentioned_max(A, A + n-1, &result);
-    printf("Result: %d\n\n", result);
+    printf("expected_result: %d\n", expected_result);
+    printf("received_result: %d\n", received_result);
+
+    printf("\n");
 }
 
-void get_mentioned_max_test_2()
+void test_get_mentioned_max_2()
 {
     int A[] = {23, 24, -33, -22, -14, -39, -33, -33, -7, -17, -17, -19};
-    int n = sizeof(A)/sizeof(A[0]);
-    int result;
+    int n = 12;
+    int received_result;
+    int expected_result = 7;
 
-    printf("Test 2 (get_mentioned_max).\n");
+    get_mentioned_max(A, A + n-1, &received_result);
+    if (expected_result == received_result)
+    {
+        printf("Test 2 (get_mentioned_max) was successed.\n");
+        return;
+    }
+
+    printf("Test 2 (get_mentioned_max) was failed.\n");
 
     printf("Initial array:\n");
     for (int i = 0; i < n; i++)
         printf("%d ", A[i]);
     printf("\n");
 
-    get_mentioned_max(A, A + n-1, &result);
-    printf("Result: %d\n\n", result);
+    printf("expected_result: %d\n", expected_result);
+    printf("received_result: %d\n", received_result);
+
+    printf("\n");
 }
 
-void get_mentioned_max_test_3()
+void test_get_mentioned_max_3()
 {
     int A[] = {-7, 3, -15, 17, 22, -22, -37, -18, -5, -16};
-    int n = sizeof(A)/sizeof(A[0]);
-    int result;
+    int n = 10;
+    int received_result;
+    int expected_result = 0;
 
-    printf("Test 3 (get_mentioned_max).\n");
+    get_mentioned_max(A, A + n-1, &received_result);
+    if (expected_result == received_result)
+    {
+        printf("Test 3 (get_mentioned_max) was successed.\n");
+        return;
+    }
+
+    printf("Test 3 (get_mentioned_max) was failed.\n");
 
     printf("Initial array:\n");
     for (int i = 0; i < n; i++)
         printf("%d ", A[i]);
     printf("\n");
 
-    get_mentioned_max(A, A + n-1, &result);
-    printf("Result: %d\n\n", result);
+    printf("expected_result: %d\n", expected_result);
+    printf("received_result: %d\n", received_result);
+
+    printf("\n");
+}
+
+void test_read_array_1()
+{
+    int received_result[MAX_ARRAY_LEN];
+    int r_n;
+    int expected_result[] = {1, 3, 4, 2, 25, 6, 7, 3, 1, 5, 6, 12};
+    int e_n = 12;
+    FILE* test_file;
+    char test_file_name[] = "in_1.txt";
+
+    test_file = fopen(test_file_name, "r");
+
+    read_array(test_file, received_result, &r_n);
+    if (r_n == e_n)
+    {
+        int flag = 0;
+        for (int i = 0; i < e_n; i++)
+        {
+            if (received_result[i] != expected_result[i])
+            {
+                flag = 1;
+            }
+        }
+        if (!flag)
+        {
+            printf("Test 1 (read_array) was successed.\n");
+            fclose(test_file);
+            return;
+        }
+    }
+
+    printf("Test 1 (read_array) was failed.\n");
+
+    printf("Input file - %s\n", test_file_name);
+    printf("Expected array:\n");
+    for (int i = 0; i < e_n; i++)
+        printf("%d ", expected_result[i]);
+    printf("\n");
+
+    printf("Received array:\n");
+    for (int i = 0; i < r_n; i++)
+        printf("%d ", received_result[i]);
+    printf("\n");
+
+    printf("\n");
+    fclose(test_file);
+}
+
+void test_read_array_2()
+{
+    int received_result[MAX_ARRAY_LEN];
+    int r_n;
+    int expected_result[] = {23, 24, -33, -22, -14, -39, -33, \
+                             -33, -7, -17, -17, -19};
+    int e_n = 12;
+    FILE* test_file;
+    char test_file_name[] = "in_2.txt";
+
+    test_file = fopen(test_file_name, "r");
+
+    read_array(test_file, received_result, &r_n);
+    if (r_n == e_n)
+    {
+        int flag = 0;
+        for (int i = 0; i < e_n; i++)
+        {
+            if (received_result[i] != expected_result[i])
+            {
+                flag = 1;
+            }
+        }
+        if (!flag)
+        {
+            printf("Test 2 (read_array) was successed.\n");
+            fclose(test_file);
+            return;
+        }
+    }
+
+    printf("Test 2 (read_array) was failed.\n");
+
+    printf("Input file - %s\n", test_file_name);
+    printf("Expected array:\n");
+    for (int i = 0; i < e_n; i++)
+        printf("%d ", expected_result[i]);
+    printf("\n");
+
+    printf("Received array:\n");
+    for (int i = 0; i < r_n; i++)
+        printf("%d ", received_result[i]);
+    printf("\n");
+
+    printf("\n");
+    fclose(test_file);
+}
+
+void test_read_array_3()
+{
+    int received_result[MAX_ARRAY_LEN];
+    int r_n;
+    int expected_result[] = {-7, 3, -15, 17, 22, -22, -37, -18, -5, -16};
+    int e_n = 10;
+    FILE* test_file;
+    char test_file_name[] = "in_3.txt";
+
+    test_file = fopen(test_file_name, "r");
+
+    read_array(test_file, received_result, &r_n);
+    if (r_n == e_n)
+    {
+        int flag = 0;
+        for (int i = 0; i < e_n; i++)
+        {
+            if (received_result[i] != expected_result[i])
+            {
+                flag = 1;
+            }
+        }
+        if (!flag)
+        {
+            printf("Test 3 (read_array) was successed.\n");
+            fclose(test_file);
+            return;
+        }
+    }
+
+    printf("Test 3 (read_array) was failed.\n");
+
+    printf("Input file - %s\n", test_file_name);
+    printf("Expected array:\n");
+    for (int i = 0; i < e_n; i++)
+        printf("%d ", expected_result[i]);
+    printf("\n");
+
+    printf("Received array:\n");
+    for (int i = 0; i < r_n; i++)
+        printf("%d ", received_result[i]);
+    printf("\n");
+
+    printf("\n");
+    fclose(test_file);
 }

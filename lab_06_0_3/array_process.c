@@ -10,9 +10,7 @@ int read_array(FILE * target, int * fa, int * len)
     int proccess_rc;
     int * pa;
 
-    for(pa = fa;
-        (proccess_rc = fscanf(target, "%d", pa)) != EOF;
-        pa++)
+    for(pa = fa; (proccess_rc = fscanf(target, "%d", pa)) != EOF; pa++)
     {
         if (proccess_rc != 1)
         {
