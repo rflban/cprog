@@ -9,12 +9,11 @@ void matrix_mulp(double* a, double* b, double*c, int len)
     
     for (int i = 0; i < len; i++)
     {
-        int ind = (i/n)*n + (i%n);
+        int ind = (i/n) + (i%n)*n;
         c[ind] = 0;
-        printf("%d", ind);
         for (int j = 0; j < n; j++)
         {
-            c[ind] += a[ind*n + j] * b[ind + j*n];
+            c[ind] += a[i%n + j] * b[ind*n + j];
         }
     }
 }
