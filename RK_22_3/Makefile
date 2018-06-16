@@ -5,5 +5,5 @@ clean:
 	@rm -f *.o
 	@rm -f *.exe
 
-%.o: %.c *.h:
-	@gcc -c %.c
+%.o: %.c *.h
+	@gcc -c $<

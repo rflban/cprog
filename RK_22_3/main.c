@@ -1,6 +1,6 @@
 /*
 Набиев Фарис. ИУ7-23Б. Вариант 3.
-Задан два одномерных массива a и b, 
+Задан два одномерных массива a и b,
 в которых находятся элементы двумерного массива.
 Они расположены в следующем порядке (пример для матрицы 3x3):
 a= [ a11, a12, a13, a21, a22, a23,…, a33 ] и
@@ -29,24 +29,27 @@ int main(int argc, char** argv)
     int b_len;
     double c[MAX_SIDE_LEN];
     int c_len;
+    double min_saddle;
     FILE* input;
-    
+
     input = fopen(argv[1], "r");
-    rc = read_array(input, a, &a_len);    
+    rc = read_array(input, a, &a_len);
     rc = read_array(input, b, &b_len);
     fclose(input);
-    
+
     if (a_len == b_len)
     {
         c_len = a_len;
         matrix_mulp(a, b, c, c_len);
-        printf("%d\n", c_len);
-        for (int i = 0; i < c_len; i++)
+        print_matrix(c, c_len);
+        rc = find_min_saddle(c, c_len, &min_saddle);
+        if (rc == 0)
+            printf("No saddles.\n");
+        else
         {
-            printf("%lf ", c[i]);
+            printf("Min saddle: %lf\n", min_saddle);
         }
-        printf("\n");
     }
-    
+
     return SUCCESS;
 }
