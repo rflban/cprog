@@ -10,6 +10,6 @@
 
 
 void exitcode_processing(FILE* error_output, const int exit_code);
-void show_usage_example(FILE* output);
+int usage_check(int argc);
 
 #endif
