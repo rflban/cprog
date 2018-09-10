@@ -14,6 +14,8 @@ int main(int argc, char** argv)
     numb *pb_array, *pe_array;
     FILE *inputf, *outputf;
 
+    setbuf(stdout, NULL);
+
     process_rc = usage_check(argc, argv);
     exitcode_processing(stderr, process_rc);
 
@@ -27,16 +29,29 @@ int main(int argc, char** argv)
     process_rc = carriage_return(inputf);
     exitcode_processing(stderr, process_rc);
 
-    pb_tmp = malloc(array_len*sizeof(numb));
-    pe_tmp = pb_tmp + array_len - 1;
-    read_array(inputf, pb_tmp, pe_tmp);
-    print_array(outputf, pb_tmp, pe_tmp);
-    free(pb_tmp);
+    if (argc == 3)
+    {
+        pb_array = malloc(array_len*sizeof(numb));
+        pe_array = pb_array + array_len - 1;
+        read_array(inputf, pb_array, pe_array);
+    }
+    else
+    {
+        pb_tmp = malloc(array_len*sizeof(numb));
+        pe_tmp = pb_tmp + array_len - 1;
+        read_array(inputf, pb_tmp, pe_tmp);
+        key(pb_tmp, pe_tmp, &pb_array, &pe_array);
+        free(pb_tmp);
+    }
+
+    mysort(pb_array, (pe_array - pb_array) + 1, sizeof(numb), comparator);
+    print_array(outputf, pb_array, pe_array);
 
     process_rc = close_file(inputf);
     exitcode_processing(stderr, process_rc);
     process_rc = close_file(outputf);
     exitcode_processing(stderr, process_rc);
+    free(pb_array);
 
     return EXIT_SUCCESS_;
 }
