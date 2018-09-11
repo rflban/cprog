@@ -7,6 +7,8 @@
 #define EXIT_CLOSE_ERROR_ -4
 #define EXIT_FILE_CR_ERROR_ -5
 #define EXIT_INPUT_ERROR_ -6
+#define EXIT_EMPTY_INPUT_ -7
+#define EXIT_EMPTY_ARRAY_ -8
 
 
 void exitcode_processing(FILE* error_output, const int exit_code);

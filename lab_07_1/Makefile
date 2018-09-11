@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -std=c99 -Werror -Wall -pedantic
 
 ifeq ($(mode), debug)
-	CFLAGS += -g3
+	CFLAGS += -ggdb
 endif
 
 ifeq ($(mode), release)

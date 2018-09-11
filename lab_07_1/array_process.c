@@ -31,13 +31,18 @@ int read_array_len(FILE* source, int* const len)
 int read_array(FILE* source, numb* const pb_src, numb* const pe_src)
 {
     int rc;
+    _Bool input_flag = 0;
 
     for (numb* pc = pb_src; pc <= pe_src; pc++)
     {
         rc = fscanf(source, NUM_FORMAT, pc);
         if (rc != 1)
             return EXIT_INPUT_ERROR_;
+        else
+            input_flag = 1;
     }
+    if (!input_flag)
+        return EXIT_EMPTY_INPUT_;
 
     return EXIT_SUCCESS_;
 }
@@ -105,8 +110,12 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         max_pos = min_pos;
         min_pos = tmp;
     }
+    else if (max_pos - min_pos == 0)
+        return EXIT_EMPTY_ARRAY_;
 
     len = max_pos - min_pos - 1;
+    if (len == 0)
+        return EXIT_EMPTY_ARRAY_;
     *pb_dst = malloc(len*sizeof(numb));
     *pe_dst = *pb_dst + len - 1;
 
@@ -116,5 +125,5 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         *pc_dst = *pc_src;
     }
 
-    return len;
+    return EXIT_SUCCESS_;
 }

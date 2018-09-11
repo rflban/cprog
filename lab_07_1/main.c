@@ -44,8 +44,9 @@ int main(int argc, char** argv)
         process_rc = read_array(inputf, pb_tmp, pe_tmp);
         memory_check(pb_tmp, process_rc);
         exitcode_processing(stderr, process_rc);
-        (void)key(pb_tmp, pe_tmp, &pb_array, &pe_array);
+        process_rc = key(pb_tmp, pe_tmp, &pb_array, &pe_array);
         free(pb_tmp);
+        exitcode_processing(stderr, process_rc);
     }
 
     mysort(pb_array, (pe_array - pb_array) + 1, sizeof(numb), comparator);
