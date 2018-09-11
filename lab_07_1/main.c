@@ -33,14 +33,18 @@ int main(int argc, char** argv)
     {
         pb_array = malloc(array_len*sizeof(numb));
         pe_array = pb_array + array_len - 1;
-        read_array(inputf, pb_array, pe_array);
+        process_rc = read_array(inputf, pb_array, pe_array);
+        memory_check(pb_array, process_rc);
+        exitcode_processing(stderr, process_rc);
     }
     else
     {
         pb_tmp = malloc(array_len*sizeof(numb));
         pe_tmp = pb_tmp + array_len - 1;
-        read_array(inputf, pb_tmp, pe_tmp);
-        key(pb_tmp, pe_tmp, &pb_array, &pe_array);
+        process_rc = read_array(inputf, pb_tmp, pe_tmp);
+        memory_check(pb_tmp, process_rc);
+        exitcode_processing(stderr, process_rc);
+        (void)key(pb_tmp, pe_tmp, &pb_array, &pe_array);
         free(pb_tmp);
     }
 
@@ -48,8 +52,10 @@ int main(int argc, char** argv)
     print_array(outputf, pb_array, pe_array);
 
     process_rc = close_file(inputf);
+    memory_check(pb_array, process_rc);
     exitcode_processing(stderr, process_rc);
     process_rc = close_file(outputf);
+    memory_check(pb_array, process_rc);
     exitcode_processing(stderr, process_rc);
     free(pb_array);
 

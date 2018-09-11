@@ -12,5 +12,6 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst);
 void mysort(void* base, size_t nitems, size_t size, \
             int (*compar)(const void*, const void*));
 int comparator(const void*, const void*);
+void memory_check(numb* target, const int exit_code);
 
 #endif

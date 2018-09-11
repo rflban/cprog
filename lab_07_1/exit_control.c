@@ -25,5 +25,22 @@ void exitcode_processing(FILE* error_output, const int exit_code)
                     "example.exe <input_file> <output_file> (f)\n");
             exit(EXIT_USAGE_ERROR_);
             break;
+        case EXIT_OPEN_ERROR_:
+            fprintf(error_output, "Could not open file:\n%s.\n",
+                    strerror(errno));
+            exit(EXIT_OPEN_ERROR_);
+            break;
+        case EXIT_CLOSE_ERROR_:
+            fprintf(error_output, "File closing error.\n");
+            exit(EXIT_CLOSE_ERROR_);
+            break;
+        case EXIT_INPUT_ERROR_:
+            fprintf(error_output, "Invalid input.\n");
+            exit(EXIT_INPUT_ERROR_);
+            break;
+        case EXIT_FILE_CR_ERROR_:
+            fprintf(error_output, "File reading error.\n");
+            exit(EXIT_FILE_CR_ERROR_);
+            break;
     }
 }

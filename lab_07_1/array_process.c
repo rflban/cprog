@@ -5,6 +5,12 @@
 #include "exit_control.h"
 
 
+void memory_check(numb* target, const int exit_code)
+{
+    if (exit_code != EXIT_SUCCESS_)
+        free(target);
+}
+
 int read_array_len(FILE* source, int* const len)
 {
     int rc;
