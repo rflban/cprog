@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 #-Werror -Wall -pedantic
+CFLAGS = -std=c99 -Werror -Wall -pedantic
 
 ifeq ($(mode), debug)
 	CFLAGS += -ggdb

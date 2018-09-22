@@ -92,15 +92,15 @@ void mysort(void* base, size_t nitems, size_t size, \
 int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
 {
     int len;
-    numb* max_pos = (numb*)pb_src;
-    numb* min_pos = (numb*)pb_src;
+    const numb* max_pos = (numb*)pb_src;
+    const numb* min_pos = (numb*)pb_src;
     
     if (pb_src - pe_src >= 0)
         return EXIT_EMPTY_ARRAY_;
     if (pb_src == NULL || pe_src == NULL)
         return EXIT_NULL_POINTER_REQ_;
 
-    for (numb* pc = (numb*)pb_src; pc <= pe_src; pc++)
+    for (const numb* pc = pb_src; pc <= pe_src; pc++)
     {
         if (*pc > *max_pos)
             max_pos = pc;
@@ -111,7 +111,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
 
     if (max_pos - min_pos < 0)
     {
-        numb* tmp = max_pos;
+        const numb* tmp = max_pos;
         max_pos = min_pos;
         min_pos = tmp;
     }
@@ -124,7 +124,8 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
             return EXIT_NULL_POINTER_REQ_;
     *pe_dst = *pb_dst + len - 1;
 
-    for (numb *pc_src = min_pos+1, *pc_dst = *pb_dst; \
+    numb* pc_dst = *pb_dst;
+    for (const numb *pc_src = min_pos+1; \
          pc_src < max_pos; pc_src++, pc_dst++)
     {
         *pc_dst = *pc_src;
