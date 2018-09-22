@@ -14,10 +14,10 @@ unsigned long long tick(void);
 void array_fill(numb *array, int len);
 
 
-int main (void)
+int main(void)
 {
     FILE *out1, *out2;
-    numb array[FINISH] = {0};
+    numb array[FINISH] = { 0 };
     unsigned long long tb, te;
 
     setbuf(stdout, NULL);
@@ -65,7 +65,7 @@ unsigned long long tick(void)
     unsigned long long a;
     __asm__ __volatile__ ("rdtsc" : "=a"(a), "=d"(d));
 
-    return ((d<<32) | a);
+    return ((d << 32) | a);
 }
 
 void array_fill(numb *array, int len)
