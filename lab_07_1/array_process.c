@@ -5,13 +5,13 @@
 #include "exit_control.h"
 
 
-void memory_check(numb* target, const int exit_code)
+void memory_check(numb *target, const int exit_code)
 {
     if (exit_code != EXIT_SUCCESS_)
         free(target);
 }
 
-int read_array_len(FILE* source, int* const len)
+int read_array_len(FILE *source, int *const len)
 {
     int rc;
     numb buf;
@@ -28,12 +28,12 @@ int read_array_len(FILE* source, int* const len)
     return EXIT_SUCCESS_;
 }
 
-int read_array(FILE* source, numb* const pb_src, numb* const pe_src)
+int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
 {
     int rc;
     _Bool input_flag = 0;
 
-    for (numb* pc = pb_src; pc <= pe_src; pc++)
+    for (numb *pc = pb_src; pc <= pe_src; pc++)
     {
         rc = fscanf(source, NUM_FORMAT, pc);
         if (rc != 1)
@@ -47,21 +47,21 @@ int read_array(FILE* source, numb* const pb_src, numb* const pe_src)
     return EXIT_SUCCESS_;
 }
 
-void  print_array(FILE* destination, numb* const pb_dst, numb* const pe_dst)
+void  print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
 {
-    for (numb* pc = pb_dst; pc <= pe_dst; pc++)
+    for (numb *pc = pb_dst; pc <= pe_dst; pc++)
     {
         fprintf(destination, NUM_FORMAT, *pc);
         fprintf(destination, (pc != pe_dst ? " " : ""));
     }
 }
 
-int comparator(const void* a, const void* b)
+int comparator(const void *a, const void *b)
 {
     return (*((numb*)a) - *((numb*)b));
 }
 
-void mysort(void* base, size_t nitems, size_t size, int (*compar)(const void*, const void*))
+void mysort(void *base, size_t nitems, size_t size, int (*compar)(const void*, const void*))
 {
     char* pb = base;
     char* pe = pb + (nitems - 1)*size;
@@ -88,18 +88,18 @@ void mysort(void* base, size_t nitems, size_t size, int (*compar)(const void*, c
     }
 }
 
-int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
+int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
 {
     int len;
-    const numb* max_pos = pb_src;
-    const numb* min_pos = pb_src;
+    const numb *max_pos = pb_src;
+    const numb *min_pos = pb_src;
     
     if (pb_src - pe_src >= 0)
         return EXIT_EMPTY_ARRAY_;
     if (pb_src == NULL || pe_src == NULL)
         return EXIT_NULL_POINTER_REQ_;
 
-    for (const numb* pc = pb_src; pc <= pe_src; pc++)
+    for (const numb *pc = pb_src; pc <= pe_src; pc++)
     {
         if (*pc > *max_pos)
             max_pos = pc;
@@ -110,7 +110,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
 
     if (max_pos - min_pos < 0)
     {
-        const numb* tmp = max_pos;
+        const numb *tmp = max_pos;
         max_pos = min_pos;
         min_pos = tmp;
     }
@@ -124,14 +124,13 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         free(*pb_dst);
         return EXIT_NULL_POINTER_REQ_;
     }
-    //*pe_dst = *pb_dst + len;
+    *pe_dst = *pb_dst + len;
 
-    numb* pc_dst = *pb_dst;
+    numb *pc_dst = *pb_dst;
     for (const numb *pc_src = min_pos+1; pc_src < max_pos; pc_src++, pc_dst++)
     {
         *pc_dst = *pc_src;
     }
-    *pe_dst = pc_dst - 1;
 
     return EXIT_SUCCESS_;
 }

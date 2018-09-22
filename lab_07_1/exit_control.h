@@ -12,7 +12,7 @@
 #define EXIT_NULL_POINTER_REQ_ -9
 
 
-void exitcode_processing(FILE* error_output, const int exit_code);
+void exitcode_processing(FILE *error_output, const int exit_code);
 int usage_check(int argc, char **argv);
 
 #endif

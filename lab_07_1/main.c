@@ -6,7 +6,7 @@
 #include "exit_control.h"
 
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     int process_rc;
     int array_len;

@@ -5,7 +5,7 @@
 
 #include "exit_control.h"
 
-int usage_check(int argc, char** argv)
+int usage_check(int argc, char **argv)
 {
     if (argc == 3)
         return EXIT_SUCCESS_;
@@ -15,7 +15,7 @@ int usage_check(int argc, char** argv)
     return EXIT_USAGE_ERROR_;
 }
 
-void exitcode_processing(FILE* error_output, const int exit_code)
+void exitcode_processing(FILE *error_output, const int exit_code)
 {
     switch (exit_code)
     {

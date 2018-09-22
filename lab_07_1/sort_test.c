@@ -11,7 +11,7 @@
 #define REPEATS 5
 
 unsigned long long tick(void);
-void array_fill(numb* array, int len);
+void array_fill(numb *array, int len);
 
 
 int main (void)
@@ -68,7 +68,7 @@ unsigned long long tick(void)
     return ((d<<32) | a);
 }
 
-void array_fill(numb* array, int len)
+void array_fill(numb *array, int len)
 {
     for (int i = 0; i < len; i++)
         array[i] = rand();

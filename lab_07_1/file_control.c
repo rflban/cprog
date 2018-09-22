@@ -12,14 +12,14 @@ int open_file(FILE **file, const char *const name, const char *const mode)
     return EXIT_SUCCESS_;
 }
 
-int close_file(FILE* file)
+int close_file(FILE *file)
 {
     if (fclose(file) == EOF)
         return EXIT_CLOSE_ERROR_;
     return EXIT_SUCCESS_;
 }
 
-int carriage_return(FILE* file)
+int carriage_return(FILE *file)
 {
     int rc;
 
