@@ -20,8 +20,8 @@ void exitcode_processing(FILE* error_output, const int exit_code)
     switch (exit_code)
     {
         case EXIT_USAGE_ERROR_:
-            fprintf(error_output, \
-                    "Unexpected usage. Example:\n"\
+            fprintf(error_output,
+                    "Unexpected usage. Example:\n"
                     "example.exe <input_file> <output_file> (f)\n");
             exit(EXIT_USAGE_ERROR_);
             break;

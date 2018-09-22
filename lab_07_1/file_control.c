@@ -4,7 +4,7 @@
 #include "exit_control.h"
 
 
-int open_file(FILE** file, const char* const name, const char* const mode)
+int open_file(FILE **file, const char *const name, const char *const mode)
 {
     *file = fopen(name, mode);
     if (*file == NULL)

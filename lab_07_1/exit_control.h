@@ -13,6 +13,6 @@
 
 
 void exitcode_processing(FILE* error_output, const int exit_code);
-int usage_check(int argc, char** argv);
+int usage_check(int argc, char **argv);
 
 #endif
