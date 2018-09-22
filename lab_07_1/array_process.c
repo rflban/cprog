@@ -95,7 +95,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     numb* max_pos = (numb*)pb_src;
     numb* min_pos = (numb*)pb_src;
     
-    if (pb_src - pe_src <= 0)
+    if (pb_src - pe_src >= 0)
         return EXIT_EMPTY_ARRAY_;
     if (pb_src == NULL || pe_src == NULL)
         return EXIT_NULL_POINTER_REQ_;
