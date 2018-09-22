@@ -117,7 +117,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     }
 
     len = max_pos - min_pos - 1;
-    if (len < 0)
+    if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
     *pb_dst = malloc(len*sizeof(numb));
     if (*pb_dst == NULL)
