@@ -109,12 +109,12 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
             min_pos = pc;
     }
 
-    /*if (max_pos - min_pos < 0)
+    if (max_pos - min_pos < 0)
     {
         const numb* tmp = max_pos;
         max_pos = min_pos;
         min_pos = tmp;
-    }*/
+    }
 
     len = max_pos - min_pos - 1;
     if (len <= 0)
@@ -125,7 +125,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         free(*pb_dst);
         return EXIT_NULL_POINTER_REQ_;
     }
-    *pe_dst = *pb_dst + len - 1;
+    *pe_dst = *pb_dst + len;
 
     numb* pc_dst = *pb_dst;
     for (const numb *pc_src = min_pos+1; \
