@@ -9,6 +9,7 @@
 #define EXIT_INPUT_ERROR_ -6
 #define EXIT_EMPTY_INPUT_ -7
 #define EXIT_EMPTY_ARRAY_ -8
+#define EXIT_NULL_POINTER_REQ_ -9
 
 
 void exitcode_processing(FILE* error_output, const int exit_code);

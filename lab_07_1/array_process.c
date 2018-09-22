@@ -94,6 +94,9 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     int len;
     numb* max_pos = (numb*)pb_src;
     numb* min_pos = (numb*)pb_src;
+    
+    if (pb_src == NULL || pe_src == NULL)
+        return EXIT_NULL_POINTER_REQ_;
 
     for (numb* pc = (numb*)pb_src; pc <= pe_src; pc++)
     {
