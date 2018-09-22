@@ -31,7 +31,7 @@ int read_array_len(FILE *source, int *const len)
 int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
 {
     int rc;
-    _Bool input_flag = 0;
+    int input_flag = 0;
 
     for (numb *pc = pb_src; pc <= pe_src; pc++)
     {
@@ -47,7 +47,7 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
     return EXIT_SUCCESS_;
 }
 
-void  print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
+ void  print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
 {
     for (numb *pc = pb_dst; pc <= pe_dst; pc++)
     {
@@ -63,22 +63,22 @@ int comparator(const void *a, const void *b)
 
 void mysort(void *base, size_t nitems, size_t size, int (*compar)(const void*, const void*))
 {
-    char* pb = base;
-    char* pe = pb + (nitems - 1)*size;
+    char *pb = base;
+    char *pe = pb + (nitems - 1) * size;
 
     while (pb != pe)
     {
-        _Bool flag = 0;
-        for (char* pc = pb; pc < pe; pc += size)
+        int flag = 0;
+        for (char *pc = pb; pc < pe; pc += size)
         {
-            if (compar(pc, pc+size) > 0)
+            if (compar(pc, pc + size) > 0)
             {
                 flag = 1;
-                for (char* sub_pc = pc; sub_pc < pc+size; sub_pc++)
+                for (char *sub_pc = pc; sub_pc < pc + size; sub_pc++)
                 {
                     char buf = *sub_pc;
-                    *sub_pc = *(sub_pc+size);
-                    *(sub_pc+size) = buf;
+                    *sub_pc = *(sub_pc + size);
+                    *(sub_pc + size) = buf;
                 }
             }
         }
@@ -118,7 +118,7 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
     len = max_pos - min_pos - 1;
     if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
-    *pb_dst = malloc(len*sizeof(numb));
+    *pb_dst = malloc(len * sizeof(numb));
     if (*pb_dst == NULL)
     {
         free(*pb_dst);
@@ -127,7 +127,7 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
     *pe_dst = *pb_dst + len;
 
     numb *pc_dst = *pb_dst;
-    for (const numb *pc_src = min_pos+1; pc_src < max_pos; pc_src++, pc_dst++)
+    for (const numb *pc_src = min_pos + 1; pc_src < max_pos; pc_src++, pc_dst++)
     {
         *pc_dst = *pc_src;
     }
