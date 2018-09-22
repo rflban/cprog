@@ -47,7 +47,7 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
     return EXIT_SUCCESS_;
 }
 
- void  print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
+void print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
 {
     for (numb *pc = pb_dst; pc <= pe_dst; pc++)
     {
