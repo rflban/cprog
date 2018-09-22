@@ -92,8 +92,8 @@ void mysort(void* base, size_t nitems, size_t size, \
 int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
 {
     int len;
-    const numb* max_pos = (numb*)pb_src;
-    const numb* min_pos = (numb*)pb_src;
+    const numb* max_pos = pb_src;
+    const numb* min_pos = pb_src;
     
     if (pb_src - pe_src >= 0)
         return EXIT_EMPTY_ARRAY_;
