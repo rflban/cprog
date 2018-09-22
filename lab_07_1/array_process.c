@@ -125,7 +125,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         free(*pb_dst);
         return EXIT_NULL_POINTER_REQ_;
     }
-    *pe_dst = *pb_dst + len;
+    //*pe_dst = *pb_dst + len;
 
     numb* pc_dst = *pb_dst;
     for (const numb *pc_src = min_pos+1; \
@@ -133,6 +133,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     {
         *pc_dst = *pc_src;
     }
+    *pe_dst = pc_dst - 1;
 
     return EXIT_SUCCESS_;
 }
