@@ -95,6 +95,8 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     numb* max_pos = (numb*)pb_src;
     numb* min_pos = (numb*)pb_src;
     
+    if (pe_src - pb_src == 0)
+        return EXIT_EMPTY_ARRAY_;
     if (pb_src == NULL || pe_src == NULL)
         return EXIT_NULL_POINTER_REQ_;
 
@@ -113,13 +115,13 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
         max_pos = min_pos;
         min_pos = tmp;
     }
-    else if (max_pos - min_pos == 0)
-        return EXIT_EMPTY_ARRAY_;
 
     len = max_pos - min_pos - 1;
-    if (len == 0)
+    if (len < 0)
         return EXIT_EMPTY_ARRAY_;
     *pb_dst = malloc(len*sizeof(numb));
+    if (*pb_dst == NULL)
+            return EXIT_NULL_POINTER_REQ_;
     *pe_dst = *pb_dst + len - 1;
 
     for (numb *pc_src = min_pos+1, *pc_dst = *pb_dst; \
