@@ -61,8 +61,7 @@ int comparator(const void* a, const void* b)
     return (*((numb*)a) - *((numb*)b));
 }
 
-void mysort(void* base, size_t nitems, size_t size, \
-            int (*compar)(const void*, const void*))
+void mysort(void* base, size_t nitems, size_t size, int (*compar)(const void*, const void*))
 {
     char* pb = base;
     char* pe = pb + (nitems - 1)*size;
@@ -128,8 +127,7 @@ int key(const numb* pb_src, const numb* pe_src, numb** pb_dst, numb** pe_dst)
     //*pe_dst = *pb_dst + len;
 
     numb* pc_dst = *pb_dst;
-    for (const numb *pc_src = min_pos+1; \
-         pc_src < max_pos; pc_src++, pc_dst++)
+    for (const numb *pc_src = min_pos+1; pc_src < max_pos; pc_src++, pc_dst++)
     {
         *pc_dst = *pc_src;
     }
