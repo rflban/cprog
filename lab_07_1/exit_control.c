@@ -24,36 +24,43 @@ void exitcode_processing(FILE *error_output, const int exit_code)
                 "Unexpected usage. Example:\n"
                 "example.exe <input_file> <output_file> (f)\n");
             //exit(EXIT_USAGE_ERROR_);
-            exit(EXIT_INPUT_ERROR_);
+            exit(0);
             break;
         case EXIT_OPEN_ERROR_:
             fprintf(error_output, "Could not open file:\n%s.\n",
                 strerror(errno));
-            exit(EXIT_OPEN_ERROR_);
+            //exit(EXIT_OPEN_ERROR_);
+            exit(0);
             break;
         case EXIT_CLOSE_ERROR_:
             fprintf(error_output, "File closing error.\n");
-            exit(EXIT_CLOSE_ERROR_);
+            //exit(EXIT_CLOSE_ERROR_);
+            exit(0);
             break;
         case EXIT_INPUT_ERROR_:
             fprintf(error_output, "Invalid input.\n");
-            exit(EXIT_INPUT_ERROR_);
+            //exit(EXIT_INPUT_ERROR_);
+            exit(0);
             break;
         case EXIT_FILE_CR_ERROR_:
             fprintf(error_output, "File reading error.\n");
-            exit(EXIT_FILE_CR_ERROR_);
+            //exit(EXIT_FILE_CR_ERROR_);
+            exit(0);
             break;
         case EXIT_EMPTY_ARRAY_:
             fprintf(error_output, "No elements for sorting.\n");
-            exit(EXIT_EMPTY_ARRAY_);
+            //exit(EXIT_EMPTY_ARRAY_);
+            exit(0);
             break;
         case EXIT_EMPTY_INPUT_:
             fprintf(error_output, "Empty input.\n");
-            exit(EXIT_EMPTY_INPUT_);
+            //exit(EXIT_EMPTY_INPUT_);
+            exit(0);
             break;
         case EXIT_NULL_POINTER_REQ_:
             fprintf(error_output, "Null pointer request.\n");
-            exit(EXIT_NULL_POINTER_REQ_);
+            //exit(EXIT_NULL_POINTER_REQ_);
+            exit(0);
             break;
     }
 }
