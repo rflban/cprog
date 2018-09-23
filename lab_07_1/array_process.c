@@ -115,7 +115,7 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
         min_pos = tmp;
     }
 
-    len = max_pos - min_pos - 1;
+    len = (max_pos - min_pos + 1) - 2;
     if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
     *pb_dst = malloc(len * sizeof(numb));
@@ -124,7 +124,7 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
         free(*pb_dst);
         return EXIT_NULL_POINTER_REQ_;
     }
-    *pe_dst = *pb_dst + len;
+    *pe_dst = *pb_dst + len - 1;
 
     numb *pc_dst = *pb_dst;
     for (const numb *pc_src = min_pos + 1; pc_src < max_pos; pc_src++, pc_dst++)
