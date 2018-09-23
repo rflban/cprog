@@ -44,18 +44,15 @@ void exitcode_processing(FILE *error_output, const int exit_code)
             break;
         case EXIT_FILE_CR_ERROR_:
             fprintf(error_output, "File reading error.\n");
-            //exit(EXIT_FILE_CR_ERROR_);
-            exit(0);
+            exit(EXIT_FILE_CR_ERROR_);
             break;
         case EXIT_EMPTY_ARRAY_:
             fprintf(error_output, "No elements for sorting.\n");
-            //exit(EXIT_EMPTY_ARRAY_);
-            exit(EXIT_NULL_POINTER_REQ_);
+            exit(EXIT_EMPTY_ARRAY_);
             break;
         case EXIT_EMPTY_INPUT_:
             fprintf(error_output, "Empty input.\n");
-            //exit(EXIT_EMPTY_INPUT_);
-            exit(EXIT_NULL_POINTER_REQ_);
+            exit(EXIT_EMPTY_INPUT_);
             break;
         case EXIT_NULL_POINTER_REQ_:
             fprintf(error_output, "Null pointer request.\n");
