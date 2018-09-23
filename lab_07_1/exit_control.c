@@ -29,13 +29,11 @@ void exitcode_processing(FILE *error_output, const int exit_code)
         case EXIT_OPEN_ERROR_:
             fprintf(error_output, "Could not open file:\n%s.\n",
                 strerror(errno));
-            //exit(EXIT_OPEN_ERROR_);
-            exit(0);
+            exit(EXIT_OPEN_ERROR_);
             break;
         case EXIT_CLOSE_ERROR_:
             fprintf(error_output, "File closing error.\n");
             exit(EXIT_CLOSE_ERROR_);
-            exit(0);
             break;
         case EXIT_INPUT_ERROR_:
             fprintf(error_output, "Invalid input.\n");
