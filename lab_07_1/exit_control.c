@@ -23,8 +23,7 @@ void exitcode_processing(FILE *error_output, const int exit_code)
             fprintf(error_output,
                 "Unexpected usage. Example:\n"
                 "example.exe <input_file> <output_file> (f)\n");
-            //exit(EXIT_USAGE_ERROR_);
-            exit(0);
+            exit(EXIT_USAGE_ERROR_);
             break;
         case EXIT_OPEN_ERROR_:
             fprintf(error_output, "Could not open file:\n%s.\n",
