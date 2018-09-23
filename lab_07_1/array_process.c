@@ -52,8 +52,7 @@ void print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
     for (numb *pc = pb_dst; pc <= pe_dst; pc++)
     {
         fprintf(destination, NUM_FORMAT, *pc);
-        //fprintf(destination, (pc != pe_dst ? " " : ""));
-        fprintf(destination, "\n");
+        fprintf(destination, (pc != pe_dst ? " " : ""));
     }
 }
 
@@ -120,7 +119,7 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
     if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
     
-    *pb_dst = (numb*)calloc(len, sizeof(numb));
+    *pb_dst = (numb*)malloc(len * sizeof(numb));
     if (*pb_dst == NULL)
         return EXIT_NULL_POINTER_REQ_;
     
