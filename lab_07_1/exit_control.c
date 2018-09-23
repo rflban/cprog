@@ -59,8 +59,7 @@ void exitcode_processing(FILE *error_output, const int exit_code)
             break;
         case EXIT_NULL_POINTER_REQ_:
             fprintf(error_output, "Null pointer request.\n");
-            //exit(EXIT_NULL_POINTER_REQ_);
-            exit(0);
+            exit(EXIT_NULL_POINTER_REQ_);
             break;
     }
 }
