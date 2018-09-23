@@ -34,7 +34,7 @@ void exitcode_processing(FILE *error_output, const int exit_code)
             break;
         case EXIT_CLOSE_ERROR_:
             fprintf(error_output, "File closing error.\n");
-            //exit(EXIT_CLOSE_ERROR_);
+            exit(EXIT_CLOSE_ERROR_);
             exit(0);
             break;
         case EXIT_INPUT_ERROR_:
