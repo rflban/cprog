@@ -39,8 +39,7 @@ void exitcode_processing(FILE *error_output, const int exit_code)
             break;
         case EXIT_INPUT_ERROR_:
             fprintf(error_output, "Invalid input.\n");
-            //exit(EXIT_INPUT_ERROR_);
-            exit(0);
+            exit(EXIT_INPUT_ERROR_);
             break;
         case EXIT_FILE_CR_ERROR_:
             fprintf(error_output, "File reading error.\n");
