@@ -118,12 +118,9 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
     len = (max_pos - min_pos + 1) - 2;
     if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
-    *pb_dst = malloc(len * sizeof(numb));
+    *pb_dst = (numb*)malloc(len * sizeof(numb));
     if (*pb_dst == NULL)
-    {
-        free(*pb_dst);
         return EXIT_NULL_POINTER_REQ_;
-    }
     *pe_dst = *pb_dst + len - 1;
 
     numb *pc_dst = *pb_dst;
