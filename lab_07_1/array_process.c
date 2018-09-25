@@ -52,8 +52,7 @@ void print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
     for (numb *pc = pb_dst; pc < pe_dst; pc++)
     {
         fprintf(destination, NUM_FORMAT, *pc);
-        //fprintf(destination, (pc != (pe_dst - 1) ? " " : ""));
-        fprintf(destination, (" "));
+        fprintf(destination, (pc != (pe_dst - 1) ? " " : ""));
     }
 }
 
@@ -66,6 +65,7 @@ void mysort(void *base, size_t nitems, size_t size, int (*compar)(const void*, c
 {
     char *pb = base;
     char *pe = pb + (nitems - 1) * size;
+    void *pointer = malloc(4);
 
     while (pb != pe)
     {
@@ -87,6 +87,7 @@ void mysort(void *base, size_t nitems, size_t size, int (*compar)(const void*, c
             break;
         pe -= size;
     }
+    free(pointer);
 }
 
 int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
