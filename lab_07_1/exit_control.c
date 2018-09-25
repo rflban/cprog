@@ -9,8 +9,7 @@ int usage_check(int argc, char **argv)
 {
     if (argc == 3)
         return EXIT_SUCCESS_;
-    //if (argc == 4 && argv[3][0] == 'f' && argv[3][1] == 0)
-    if (argc == 4)
+    if (argc == 4 && argv[3][0] == 'f' && argv[3][1] == 0)
         return EXIT_SUCCESS_;
 
     return EXIT_USAGE_ERROR_;
