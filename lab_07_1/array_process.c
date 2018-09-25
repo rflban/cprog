@@ -52,7 +52,7 @@ void print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
     for (numb *pc = pb_dst; pc < pe_dst; pc++)
     {
         fprintf(destination, NUM_FORMAT, *pc);
-        fprintf(destination, (pc != (pe_dst - 1) ? "\n" : ""));
+        fprintf(destination, (pc != (pe_dst - 1) ? " " : ""));
         //fprintf(destination, ("\n"));
     }
 }
