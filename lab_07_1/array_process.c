@@ -33,7 +33,7 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
     int rc;
     int input_flag = 0;
 
-    for (numb *pc = pb_src; pc <= pe_src; pc++)
+    for (numb *pc = pb_src; pc < pe_src; pc++)
     {
         rc = fscanf(source, NUM_FORMAT, pc);
         if (rc != 1)
@@ -49,10 +49,10 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src)
 
 void print_array(FILE *destination, numb *const pb_dst, numb *const pe_dst)
 {
-    for (numb *pc = pb_dst; pc <= pe_dst; pc++)
+    for (numb *pc = pb_dst; pc < pe_dst; pc++)
     {
         fprintf(destination, NUM_FORMAT, *pc);
-        fprintf(destination, (pc != pe_dst ? " " : ""));
+        fprintf(destination, (pc != (pe_dst - 1) ? " " : ""));
     }
 }
 
@@ -93,13 +93,13 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
     int len;
     const numb *max_pos = pb_src;
     const numb *min_pos = pb_src;
-    
+
     if (pb_src - pe_src >= 0)
         return EXIT_EMPTY_ARRAY_;
     if (pb_src == NULL || pe_src == NULL)
         return EXIT_NULL_POINTER_REQ_;
 
-    for (const numb *pc = pb_src; pc <= pe_src; pc++)
+    for (const numb *pc = pb_src; pc < pe_src; pc++)
     {
         if (*pc > *max_pos)
             max_pos = pc;
@@ -115,15 +115,15 @@ int key(const numb *pb_src, const numb *pe_src, numb **pb_dst, numb **pe_dst)
         min_pos = tmp;
     }
 
-    len = (max_pos - min_pos + 1) - 2;
+    len = (max_pos + 1 - min_pos) - 2;
     if (len <= 0)
         return EXIT_EMPTY_ARRAY_;
-    
+
     *pb_dst = (numb*)malloc(len * sizeof(numb));
     if (*pb_dst == NULL)
         return EXIT_NULL_POINTER_REQ_;
-    
-    *pe_dst = *pb_dst + len - 1;
+
+    *pe_dst = *pb_dst + len;
     numb *pc_dst = *pb_dst;
     for (const numb *pc_src = min_pos + 1; pc_src < max_pos; pc_src++, pc_dst++)
     {

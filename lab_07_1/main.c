@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     if (argc == 3)
     {
         pb_array = malloc(array_len * sizeof(numb));
-        pe_array = pb_array + array_len - 1;
+        pe_array = pb_array + array_len;
         process_rc = read_array(inputf, pb_array, pe_array);
         memory_check(pb_array, process_rc);
         exitcode_processing(stderr, process_rc);
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     else
     {
         pb_tmp = malloc(array_len * sizeof(numb));
-        pe_tmp = pb_tmp + array_len - 1;
+        pe_tmp = pb_tmp + array_len;
         process_rc = read_array(inputf, pb_tmp, pe_tmp);
         memory_check(pb_tmp, process_rc);
         exitcode_processing(stderr, process_rc);
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
         exitcode_processing(stderr, process_rc);
     }
 
-    mysort(pb_array, (pe_array - pb_array) + 1, sizeof(numb), comparator);
+    mysort(pb_array, (pe_array - pb_array), sizeof(numb), comparator);
     print_array(outputf, pb_array, pe_array);
 
     process_rc = close_file(inputf);

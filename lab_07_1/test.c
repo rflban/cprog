@@ -145,7 +145,7 @@ void test_key_first_max()
     int *rr_pb, *rr_pe;
     int expected_result[] = {4, 3, 2};
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])-1], \
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
         &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
@@ -184,7 +184,7 @@ void test_key_first_min()
     int *rr_pb, *rr_pe;
     int expected_result[] = {2, 3, 4};
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])-1], \
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
         &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
@@ -223,7 +223,7 @@ void test_key_many_extremas()
     int *rr_pb, *rr_pe;
     int expected_result[] = {1, 3};
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])-1], \
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
         &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
