@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     process_rc = open_file(&inputf, argv[1], "r");
     exitcode_processing(stderr, process_rc);
     process_rc = open_file(&outputf, argv[2], "w");
-    exitcode_processing(stderr, process_rc);
+    //exitcode_processing(stderr, process_rc);
 
     process_rc = read_array_len(inputf, &array_len);
     exitcode_processing(stderr, process_rc);
