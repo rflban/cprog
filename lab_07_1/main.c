@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     process_rc = open_file(&inputf, argv[1], "r");
     exitcode_processing(stderr, process_rc);
     process_rc = open_file(&outputf, argv[2], "w");
-    //exitcode_processing(stderr, process_rc);
+    exitcode_processing(stderr, process_rc);
 
     process_rc = read_array_len(inputf, &array_len);
     exitcode_processing(stderr, process_rc);
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     {
         pb_array = malloc(array_len * sizeof(numb));
         pe_array = pb_array + array_len;
-        process_rc = read_array(inputf, pb_array, pe_array);
+        process_rc = read_array(inputf, pb_array, pe_array, array_len);
         memory_check(pb_array, process_rc);
         exitcode_processing(stderr, process_rc);
     }
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     {
         pb_tmp = malloc(array_len * sizeof(numb));
         pe_tmp = pb_tmp + array_len;
-        process_rc = read_array(inputf, pb_tmp, pe_tmp);
+        process_rc = read_array(inputf, pb_tmp, pe_tmp, array_len);
         memory_check(pb_tmp, process_rc);
         exitcode_processing(stderr, process_rc);
         process_rc = key(pb_tmp, pe_tmp, &pb_array, &pe_array);
