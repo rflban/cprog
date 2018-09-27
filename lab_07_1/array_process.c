@@ -28,7 +28,7 @@ int read_array_len(FILE *source, int *const len)
     return EXIT_SUCCESS_;
 }
 
-int read_array(FILE *source, numb *const pb_src, numb *const pe_src, int len)
+int read_array(FILE *source, numb *const pb_src, numb **const pe_src, int len)
 {
     int rc;
     int input_flag = 0;
@@ -43,6 +43,8 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src, int len)
     }
     if (!input_flag)
         return EXIT_EMPTY_INPUT_;
+    
+    (*pe_src) = pb_src + len;
 
     return EXIT_SUCCESS_;
 }
