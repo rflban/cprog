@@ -52,12 +52,12 @@ int main(int argc, char **argv)
     mysort(pb_array, (pe_array - pb_array), sizeof(numb), comparator);
     print_array(outputf, pb_array, pe_array);
 
-    process_rc = close_file(inputf);
+    /*process_rc = close_file(inputf);
     memory_check(pb_array, process_rc);
     exitcode_processing(stderr, process_rc);
     process_rc = close_file(outputf);
     memory_check(pb_array, process_rc);
-    exitcode_processing(stderr, process_rc);
+    exitcode_processing(stderr, process_rc);*/
     free(pb_array);
 
     return EXIT_SUCCESS_;
