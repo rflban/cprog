@@ -33,7 +33,7 @@ int read_array(FILE *source, numb *const pb_src, numb *const pe_src, int len)
     int rc;
     int input_flag = 0;
 
-    for (numb *pc = pb_src; pc < pe_src; pc++)
+    for (numb *pc = pb_src; pc - pb_src < len; pc++)
     {
         rc = fscanf(source, NUM_FORMAT, pc);
         if (rc != 1)
