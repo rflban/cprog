@@ -39,6 +39,8 @@ int main(int argc, char **argv)
     }
     else
     {
+        if (!(argv[3][0] == 'f' && argv[3][1] == 0))
+            exitcode_processing(stderr, EXIT_USAGE_ERROR_);
         pb_tmp = malloc(array_len * sizeof(numb));
         pe_tmp = pb_tmp + array_len;
         process_rc = read_array(inputf, pb_tmp, pe_tmp);
@@ -58,7 +60,7 @@ int main(int argc, char **argv)
     process_rc = close_file(outputf);
     memory_check(pb_array, process_rc);
     exitcode_processing(stderr, process_rc);
-    //free(pb_array);
+    free(pb_array);
 
     return EXIT_SUCCESS_;
 }
