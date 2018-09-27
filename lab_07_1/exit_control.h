@@ -11,8 +11,24 @@
 #define EXIT_EMPTY_ARRAY_ -8
 #define EXIT_NULL_POINTER_REQ_ -9
 
+/*!
+Выводит в поток error_output сообщение об ошибке, соответствующеее
+exit_code и завершает работу программы. Если exit_code равен 0, ничего не делает.
 
+@param error_output [in]
+@param exit_code [in]
+*/
 void exitcode_processing(FILE *error_output, const int exit_code);
+
+/*!
+Проверяет правильность использования программы по параметрам командной строки.
+
+@param argc [in]
+@param argv [in]
+
+@return Возвращает EXIT_SUCCESS_, если ошибок не было,
+либо EXIT_USAGE_ERROR_, если переданы неверные параметры.
+*/
 int usage_check(int argc, char **argv);
 
 #endif

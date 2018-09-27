@@ -1,5 +1,4 @@
 #define __USE_MINGW_ANSI_STDIO 1
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -13,11 +12,12 @@
 #define REPEATS 5
 
 unsigned long long tick(void);
-void array_fill(numb *array, int len);
+void array_fill(numb *array, int len, int state);
 
 
-int main(void)
+int main(int argc, char **argv)
 {
+    int state = 0;
     FILE *out1, *out2;
     numb array[FINISH] = { 0 };
     unsigned long long tb, te;
@@ -25,8 +25,13 @@ int main(void)
     setbuf(stdout, NULL);
     srand(time(NULL));
 
+    if (argc == 2)
+        state = atoi(argv[1]);
+
     out1 = fopen("sort_out_1.txt", "w");
     out2 = fopen("sort_out_2.txt", "w");
+
+    printf("Fill type: %d.\n", state);
     for (int i = START; i <= FINISH; i += STEP)
     {
         unsigned long long tacts;
@@ -34,7 +39,7 @@ int main(void)
         tacts = 0;
         for (int j = 0; j < REPEATS; j++)
         {
-            array_fill(array, i);
+            array_fill(array, i, state);
             tb = tick();
             mysort(array, i, sizeof(numb), comparator);
             te = tick();
@@ -45,7 +50,7 @@ int main(void)
         tacts = 0;
         for (int j = 0; j < REPEATS; j++)
         {
-            array_fill(array, i);
+            array_fill(array, i, state);
             tb = tick();
             qsort(array, i, sizeof(numb), comparator);
             te = tick();
@@ -60,18 +65,44 @@ int main(void)
     return 0;
 }
 
-
+/*
+EAX -> a
+EDX -> d
+*/
 unsigned long long tick(void)
 {
-    unsigned long long d;
     unsigned long long a;
+    unsigned long long d;
+    
     __asm__ __volatile__ ("rdtsc" : "=a"(a), "=d"(d));
 
     return ((d << 32) | a);
 }
 
-void array_fill(numb *array, int len)
+/*
+state:
+-1 - по возрастанию
+0 - произвольно
+1 - по убыванию
+*/
+void array_fill(numb *array, int len, int state)
 {
     for (int i = 0; i < len; i++)
-        array[i] = rand();
+    {
+        switch (state)
+        {
+            case -1:
+                array[i] = i;
+                break;
+            case 0:
+                array[i] = rand();
+                break;
+            case 1:
+                array[i] = len - i;
+                break;
+            default:
+                array[i] = 0;
+                break;
+        }
+    }
 }
