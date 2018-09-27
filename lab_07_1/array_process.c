@@ -28,12 +28,12 @@ int read_array_len(FILE *source, int *const len)
     return EXIT_SUCCESS_;
 }
 
-int read_array(FILE *source, numb *const pb_src, numb **const pe_src, int len)
+int read_array(FILE *source, numb *pb_src, numb *pe_src)
 {
     int rc;
     int input_flag = 0;
 
-    for (numb *pc = pb_src; pc - pb_src < len; pc++)
+    for (numb *pc = pb_src; pc < pe_src; pc++)
     {
         rc = fscanf(source, NUM_FORMAT, pc);
         if (rc != 1)
@@ -43,8 +43,6 @@ int read_array(FILE *source, numb *const pb_src, numb **const pe_src, int len)
     }
     if (!input_flag)
         return EXIT_EMPTY_INPUT_;
-    
-    (*pe_src) = pb_src + len;
 
     return EXIT_SUCCESS_;
 }
