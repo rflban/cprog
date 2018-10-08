@@ -145,7 +145,7 @@ void test_key_first_max()
     int *rr_pb, *rr_pe;
     int expected_result[] = { 4, 3, 2 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
@@ -153,7 +153,7 @@ void test_key_first_max()
             printf("Test key, first max, was failed.\n");
 
             printf("Initial array:\n");
-            for (int j = 0; j < sizeof(initial)/sizeof(initial[0]); j++)
+            for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
                 printf("%d ", initial[j]);
             printf("\n");
 
@@ -183,7 +183,7 @@ void test_key_first_min()
     int *rr_pb, *rr_pe;
     int expected_result[] = { 2, 3, 4 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
@@ -191,7 +191,7 @@ void test_key_first_min()
             printf("Test key, first min, was failed.\n");
 
             printf("Initial array:\n");
-            for (int j = 0; j < sizeof(initial)/sizeof(initial[0]); j++)
+            for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
                 printf("%d ", initial[j]);
             printf("\n");
 
@@ -221,7 +221,7 @@ void test_key_many_extremas()
     int *rr_pb, *rr_pe;
     int expected_result[] = { 1, 3 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
@@ -229,7 +229,7 @@ void test_key_many_extremas()
             printf("Test key, many extremas, was failed.\n");
 
             printf("Initial array:\n");
-            for (int j = 0; j < sizeof(initial)/sizeof(initial[0]); j++)
+            for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
                 printf("%d ", initial[j]);
             printf("\n");
 
