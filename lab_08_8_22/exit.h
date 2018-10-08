@@ -10,7 +10,7 @@
 #define __EXIT_NULL_POINTER_REQ -7
 
 void exit_process();
-void usage_check(int argc, char **argv);
+int is_correct_usage(int argc, char **argv);
 
 extern int exit_code;
 
