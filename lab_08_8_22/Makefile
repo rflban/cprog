@@ -1,18 +1,19 @@
 CC = gcc
-CFLAGS = -std=c99 -Werror -Wall -pedantic -O3
+CFLAGS = -std=c99 -Werror -Wall -pedantic
+mode = debug
 
 ifeq ($(mode), debug)
 	CFLAGS += -ggdb
 endif
 
 ifeq ($(mode), release)
-	CFLAGS += -g0 -DNDEBUG
+	CFLAGS += -g0 -DNDEBUG -O3
 endif
 
-app.exe: main.o array_process.o exit_control.o file_control.o
+app.exe: main.o matrix.o exit.o fio.o
 	@$(CC) -o $@ $^
 
-test.exe: test.o array_process.o
+test.exe: test.o matrix.o
 	@$(CC) -o $@ $^
 
 clean:
