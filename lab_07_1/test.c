@@ -5,7 +5,7 @@
 
 void test_mysort_sorted_array();
 void test_mysort_unsorted_array();
-void test_mysort_identical_els_array();
+void test_mysort_identical_els_arr();
 
 void test_key_first_max();
 void test_key_first_min();
@@ -18,7 +18,7 @@ int main(void)
 
     test_mysort_sorted_array();
     test_mysort_unsorted_array();
-    test_mysort_identical_els_array();
+    test_mysort_identical_els_arr();
 
     test_key_first_max();
     test_key_first_min();
@@ -31,10 +31,10 @@ int main(void)
 
 void test_mysort_sorted_array()
 {
-    int initial[] = {1, 2, 3, 4, 5};
+    int initial[] = { 1, 2, 3, 4, 5 };
     int n = 5;
-    int received_result[] = {1, 2, 3, 4, 5};
-    int expected_result[] = {1, 2, 3, 4, 5};
+    int received_result[] = { 1, 2, 3, 4, 5 };
+    int expected_result[] = { 1, 2, 3, 4, 5 };
 
     mysort(received_result, n, sizeof(received_result[0]), comparator);
     for (int i = 0; i < n; i++)
@@ -68,10 +68,10 @@ void test_mysort_sorted_array()
 
 void test_mysort_unsorted_array()
 {
-    int initial[] = {5, 4, 3, 2, 1};
+    int initial[] = { 5, 4, 3, 2, 1 };
     int n = 5;
-    int received_result[] = {5, 4, 3, 2, 1};
-    int expected_result[] = {1, 2, 3, 4, 5};
+    int received_result[] = { 5, 4, 3, 2, 1 };
+    int expected_result[] = { 1, 2, 3, 4, 5 };
 
     mysort(received_result, n, sizeof(received_result[0]), comparator);
     for (int i = 0; i < n; i++)
@@ -102,12 +102,12 @@ void test_mysort_unsorted_array()
     printf("Test mysort, unsorted array, was successed.\n");
 }
 
-void test_mysort_identical_els_array()
+void test_mysort_identical_els_arr()
 {
-    int initial[] = {1, 1, 1, 1, 1};
+    int initial[] = { 1, 1, 1, 1, 1 };
     int n = 5;
-    int received_result[] = {1, 1, 1, 1, 1};
-    int expected_result[] = {1, 1, 1, 1, 1};
+    int received_result[] = { 1, 1, 1, 1, 1 };
+    int expected_result[] = { 1, 1, 1, 1, 1 };
 
     mysort(received_result, n, sizeof(received_result[0]), comparator);
     for (int i = 0; i < n; i++)
@@ -140,13 +140,12 @@ void test_mysort_identical_els_array()
 
 void test_key_first_max()
 {
-    int initial[] = {5, 4, 3, 2, 1};
+    int initial[] = { 5, 4, 3, 2, 1 };
     int n = 3;
     int *rr_pb, *rr_pe;
-    int expected_result[] = {4, 3, 2};
+    int expected_result[] = { 4, 3, 2 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
-        &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
@@ -179,13 +178,12 @@ void test_key_first_max()
 
 void test_key_first_min()
 {
-    int initial[] = {1, 2, 3, 4, 5};
+    int initial[] = { 1, 2, 3, 4, 5 };
     int n = 3;
     int *rr_pb, *rr_pe;
-    int expected_result[] = {2, 3, 4};
+    int expected_result[] = { 2, 3, 4 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
-        &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
@@ -218,13 +216,12 @@ void test_key_first_min()
 
 void test_key_many_extremas()
 {
-    int initial[] = {1, 1, 3, 5, 5};
+    int initial[] = { 1, 1, 3, 5, 5 };
     int n = 2;
     int *rr_pb, *rr_pe;
-    int expected_result[] = {1, 3};
+    int expected_result[] = { 1, 3 };
 
-    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], \
-        &rr_pb, &rr_pe);
+    key(&initial[0], &initial[sizeof(initial)/sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
         if (rr_pb[i] != expected_result[i])
