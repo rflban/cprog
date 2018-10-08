@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <inttypes.h>
 
 #include "array_process.h"
 
@@ -28,8 +27,8 @@ int main(int argc, char **argv)
     if (argc == 2)
         state = atoi(argv[1]);
 
-    out1 = fopen("sort_out_1.txt", "w");
-    out2 = fopen("sort_out_2.txt", "w");
+    out1 = fopen("mysort_res.txt", "w");
+    out2 = fopen("qsort_res.txt", "w");
 
     printf("Fill type: %d.\n", state);
     for (int i = START; i <= FINISH; i += STEP)
@@ -45,7 +44,7 @@ int main(int argc, char **argv)
             te = tick();
             tacts += te - tb;
         }
-        fprintf(out1, "%llu\n", (tacts / REPEATS));
+        fprintf(out1, "%d %llu\n", i, (tacts / REPEATS));
 
         tacts = 0;
         for (int j = 0; j < REPEATS; j++)
@@ -56,7 +55,7 @@ int main(int argc, char **argv)
             te = tick();
             tacts += te - tb;
         }
-        fprintf(out2, "%llu\n", (tacts / REPEATS));
+        fprintf(out2, "%d %llu\n", i, (tacts / REPEATS));
     }
 
     fclose(out1);
@@ -73,7 +72,7 @@ unsigned long long tick(void)
 {
     unsigned long long a;
     unsigned long long d;
-    
+
     __asm__ __volatile__ ("rdtsc" : "=a"(a), "=d"(d));
 
     return ((d << 32) | a);
