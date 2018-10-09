@@ -24,20 +24,3 @@ void exit_process()
             break;
     }
 }
-
-int is_correct_usage(int argc, char **argv)
-{
-    exit_code = __EXIT_SUCCESS;
-
-    if (argc != 4 && argc != 5)
-        exit_code = __EXIT_INVALID_USAGE;
-    else if (argv[1][0] != 'a' && argv[1][0] != 'm' && argv[1][0] != 'o')
-        exit_code = __EXIT_INVALID_USAGE;
-    else if (argv[1][1] != 0)
-        exit_code = __EXIT_INVALID_USAGE;
-
-    if (argc == 2 && argv[1][0] == 'h' && argv[1][1] != '0')
-        exit_code = __EXIT_SUCCESS;
-
-    return exit_code == __EXIT_SUCCESS;
-}
