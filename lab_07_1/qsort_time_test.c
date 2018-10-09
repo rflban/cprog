@@ -6,9 +6,9 @@
 #include "array_process.h"
 
 #define START 0
-#define FINISH 10000
+#define FINISH 10000000
 #define STEP 10
-#define REPEATS 5
+#define REPEATS 1
 
 unsigned long long tick(void);
 void array_fill(numb *array, int len, int state);
@@ -17,7 +17,7 @@ void array_fill(numb *array, int len, int state);
 int main(int argc, char **argv)
 {
     int state = 0;
-    FILE *out1, *out2;
+    FILE *out1;
     numb *array = malloc(sizeof(numb) * FINISH);
     unsigned long long tb, te;
 
@@ -27,8 +27,7 @@ int main(int argc, char **argv)
     if (argc == 2)
         state = atoi(argv[1]);
 
-    out1 = fopen("mysort_res.txt", "w");
-    out2 = fopen("qsort_res.txt", "w");
+    out1 = fopen("qsort_time_res.txt", "w");
 
     printf("Fill type: %d.\n", state);
     for (int i = START; i <= FINISH; i += STEP)
@@ -40,26 +39,14 @@ int main(int argc, char **argv)
         {
             array_fill(array, i, state);
             tb = tick();
-            mysort(array, i, sizeof(numb), comparator);
-            te = tick();
-            tacts += te - tb;
-        }
-        fprintf(out1, "%d %llu\n", i, (tacts / REPEATS));
-
-        tacts = 0;
-        for (int j = 0; j < REPEATS; j++)
-        {
-            array_fill(array, i, state);
-            tb = tick();
             qsort(array, i, sizeof(numb), comparator);
             te = tick();
             tacts += te - tb;
         }
-        fprintf(out2, "%d %llu\n", i, (tacts / REPEATS));
+        fprintf(out1, "%d %llu\n", i, (tacts / REPEATS));
     }
 
     fclose(out1);
-    fclose(out2);
     free(array);
 
     return 0;

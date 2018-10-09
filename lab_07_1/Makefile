@@ -18,6 +18,9 @@ test.exe: test.o array_process.o
 sort_test.exe: sort_test.o array_process.o
 	@$(CC) -o $@ $^
 
+qsort_time_test.exe: qsort_time_test.o array_process.o
+	@$(CC) -o $@ $^
+
 clean:
 	@rm *.exe -f
 	@rm *.o -f
