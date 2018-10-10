@@ -8,6 +8,9 @@
 #define __EXIT_INVALID_INPUT -5
 #define __EXIT_EMPTY_INPUT -6
 #define __EXIT_NULL_POINTER_REQ -7
+#define __EXIT_ALLOC_ERROR -8
+#define __EXIT_INVALID_DATA -9
+//#define __EXIT_FCR_ERROR -9
 
 void exit_process();
 

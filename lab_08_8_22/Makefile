@@ -11,9 +11,11 @@ ifeq ($(mode), release)
 endif
 
 app.exe: main.o matrix.o exit.o fio.o ref.o actions.o matrix_operations.o
+	@echo $(mode)
 	$(CC) -o $@ $^
 
 test.exe: test.o matrix.o
+	@echo $(mode)
 	$(CC) -o $@ $^
 
 clean:

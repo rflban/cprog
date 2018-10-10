@@ -1,11 +1,14 @@
 #if ! defined __MATRIX_H
 #define __MATRIX_H
 
-typedef double** matrix;
+typedef double **matrix;
 
 matrix matrix_allocate(int n, int m);
-void matrix_free(matrix data);
 matrix read_matrix(FILE *source);
-void memory_check(matrix one);
+void write_matrix(FILE *destinaion, matrix data);
+void get_sizes(matrix data, int *n, int *m);
+void matrix_free(matrix data);
+void matrix_fill(matrix data, double value);
+void memory_check(matrix data);
 
 #endif

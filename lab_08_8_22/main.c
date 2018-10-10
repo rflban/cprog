@@ -16,7 +16,13 @@ int main(int argc, char **argv)
     FILE *src_b = NULL;
     FILE *dst_res = NULL;
 
-    (void)is_correct_usage(argc, argv);
+    setbuf(stdout, NULL);
+
+    src_a = fopen("in_1_1.txt", "r");
+    a = read_matrix(src_a);
+    write_matrix(stdout, a);
+
+    /*(void)is_correct_usage(argc, argv);
     exit_process();
 
     if (argv[1][0] != 'h')
@@ -60,7 +66,7 @@ int main(int argc, char **argv)
     matrix_free(b);
     exit_process();
     closef(dst_res);
-    exit_process();
+    exit_process();*/
 
     return __EXIT_SUCCESS;
 }
