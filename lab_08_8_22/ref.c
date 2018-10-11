@@ -14,6 +14,9 @@ int is_correct_usage(int argc, char **argv)
     else if (argv[1][1] != 0)
         exit_code = __EXIT_INVALID_USAGE;
 
+    if (argc == 5 && argv[1][0] == 'o')
+        exit_code = __EXIT_INVALID_USAGE;
+
     if (argc == 2 && argv[1][0] == 'h' && argv[1][1] != '0')
         exit_code = __EXIT_SUCCESS;
 

@@ -6,7 +6,7 @@
 #include "ref.h"
 #include "actions.h"
 #include "matrix_operations.h"
-
+    
 
 int main(int argc, char **argv)
 {
@@ -18,11 +18,12 @@ int main(int argc, char **argv)
 
     setbuf(stdout, NULL);
 
-    src_a = fopen("in_1_1.txt", "r");
-    a = read_matrix(src_a);
-    write_matrix(stdout, a);
+    // src_a = fopen("in_3.txt", "r");
+    // a = read_matrix(src_a);
+    // printf("%g\n", matrix_determinant(a));
+    // matrix_free(a);
 
-    /*(void)is_correct_usage(argc, argv);
+    (void)is_correct_usage(argc, argv);
     exit_process();
 
     if (argv[1][0] != 'h')
@@ -61,12 +62,15 @@ int main(int argc, char **argv)
         }
     }
 
+    memory_check(a);
+    memory_check(b);
+    exit_process();
     carry_out(dst_res, argv[1][0], a, b);
     matrix_free(a);
     matrix_free(b);
     exit_process();
     closef(dst_res);
-    exit_process();*/
+    exit_process();
 
     return __EXIT_SUCCESS;
 }

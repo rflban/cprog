@@ -10,7 +10,7 @@
 #define __EXIT_NULL_POINTER_REQ -7
 #define __EXIT_ALLOC_ERROR -8
 #define __EXIT_INVALID_DATA -9
-//#define __EXIT_FCR_ERROR -9
+#define __EXIT_MATRICES_SIZE_MISMATCH -10
 
 void exit_process();
 

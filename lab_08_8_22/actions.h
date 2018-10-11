@@ -1,9 +1,11 @@
-#if ! defined __OPTIONS_H
-#define __OPTIONS_H
+#if ! defined __ACTIONS_H
+#define __ACTIONS_H
 
-void action_a();
-void action_m();
-void action_o();
+#include "matrix.h"
+
+void action_a(FILE *outputf, matrix a, matrix b);
+void action_m(FILE *outputf, matrix a, matrix b);
+void action_o(FILE *outputf, matrix a);
 void action_h();
 void carry_out(FILE *outputf, char action, matrix a, matrix b);
 

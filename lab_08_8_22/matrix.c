@@ -22,7 +22,7 @@ matrix matrix_allocate(int n, int m)
     *(space - 1) = n;
     *(space - 2) = m;
 
-    data = (matrix)((void*)(space));
+    data = (matrix)space;
     for (int i = 0; i < n; i++)
     {
         data[i] = malloc(m * sizeof(double));
@@ -39,19 +39,44 @@ matrix matrix_allocate(int n, int m)
 
 void matrix_free(matrix data)
 {
+    int *space;
+
     if (data == NULL)
         return;
 
     int n = *((int*)data - 1);
     for (int i = 0; i < n; i++)
         free(data[i]);
-    free(data);
+
+    space = (int*)data - 2;
+    free(space);
 }
 
 void get_sizes(matrix data, int *n, int *m)
 {
     *n = *((int*)data - 1);
     *m = *((int*)data - 2);
+}
+
+matrix matrix_copy(matrix data)
+{
+    int rowsq;
+    int colsq;
+    matrix result;
+
+    get_sizes(data, &rowsq, &colsq);
+    result = matrix_allocate(rowsq, colsq);
+    if (exit_code != __EXIT_SUCCESS)
+    {
+        exit_code = __EXIT_ALLOC_ERROR;
+        return NULL;
+    }
+
+    for (int i = 0; i < rowsq; i++)
+        for (int j = 0; j < colsq; j++)
+            result[i][j] = data[i][j];
+
+    return result;
 }
 
 void matrix_fill(matrix data, double value)
@@ -76,15 +101,20 @@ matrix read_matrix(FILE *source)
     int rc;
 
     rc = fscanf(source, "%d%d%d", &rowsq, &colsq, &nonzeroesq);
-    if (rc != 3)
+    if (rc == EOF)
+    {
+        exit_code = __EXIT_EMPTY_INPUT;
+        return NULL;
+    }
+    else if (rc != 3)
     {
         exit_code = __EXIT_INVALID_INPUT;
         return NULL;
     }
 
-    if (rowsq <= 0 || colsq <= 0 || nonzeroesq < 0)
+    if (rowsq <= 0 || colsq <= 0 || nonzeroesq < 0 || rowsq * colsq < nonzeroesq)
     {
-        exit_code = __EXIT_INVALID_INPUT;
+        exit_code = __EXIT_INVALID_DATA;
         return NULL;
     }
 
@@ -153,10 +183,10 @@ void write_matrix(FILE *destinaion, matrix data)
     for (int i = 0; i < rowsq; i++)
         for (int j = 0; j < colsq; j++)
             if (data[i][j] != 0)
-                fprintf(destinaion, "%d %d %lf\n", i + 1, j + 1, data[i][j]);
+                fprintf(destinaion, "%d %d %g\n", i + 1, j + 1, data[i][j]);
 }
 
-    void memory_check(matrix data)
+void memory_check(matrix data)
 {
     if (exit_code != __EXIT_SUCCESS)
         matrix_free(data);
