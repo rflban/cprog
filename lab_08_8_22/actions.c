@@ -17,7 +17,7 @@ void carry_out(FILE *outputf, char action, matrix a, matrix b)
             action_m(outputf, a, b);
             break;
         case 'o':
-            //action_o(outputf, a);
+            action_o(outputf, a);
             break;
         case 'h':
             action_h();
@@ -71,6 +71,25 @@ void action_m(FILE *outputf, matrix a, matrix b)
     result = matrix_multiplication(a, b);
     write_matrix(outputf, result);
     matrix_free(result);
+}
+
+void action_o(FILE *outputf, matrix a)
+{
+    exit_code = __EXIT_SUCCESS;
+
+    int rowsq;
+    int colsq;
+    double result;
+
+    get_sizes(a, &rowsq, &colsq);
+    if (rowsq != colsq)
+    {
+        exit_code = __EXIT_MATRICES_SIZE_MISMATCH;
+        return;
+    }
+
+    result = matrix_determinant(a);
+    fprintf(outputf, "%g\n", result);
 }
 
 void action_h()

@@ -18,11 +18,6 @@ int main(int argc, char **argv)
 
     setbuf(stdout, NULL);
 
-    // src_a = fopen("in_3.txt", "r");
-    // a = read_matrix(src_a);
-    // printf("%g\n", matrix_determinant(a));
-    // matrix_free(a);
-
     (void)is_correct_usage(argc, argv);
     exit_process();
 

@@ -98,11 +98,6 @@ double matrix_determinant(matrix data)
     matrix temp;
 
     get_sizes(data, &rowsq, &colsq);
-    if (rowsq != colsq)
-    {
-        exit_code = __EXIT_MATRICES_SIZE_MISMATCH;
-        return 0;
-    }
 
     temp = matrix_copy(data);
     for (int i = 0; i < rowsq; i++)
