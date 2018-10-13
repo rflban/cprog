@@ -68,6 +68,12 @@ void test_matrix_operations_h()
     test_mtrx_add_neutral();
     test_mtrx_add_opposite();
     test_mtrx_add_rnd();
+    test_mtrx_mltply_neutral();
+    test_mtrx_mltply_opposite();
+    test_mtrx_mltply_rnd();
+    test_mtrx_dtrmnt_rnd1();
+    test_mtrx_dtrmnt_rnd2();
+    test_mtrx_dtrmnt_zero();
     printf("\n");
 }
 
@@ -408,4 +414,283 @@ void test_mtrx_add_rnd()
     matrix_free(summand2);
     matrix_free(expected_result);
     matrix_free(received_result);
+}
+
+void test_mtrx_mltply_neutral()
+{
+    int status = EXIT_SUCCESS;
+    int n = 4;
+    int m = 4;
+    double s1_src[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+    double s2_src[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+    double exp_src[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+    matrix multiplier1;
+    matrix multiplier2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_multiplication. Neutral second multiplier. ");
+
+    multiplier1 = matrix_allocate(n, m);
+    multiplier2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            multiplier1[i][j] = s1_src[i * m + j];
+            multiplier2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+
+    received_result = matrix_multiplication(multiplier1, multiplier2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Multiplier 1:\n");
+        print_matrix(multiplier1, n, m);
+        printf("Multiplier 2:\n");
+        print_matrix(multiplier2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(multiplier1);
+    matrix_free(multiplier2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
+}
+
+void test_mtrx_mltply_opposite()
+{
+    int status = EXIT_SUCCESS;
+    int n = 2;
+    int m = 2;
+    double s1_src[] = { 7, 4, 5, 3 };
+    double s2_src[] = { 3, -4, -5, 7 };
+    double exp_src[] = { 1, 0, 0, 1 };
+    matrix multiplier1;
+    matrix multiplier2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_multiplication. Opposite second multiplier. ");
+
+    multiplier1 = matrix_allocate(n, m);
+    multiplier2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            multiplier1[i][j] = s1_src[i * m + j];
+            multiplier2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+
+    received_result = matrix_multiplication(multiplier1, multiplier2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Multiplier 1:\n");
+        print_matrix(multiplier1, n, m);
+        printf("Multiplier 2:\n");
+        print_matrix(multiplier2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(multiplier1);
+    matrix_free(multiplier2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
+}
+
+void test_mtrx_mltply_rnd()
+{
+    int status = EXIT_SUCCESS;
+    int n = 2;
+    int m = 2;
+    double s1_src[] = { 0, 1, 2, 3 };
+    double s2_src[] = { 3, 2, 1, 0 };
+    double exp_src[] = { 1, 0, 9, 4 };
+    matrix multiplier1;
+    matrix multiplier2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_multiplication. Case of random multipliers. ");
+
+    multiplier1 = matrix_allocate(n, m);
+    multiplier2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            multiplier1[i][j] = s1_src[i * m + j];
+            multiplier2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+
+    received_result = matrix_multiplication(multiplier1, multiplier2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Multiplier 1:\n");
+        print_matrix(multiplier1, n, m);
+        printf("Multiplier 2:\n");
+        print_matrix(multiplier2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(multiplier1);
+    matrix_free(multiplier2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
+}
+
+void test_mtrx_dtrmnt_rnd1()
+{
+    int status = EXIT_SUCCESS;
+    int n = 3;
+    int m = 3;
+    double src[] = { 5, 6, 2, 3, 4, 5, 5, 6, 0 };
+    matrix initial;
+    double expected_result = -4;
+    double received_result;
+
+    printf("Test matrix_determinant. Case of random matrix #1. ");
+
+    initial = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            initial[i][j] = src[i * m + j];
+
+    received_result = matrix_determinant(initial);
+    {
+        double temp = received_result - expected_result;
+        if (temp < 0)
+            temp *= -1;
+        if (temp > EPS)
+            status = EXIT_FAILURE;
+    }
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure.\n");
+        printf("Initial matrix:\n");
+        print_matrix(initial, m, n);
+        printf("Expected result: %g\n", expected_result);
+        printf("Received result: %g\n", received_result);
+    }
+
+    matrix_free(initial);
+}
+
+void test_mtrx_dtrmnt_rnd2()
+{
+    int status = EXIT_SUCCESS;
+    int n = 2;
+    int m = 2;
+    double src[] = { 11, -2, 7, 5 };
+    matrix initial;
+    double expected_result = 69;
+    double received_result;
+
+    printf("Test matrix_determinant. Case of random matrix #2. ");
+
+    initial = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            initial[i][j] = src[i * m + j];
+
+    received_result = matrix_determinant(initial);
+    {
+        double temp = received_result - expected_result;
+        if (temp < 0)
+            temp *= -1;
+        if (temp > EPS)
+            status = EXIT_FAILURE;
+    }
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure.\n");
+        printf("Initial matrix:\n");
+        print_matrix(initial, m, n);
+        printf("Expected result: %g\n", expected_result);
+        printf("Received result: %g\n", received_result);
+    }
+
+    matrix_free(initial);
+}
+
+void test_mtrx_dtrmnt_zero()
+{
+    int status = EXIT_SUCCESS;
+    int n = 4;
+    int m = 4;
+    double src[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+    matrix initial;
+    double expected_result = 0;
+    double received_result;
+
+    printf("Test matrix_determinant. Zero determinant. ");
+
+    initial = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            initial[i][j] = src[i * m + j];
+
+    received_result = matrix_determinant(initial);
+    {
+        double temp = received_result - expected_result;
+        if (temp < 0)
+            temp *= -1;
+        if (temp > EPS)
+            status = EXIT_FAILURE;
+    }
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure.\n");
+        printf("Initial matrix:\n");
+        print_matrix(initial, m, n);
+        printf("Expected result: %g\n", expected_result);
+        printf("Received result: %g\n", received_result);
+    }
+
+    matrix_free(initial);
 }
