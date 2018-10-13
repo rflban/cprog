@@ -61,11 +61,14 @@ int main(int argc, char **argv)
     memory_check(b);
     exit_process();
     carry_out(dst_res, argv[1][0], a, b);
-    matrix_free(a);
-    matrix_free(b);
-    exit_process();
-    closef(dst_res);
-    exit_process();
+    if (argv[1][0] != 'h')
+    {
+        matrix_free(a);
+        matrix_free(b);
+        exit_process();
+        closef(dst_res);
+        exit_process();
+    }
 
     return __EXIT_SUCCESS;
 }

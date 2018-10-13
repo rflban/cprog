@@ -1,6 +1,8 @@
 #if ! defined __MATRIX_OPERATIONS_H
 #define __MATRIX_OPERATIONS_H
 
+#include "matrix.h"
+
 #define EPS 0.000000000001
 
 matrix matrix_addition(matrix a, matrix b);
