@@ -10,7 +10,7 @@ static void swap_rows(matrix data, int rown1, int rown2)
     int colsq;
 
     get_sizes(data, &rowsq, &colsq);
-    if (rown1 > rowsq -1 || rown2 >= rowsq - 1)
+    if (rown1 > rowsq - 1 || rown2 >= rowsq - 1)
         return;
 
     for (int j = 0; j < colsq; j++)

@@ -45,7 +45,7 @@ void print_matrix(matrix data, int n, int m)
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
-            printf("%g ", data[i][j]);
+            printf("%5g ", data[i][j]);
         printf("\n");
     }
 }
@@ -65,6 +65,9 @@ void test_matrix_operations_h()
     test_abs_positive();
     test_abs_negative();
     test_abs_neutral();
+    test_mtrx_add_neutral();
+    test_mtrx_add_opposite();
+    test_mtrx_add_rnd();
     printf("\n");
 }
 
@@ -246,4 +249,163 @@ void test_abs_neutral()
         printf("Received value: %g\n", received_result);
         printf("Expected value: %g\n", expected_result);
     }
+}
+
+void test_mtrx_add_neutral()
+{
+    int status = EXIT_SUCCESS;
+    int n = 4;
+    int m = 5;
+    double s1_src[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+    double s2_src[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    double exp_src[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+    matrix summand1;
+    matrix summand2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_addition. Neutral second summand. ");
+
+    summand1 = matrix_allocate(n, m);
+    summand2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            summand1[i][j] = s1_src[i * m + j];
+            summand2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+    
+    received_result = matrix_addition(summand1, summand2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Summand 1:\n");
+        print_matrix(summand1, n, m);
+        printf("Summand 2:\n");
+        print_matrix(summand2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(summand1);
+    matrix_free(summand2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
+}
+
+void test_mtrx_add_opposite()
+{
+    int status = EXIT_SUCCESS;
+    int n = 4;
+    int m = 5;
+    double s1_src[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+    double s2_src[] = {0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19};
+    double exp_src[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    matrix summand1;
+    matrix summand2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_addition. Opposite second summand. ");
+
+    summand1 = matrix_allocate(n, m);
+    summand2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            summand1[i][j] = s1_src[i * m + j];
+            summand2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+
+    received_result = matrix_addition(summand1, summand2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Summand 1:\n");
+        print_matrix(summand1, n, m);
+        printf("Summand 2:\n");
+        print_matrix(summand2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(summand1);
+    matrix_free(summand2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
+}
+
+void test_mtrx_add_rnd()
+{
+    int status = EXIT_SUCCESS;
+    int n = 4;
+    int m = 5;
+    double s1_src[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+    double s2_src[] = {19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+    double exp_src[] = {19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19};
+    matrix summand1;
+    matrix summand2;
+    matrix expected_result;
+    matrix received_result;
+
+    printf("Test matrix_addition. Case of random summands. ");
+
+    summand1 = matrix_allocate(n, m);
+    summand2 = matrix_allocate(n, m);
+    expected_result = matrix_allocate(n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            summand1[i][j] = s1_src[i * m + j];
+            summand2[i][j] = s2_src[i * m + j];
+            expected_result[i][j] = exp_src[i * m + j];
+        }
+
+    received_result = matrix_addition(summand1, summand2);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (received_result[i][j] != expected_result[i][j])
+                status = EXIT_FAILURE;
+
+    if (status == EXIT_SUCCESS)
+        printf("Success.\n");
+    else
+    {
+        printf("Failure:\n");
+        printf("Summand 1:\n");
+        print_matrix(summand1, n, m);
+        printf("Summand 2:\n");
+        print_matrix(summand2, n, m);
+        printf("Received result:\n");
+        print_matrix(received_result, n, m);
+        printf("Expected result:\n");
+        print_matrix(expected_result, n, m);
+    }
+
+    matrix_free(summand1);
+    matrix_free(summand2);
+    matrix_free(expected_result);
+    matrix_free(received_result);
 }
