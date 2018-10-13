@@ -154,7 +154,7 @@ void test_mtrx_fill()
 void test_mtrx_szs()
 {
     int status = EXIT_SUCCESS;
-    int expected_result[2] = {4, 4};
+    int expected_result[2] = { 4, 4 };
     int received_result[2];
     matrix data;
 
