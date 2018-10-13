@@ -2,4 +2,5 @@
 *.o
 *.creator.user
 *.bin
+functestsetup.sh
 **/.vscode/**
