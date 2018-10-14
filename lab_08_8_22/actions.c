@@ -6,7 +6,7 @@
 #include "exit.h"
 #include "ref.h"
 
-void carry_out(FILE *outputf, char action, matrix a, matrix b)
+void carry_out(FILE *outputf, const char action, const matrix a, const matrix b)
 {
     switch (action)
     {
@@ -25,7 +25,7 @@ void carry_out(FILE *outputf, char action, matrix a, matrix b)
     }
 }
 
-void action_a(FILE *outputf, matrix a, matrix b)
+void action_a(FILE *outputf, const matrix a, const matrix b)
 {
     exit_code = __EXIT_SUCCESS;
 
@@ -49,7 +49,7 @@ void action_a(FILE *outputf, matrix a, matrix b)
     matrix_free(result);
 }
 
-void action_m(FILE *outputf, matrix a, matrix b)
+void action_m(FILE *outputf, const matrix a, const matrix b)
 {
     exit_code = __EXIT_SUCCESS;
 
@@ -73,7 +73,7 @@ void action_m(FILE *outputf, matrix a, matrix b)
     matrix_free(result);
 }
 
-void action_o(FILE *outputf, matrix a)
+void action_o(FILE *outputf, const matrix a)
 {
     exit_code = __EXIT_SUCCESS;
 

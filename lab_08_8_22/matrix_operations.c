@@ -4,7 +4,7 @@
 #include "matrix_operations.h"
 #include "exit.h"
 
-static void swap_rows(matrix data, int rown1, int rown2)
+static void swap_rows(matrix data, const int rown1, const int rown2)
 {
     int rowsq;
     int colsq;
@@ -21,7 +21,7 @@ static void swap_rows(matrix data, int rown1, int rown2)
     }
 }
 
-static void swap_cols(matrix data, int coln1, int coln2)
+static void swap_cols(matrix data, const int coln1, const int coln2)
 {
     int rowsq;
     int colsq;
@@ -38,7 +38,7 @@ static void swap_cols(matrix data, int coln1, int coln2)
     }
 }
 
-matrix matrix_addition(double **a, double **b)
+matrix matrix_addition(const matrix a, const matrix b)
 {
     exit_code = 1;
 
@@ -61,7 +61,7 @@ matrix matrix_addition(double **a, double **b)
     return result;
 }
 
-matrix matrix_multiplication(double **a, double **b)
+matrix matrix_multiplication(const matrix a, const matrix b)
 {
     exit_code = 1;
 
@@ -88,7 +88,7 @@ matrix matrix_multiplication(double **a, double **b)
     return result;
 }
 
-double matrix_determinant(matrix data)
+double matrix_determinant(const matrix data)
 {
     exit_code = 1;
 
@@ -149,9 +149,9 @@ double matrix_determinant(matrix data)
     return determinant;
 }
 
-double nabs(double number)
+double nabs(const double number)
 {
     if (number < 0)
-        number *= -1;
+        return -number;
     return number;
 }

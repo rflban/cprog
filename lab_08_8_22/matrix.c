@@ -4,7 +4,7 @@
 #include "exit.h"
 #include "matrix.h"
 
-matrix matrix_allocate(int n, int m)
+matrix matrix_allocate(const int n, const int m)
 {
     exit_code = __EXIT_SUCCESS;
 
@@ -52,13 +52,13 @@ void matrix_free(matrix data)
     free(space);
 }
 
-void get_sizes(matrix data, int *n, int *m)
+void get_sizes(const matrix data, int *n, int *m)
 {
     *n = *((int*)data - 1);
     *m = *((int*)data - 2);
 }
 
-matrix matrix_copy(matrix data)
+matrix matrix_copy(const matrix data)
 {
     int rowsq;
     int colsq;
@@ -79,7 +79,7 @@ matrix matrix_copy(matrix data)
     return result;
 }
 
-void matrix_fill(matrix data, double value)
+void matrix_fill(matrix data, const double value)
 {
     int rowsq;
     int colsq;
@@ -164,7 +164,7 @@ matrix read_matrix(FILE *source)
     return data;
 }
 
-void write_matrix(FILE *destinaion, matrix data)
+void write_matrix(FILE *destinaion, const matrix data)
 {
     int rowsq;
     int colsq;

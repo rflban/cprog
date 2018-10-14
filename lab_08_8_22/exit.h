@@ -12,6 +12,11 @@
 #define __EXIT_INVALID_DATA -9
 #define __EXIT_MATRICES_SIZE_MISMATCH -10
 
+/*!
+Обратобка коды выхода из последнего процесса exit_code.
+
+@return Ничего.
+*/
 void exit_process();
 
 extern int exit_code;
