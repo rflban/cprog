@@ -3,3 +3,4 @@
 *.creator.user
 *.bin
 functestsetup.sh
+**/.vscode/**
