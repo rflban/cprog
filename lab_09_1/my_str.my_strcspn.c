@@ -9,7 +9,7 @@
 size_t my_strcspn(const char *s, const char *reject)
 {
     if (s == NULL || reject == NULL)
-        return -1;
+        return 0;
 
     size_t count;
     const char *cur_char;
