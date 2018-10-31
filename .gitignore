@@ -4,3 +4,5 @@
 *.bin
 functestsetup.sh
 **/.vscode/**
+*.out
+*.gch
