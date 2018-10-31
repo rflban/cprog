@@ -30,7 +30,7 @@ size_t my_strcspn(const char *s, const char *reject)
         }
         cur_reject = reject;
 
-        count++;
+        count += sizeof(char);
         cur_char++;
     }
 
