@@ -4,8 +4,8 @@
 #if !defined size_t
 #define __need_size_t
 #include <stddef.h>
-#endif
+#endif /*size_t*/
 
 size_t my_strcspn(const char *s, const char *reject);
 
-#endif
+#endif /*__MY_STR_H*/
