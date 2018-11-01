@@ -11,6 +11,8 @@
 
 int main(int argc, char **argv)
 {
+    usage_check(argc, argv);
+    exit_process(1);
 
     return __EXIT_SUCCESS;
 }

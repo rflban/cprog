@@ -8,3 +8,4 @@ clean:
 	rm *.out -f
 	rm *.exe -f
 	rm *.o -f
+	rm *.gch -f

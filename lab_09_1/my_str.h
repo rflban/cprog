@@ -1,5 +1,5 @@
 #if !defined __MY_STR_H
-#define __MY_STR_H
+#define __MY_STR_H 1
 
 #if !defined size_t
 #define __need_size_t
