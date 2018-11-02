@@ -24,6 +24,10 @@
 #define __EXIT_IVALID_USAGE 2
 #define __EXIT_FOPEN_ERROR 3
 #define __EXIT_FCLOSE_ERROR 4
+#define __EXIT_READ_ERROR 5
+#define __EXIT_REQUEST_NULL 6
+#define __EXIT_SSIZE_OVERFLOW 7
+#define __EXIT_MEM_ERROR 8
 
 extern int exit_code;
 

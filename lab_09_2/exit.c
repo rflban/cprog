@@ -18,21 +18,22 @@ void exit_process(int leave)
 {
     switch (exit_code)
     {
-    case __EXIT_FAILURE:
-        fprintf(stderr, "Error\n");
-        __EXIT(exit_code, leave);
-        break;
-    case __EXIT_IVALID_USAGE:
-        fprintf(stderr, "Invalid usage. Exapmle:\n\n");
-        __EXIT(exit_code, leave);
-        break;
-    case __EXIT_FOPEN_ERROR:
-        fprintf(stderr, "Could not open file:\n%s\n", strerror(errno));
-        __EXIT(exit_code, leave);
-        break;
-    case __EXIT_FCLOSE_ERROR:
-        fprintf(stderr, "Could not close file:\n%s\n", strerror(errno));
-        __EXIT(exit_code, leave);
-        break;
+        case __EXIT_FAILURE:
+            fprintf(stderr, "Error\n");
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_IVALID_USAGE:
+            fprintf(stderr, "Invalid usage. Exapmle:\n"
+                "app.exe <in> <out> –s <search> –r <replace>\n");
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_FOPEN_ERROR:
+            fprintf(stderr, "Could not open file:\n%s\n", strerror(errno));
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_FCLOSE_ERROR:
+            fprintf(stderr, "Could not close file:\n%s\n", strerror(errno));
+            __EXIT(exit_code, leave);
+            break;
     }
 }
