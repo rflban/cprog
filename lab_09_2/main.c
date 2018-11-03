@@ -22,7 +22,7 @@ int main(int argc, char ** argv)
     // exit_process(1);
 
     char *lineptr = malloc(10);
-    char *r = str_replace("sanya eto kruto\n", "sanya eto kruto", "T");
+    char *r = str_replace("sanya eto kruto\n", "", "\n");
     printf("%s\n", r);
     free(r);
     size_t n = 0;

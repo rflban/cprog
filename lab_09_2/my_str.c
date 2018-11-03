@@ -99,6 +99,36 @@ char *str_replace(const char *source, const char *search, const char *replace)
     for (srch_len = 0; search[srch_len] != '\0'; srch_len++);
     for (rplc_len = 0; replace[rplc_len] != '\0'; rplc_len++);
 
+    if (srch_len == 0)
+    {
+        int i, j;
+
+        res_len = 2 * src_len + 1;
+        res = (char*)malloc((res_len + 1) * sizeof(char));
+        if (!res)
+        {
+            exit_code = __EXIT_MEM_ERROR;
+            return NULL;
+        }
+        res[res_len] = '\0';
+        
+        i = 0;
+        j = 0;
+        do
+        {
+            for (int k = 0; k < rplc_len; k++, j++)
+                res[j] = replace[k];
+
+            res[j] = source[i];
+
+            i++;
+            j++;
+        }
+        while (i < src_len);
+
+        return res;
+    }
+
     srch_cnt = 0;
     for (int i = 0; i < src_len; i++)
         if (str_find(&source[i], search))
