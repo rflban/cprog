@@ -82,5 +82,98 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
 char *str_replace(const char *source, const char *search, const char *replace)
 {
-    return "&";
+    if (source == NULL || search == NULL || replace == NULL)
+    {
+        exit_code = __EXIT_REQUEST_NULL;
+        return NULL;
+    }
+
+    int res_len;
+    int src_len;
+    int srch_len;
+    int rplc_len;
+    int srch_cnt;
+    char *res;
+
+    for (src_len = 0; source[src_len] != '\0'; src_len++);
+    for (srch_len = 0; search[srch_len] != '\0'; srch_len++);
+    for (rplc_len = 0; replace[rplc_len] != '\0'; rplc_len++);
+
+    srch_cnt = 0;
+    for (int i = 0; i < src_len; i++)
+        if (str_find(&source[i], search))
+        {
+            i += srch_len - 1;
+            srch_cnt++;
+        }
+
+    res_len = src_len - srch_cnt * (srch_len - rplc_len);
+    res = (char*)malloc((res_len + 1) * sizeof(char));
+    if (!res)
+    {
+        exit_code = __EXIT_MEM_ERROR;
+        return NULL;
+    }
+    res[res_len] = '\0';
+
+    for (int i = 0, j = 0; i < src_len; i++, j++)
+    {
+        if (&source[i] == str_find(&source[i], search))
+        {
+            for (int k = 0; k < rplc_len; k++, j++)
+                res[j] = replace[k];
+
+            i += srch_len - 1;
+            j--;
+        }
+        else
+            res[j] = source[i];
+    }
+
+    return res;
+}
+
+char *str_find(const char *source, const char *search)
+{
+    if (source == NULL || search == NULL)
+    {
+        exit_code = __EXIT_REQUEST_NULL;
+        return NULL;
+    }
+
+    if (search[0] == '\0')
+        return (char*)source;
+
+    int src_len;
+    int srch_len;
+
+    for (src_len = 0; source[src_len] != '\0'; src_len++);
+    for (srch_len = 0; search[srch_len] != '\0'; srch_len++);
+
+    for (int i = 0, j = 0, finded = 0; i < src_len; i++)
+    {            
+        if (finded)
+        {
+            if (source[i] == search[j])
+                j++;
+            else
+            {
+                finded = 0;
+                j = 0;
+            }
+        }
+        else
+        {
+            if (source[i] == search[j])
+            {
+                finded = 1;
+                j++;
+            }
+        }
+
+        if (j >= srch_len)
+            return (char*)(&source[i] - srch_len + 1);
+    }
+
+    return NULL;
 }

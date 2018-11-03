@@ -1,11 +1,16 @@
 #if !defined __MY_STR_H
-#define __MY_STR_H 1
+#define __MY_STR_H
 
 #if !defined size_t
 #define __need_size_t
 #include <stddef.h>
 #endif /*size_t*/
 
-size_t my_strcspn(const char *s, const char *reject);
+#if !defined NULL
+#define __need_NULL
+#include <stddef.h>
+#endif /*NULL*/
+
+size_t my_strspn(const char *s, const char *reject);
 
 #endif /*__MY_STR_H*/
