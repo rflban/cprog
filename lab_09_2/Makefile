@@ -10,10 +10,10 @@ ifeq ($(mode), release)
 	CFLAGS += -g0 -DNDEBUG -O3
 endif
 
-app.exe: main.o exit.o file.o my_str.o
+app.exe: main.o exit.o file.o my_str.o rewrite.o
 	$(CC) $^ -o $@
 
-test.exe: test.o my_str.o
+test.exe: test.o my_str.o exit.o
 	$(CC) $^ -o $@
 
 clean:

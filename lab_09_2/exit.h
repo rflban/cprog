@@ -1,21 +1,10 @@
 #if !defined __EXIT_H
 #define __EXIT_H 1
 
-#if !defined _STDIO_H
 #include <stdio.h>
-#endif /*_STDIO_H*/
-
-#if !defined _STDLIB_H
 #include <stdlib.h>
-#endif /*_STDLIB_H*/
-
-#if !defined _ERRNO_H
 #include <errno.h>
-#endif /*_ERRNO_H*/
-
-#if !defined _STRING_H
 #include <string.h>
-#endif /*_STRING_H*/
 
 #define __EXIT(exit_code, leave) ((leave) ? exit(exit_code) : (void)0)
 

@@ -3,13 +3,15 @@
 
 #if !defined size_t
 #define __need_size_t
-#include <stddef.h>
-#endif /*size_t*/
+#endif /*need size_t*/
 
 #if !defined NULL
 #define __need_NULL
+#endif /*need NULL*/
+
+#if !defined size_t || !defined NULL
 #include <stddef.h>
-#endif /*NULL*/
+#endif /*get size_t or get NULL*/
 
 size_t my_strspn(const char *s, const char *reject);
 

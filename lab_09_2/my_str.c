@@ -38,7 +38,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
             while (buffer[zero_ind] != '\0')
                 zero_ind++;
 
-            if (read_counter + zero_ind + 1> *n)
+            if (read_counter + zero_ind + 1 > *n)
             {
                 *n = read_counter + zero_ind + 1;
 
@@ -50,9 +50,9 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
                     return EOF;
                 }
             }
-
-            for (ssize_t i; i < zero_ind; i++)
+            for (ssize_t i = 0; i < zero_ind; i++)
                 (*lineptr)[read_counter + i] = buffer[i];
+                
 
             read_counter += zero_ind;
             read_ending = buffer[zero_ind - 1];
@@ -131,7 +131,7 @@ char *str_replace(const char *source, const char *search, const char *replace)
 
     srch_cnt = 0;
     for (int i = 0; i < src_len; i++)
-        if (str_find(&source[i], search))
+        if (str_find(&source[i], search) == &source[i])
         {
             i += srch_len - 1;
             srch_cnt++;
@@ -144,7 +144,6 @@ char *str_replace(const char *source, const char *search, const char *replace)
         exit_code = __EXIT_MEM_ERROR;
         return NULL;
     }
-    res[res_len] = '\0';
 
     for (int i = 0, j = 0; i < src_len; i++, j++)
     {
@@ -159,6 +158,7 @@ char *str_replace(const char *source, const char *search, const char *replace)
         else
             res[j] = source[i];
     }
+    res[res_len] = '\0';
 
     return res;
 }
