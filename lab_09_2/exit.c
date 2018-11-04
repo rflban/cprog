@@ -35,5 +35,21 @@ void exit_process(int leave)
             fprintf(stderr, "Could not close file:\n%s\n", strerror(errno));
             __EXIT(exit_code, leave);
             break;
+        case __EXIT_READ_ERROR:
+            fprintf(stderr, "Invalid input data\n");
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_REQUEST_NULL:
+            fprintf(stderr, "Null pointer request\n");
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_SSIZE_OVERFLOW:
+            fprintf(stderr, "ssize overflow\n");
+            __EXIT(exit_code, leave);
+            break;
+        case __EXIT_MEM_ERROR:
+            fprintf(stderr, "Memory allocation error\n");
+            __EXIT(exit_code, leave);
+            break;
     }
 }
