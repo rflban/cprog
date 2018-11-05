@@ -2,7 +2,7 @@
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    if (lineptr == NULL || n == NULL || stream == NULL)
+    if (lineptr == NULL || n == NULL || stream == NULL || feof(stream) || ferror(stream))
     {
         exit_code = __EXIT_REQUEST_NULL;
         return EOF;
