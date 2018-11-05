@@ -18,7 +18,7 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
         my_getline(&str, &str_size, source);
         if (exit_code != __EXIT_SUCCESS)
         {
-            free(str);
+            // free(str);
             return;
         }
 

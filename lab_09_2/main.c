@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     exit_process(1);
     outputf = openf(argv[2], "w");
     exit_process(1);
-return __EXIT_SUCCESS;
+    
     rewrite(inputf, outputf, argv[4], argv[6]);
     exit_process(1);
 
