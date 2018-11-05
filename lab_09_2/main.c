@@ -30,10 +30,10 @@ int main(int argc, char **argv)
     rewrite(inputf, outputf, argv[4], argv[6]);
     exit_process(1);
 
-    closef(inputf);
+    /*closef(inputf);
     exit_process(1);
     closef(outputf);
-    exit_process(1);
+    exit_process(1);*/
 
     return __EXIT_SUCCESS;
 }
