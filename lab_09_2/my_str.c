@@ -40,7 +40,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
             if (read_counter + zero_ind + 1 > *n)
             {
-                *n = read_counter + zero_ind + 1;
+                *n = (read_counter + zero_ind) * 2;
 
                 *lineptr = (char*)realloc(*lineptr, *n);
                 if (!(*lineptr))
