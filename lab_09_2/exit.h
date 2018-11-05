@@ -20,7 +20,26 @@
 
 extern int exit_code;
 
+/*!
+Обрабатывает код выхода из функции, хранящийся в exit_code.
+Если leave содержит в себе ненулевое значение, завершает работу программы.
+
+@param leave [in]
+
+@return Ничего не возвращает.
+*/
 void exit_process(int leave);
+
+/*!
+Проверяет правильность использования программы
+по параметрам командной строки
+согласно заданию лабораторной работы.
+
+@param argc [in]
+@param argv [in]
+
+@return Ничего не возвращает.
+*/
 void usage_check(const int argc, char **argv);
 
 #endif /*__EXIT_H*/

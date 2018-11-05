@@ -1,3 +1,7 @@
+/*
+Nabiev Faris. IU7-33B. Var 16/2.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
