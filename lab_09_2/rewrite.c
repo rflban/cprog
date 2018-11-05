@@ -2,6 +2,8 @@
 
 void rewrite(FILE *source, FILE *destination, const char *search, const char *replace)
 {
+    ssize_t read_counter = 0;
+
     while (!feof(source))
     {
         char *str;
@@ -15,7 +17,7 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
             return;
         }
 
-        my_getline(&str, &str_size, source);
+        read_counter += my_getline(&str, &str_size, source);
         if (exit_code != __EXIT_SUCCESS)
         {
             free(str);
@@ -34,4 +36,7 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
         free(rewrited_str);
         free(str);
     }
+
+    if (read_counter == 0)
+        exit_code = __EXIT_READ_ERROR;
 }
