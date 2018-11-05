@@ -8,11 +8,11 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
         return EOF;
     }
 
-    if (*n > __SIZE_MAX / 2)
-    {
-        exit_code = __EXIT_SSIZE_OVERFLOW;
-        return EOF;
-    }
+    // if (*n > __SIZE_MAX / 2)
+    // {
+    //     exit_code = __EXIT_SSIZE_OVERFLOW;
+    //     return EOF;
+    // }
 
     char *buffer;
     char read_ending = '\0';
@@ -23,7 +23,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         if (*n == 0)
             *n = BUFFER_INIT_SIZE;
-            
+
         if (!(*lineptr))
             *lineptr = (char*)malloc(*n);
         else
