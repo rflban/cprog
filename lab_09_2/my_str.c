@@ -51,9 +51,10 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
                 }
             }
             for (ssize_t i = 0; i < zero_ind; i++)
+            {
                 (*lineptr)[read_counter + i] = buffer[i];
+            }
                 
-
             read_counter += zero_ind;
             read_ending = buffer[zero_ind - 1];
         }
@@ -63,12 +64,6 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     (*lineptr)[read_counter] = '\0';
 
     free(buffer);
-
-    if (read_counter == 0)
-    {
-        exit_code = __EXIT_READ_ERROR;
-        return EOF;
-    }
 
     *lineptr = (char*)realloc(*lineptr, (read_counter + 1) * sizeof(char));
     if (!(*lineptr))
