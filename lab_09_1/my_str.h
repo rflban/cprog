@@ -1,16 +1,13 @@
 #if !defined __MY_STR_H
 #define __MY_STR_H
 
-#define __NEED_SIZE_T __need_size_t
-#define __NEED_NULL __need_NULL
+// #if !defined size_t
+// #define __need_size_t
+// #endif /*need size_t*/
 
-#if !defined size_t
-#define __NEED_SIZE_T
-#endif /*need size_t*/
-
-#if !defined NULL
-#define __NEED_NULL
-#endif /*need NULL*/
+// #if !defined NULL
+// #define __need_NULL
+// #endif /*need NULL*/
 
 #if !defined size_t || !defined NULL
 #include <stddef.h>
