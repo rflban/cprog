@@ -22,11 +22,14 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     if (*lineptr == NULL || *n == 0)
     {
         *n = BUFFER_INIT_SIZE;
-        *lineptr = (char*)malloc(*n);
         if (!(*lineptr))
         {
-            exit_code = __EXIT_MEM_ERROR;
-            return EOF;
+            *lineptr = (char*)malloc(*n);
+            if (!(*lineptr))
+            {
+                exit_code = __EXIT_MEM_ERROR;
+                return EOF;
+            }
         }
     }
 
