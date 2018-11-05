@@ -65,12 +65,12 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
     free(buffer);
 
-    *lineptr = (char*)realloc(*lineptr, (read_counter + 1) * sizeof(char));
-    if (!(*lineptr))
-    {
-        exit_code = __EXIT_MEM_ERROR;
-        return EOF;
-    }
+    // *lineptr = (char*)realloc(*lineptr, (read_counter + 1) * sizeof(char));
+    // if (!(*lineptr))
+    // {
+    //     exit_code = __EXIT_MEM_ERROR;
+    //     return EOF;
+    // }
 
     return read_counter;
 }
