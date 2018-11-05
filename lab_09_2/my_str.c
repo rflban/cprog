@@ -8,7 +8,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
         return EOF;
     }
 
-    if (*n > SIZE_MAX / 2)
+    if (*n > __SIZE_MAX / 2)
     {
         exit_code = __EXIT_SSIZE_OVERFLOW;
         return EOF;

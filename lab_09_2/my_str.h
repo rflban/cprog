@@ -14,6 +14,7 @@
 #endif /*ssize_t*/
 
 #define BUFFER_INIT_SIZE 120
+#define __SIZE_MAX SIZE_MAX
 
 /*!
 Считывает последовательность символов до EOL или EOF, включая EOL,
