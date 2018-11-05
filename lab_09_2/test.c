@@ -3,11 +3,17 @@
 
 #include "my_str.h"
 
-#define PRINT_ERR_SRCH_RES(initial, expected, received, search) printf("Initial:\n%s\nExpected:\n%s\nReceived:\n%s\nSearch:\n%s\n", initial, expected, received, search)
+#define PRINT_ERR_SRCH_RES(initial, expected, received, search) \
+printf("Initial:\n%s\nExpected:\n%s\nReceived:\n%s\nSearch:\n%s\n", \
+initial, expected, received, search)
 
 void test_str_replace_no_match(int *err_cnt);
 void test_str_replace_one_match(int *err_cnt);
 void test_str_replace_two_matches(int *err_cnt);
+
+void test_str_find_no_match(int *err_cnt);
+void test_str_find_one_match(int *err_cnt);
+void test_str_find_two_matches(int *err_cnt);
 
 int main(void)
 {
@@ -16,14 +22,18 @@ int main(void)
     test_str_replace_no_match(&err_cnt);
     test_str_replace_one_match(&err_cnt);
     test_str_replace_two_matches(&err_cnt);
+
+    test_str_find_no_match(&err_cnt);
+    test_str_find_one_match(&err_cnt);
+    test_str_find_two_matches(&err_cnt);
     
     return ((err_cnt == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 void test_str_replace_no_match(int *err_cnt)
 {
-    char *initial = "Aleksander Stepanov"; /*Если что, я Фарис*/
-    char *expected = "Aleksander Stepanov";
+    char *initial = "Aleksandr Stepanov"; /*Если что, я Фарис*/
+    char *expected = "Aleksandr Stepanov";
     char *search = "Kupry";
     char *replace = "Loh";
     char *received;
@@ -67,8 +77,8 @@ void test_str_replace_no_match(int *err_cnt)
 
 void test_str_replace_one_match(int *err_cnt)
 {
-    char *initial = "Aleksander Kupry"; /*Если что, я Фарис*/
-    char *expected = "Aleksander Kuprin";
+    char *initial = "Aleksandr Kupry"; /*Если что, я Фарис*/
+    char *expected = "Aleksandr Kuprin";
     char *search = "Kupry";
     char *replace = "Kuprin";
     char *received;
@@ -112,9 +122,9 @@ void test_str_replace_one_match(int *err_cnt)
 
 void test_str_replace_two_matches(int *err_cnt)
 {
-    char *initial = "Aleksander Aleksanderovich Kupry"; /*Если что, я Фарис*/
+    char *initial = "Aleksandr Aleksandrovich Kupry"; /*Если что, я Фарис*/
     char *expected = "Ivan Ivanovich Kupry";
-    char *search = "Aleksander";
+    char *search = "Aleksandr";
     char *replace = "Ivan";
     char *received;
     int expected_len;
@@ -151,6 +161,78 @@ void test_str_replace_two_matches(int *err_cnt)
     printf("Replace:\n%s\n", replace);
 
     free(received);
+
+    *err_cnt += 1;
+}
+
+void test_str_find_no_match(int *err_cnt)
+{
+    char *initial = "Aleksandr Stepanov"; /*Если что, я Фарис*/
+    char *expected = NULL;
+    char *search = "Kupry";
+    char *received;
+
+    printf("Test str_find. No match case. ");
+
+    received = str_find(initial, search);
+
+    if (expected == received)
+    {
+        printf("Success.\n");
+        return;        
+    }
+
+    printf("Failure.\n");
+
+    PRINT_ERR_SRCH_RES(initial, expected, received, search);
+
+    *err_cnt += 1;
+}
+
+void test_str_find_one_match(int *err_cnt)
+{
+    char *initial = "Aleksandr Kupry"; /*Если что, я Фарис*/
+    char *expected = &initial[10];
+    char *search = "Kupry";
+    char *received;
+
+    printf("Test str_find. One match case. ");
+
+    received = str_find(initial, search);
+
+    if (expected == received)
+    {
+        printf("Success.\n");
+        return;
+    }
+
+    printf("Failure.\n");
+
+    PRINT_ERR_SRCH_RES(initial, expected, received, search);
+
+    *err_cnt += 1;
+}
+
+void test_str_find_two_matches(int *err_cnt)
+{
+    char *initial = "Aleksandr Aleksandrovich Kupry"; /*Если что, я Фарис*/
+    char *expected = &initial[0];
+    char *search = "Aleksandr";
+    char *received;
+    
+    printf("Test str_find. Two matches case. ");
+
+    received = str_find(initial, search);
+
+    if (expected == received)
+    {
+        printf("Success.\n");
+        return;        
+    }
+
+    printf("Failure.\n");
+
+    PRINT_ERR_SRCH_RES(initial, expected, received, search);
 
     *err_cnt += 1;
 }

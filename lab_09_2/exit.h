@@ -1,5 +1,5 @@
 #if !defined __EXIT_H
-#define __EXIT_H 1
+#define __EXIT_H
 
 #include <stdio.h>
 #include <stdlib.h>
