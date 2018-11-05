@@ -2,7 +2,7 @@
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    if (lineptr == NULL || *lineptr == NULL || n == NULL || stream == NULL)
+    if (lineptr == NULL || n == NULL || stream == NULL)
     {
         exit_code = __EXIT_REQUEST_NULL;
         return EOF;
@@ -18,6 +18,9 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     char read_ending = '\0';
     size_t buf_size = BUFFER_INIT_SIZE;
     ssize_t read_counter = 0;
+
+    if (*lineptr == NULL)
+        *n = 0;
 
     buffer = (char*)malloc(buf_size);
     if (!buffer)
