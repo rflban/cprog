@@ -4,10 +4,9 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
 {
     while (!feof(source))
     {
-        return;
         char *str;
         char *rewrited_str;
-        size_t str_size = 0;
+        size_t str_size = 1;
 
         str = (char*)malloc(str_size);
         if (!str)
