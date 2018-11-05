@@ -2,7 +2,7 @@
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    if (lineptr == NULL || n == NULL || stream == NULL || feof(stream) || ferror(stream))
+    if (lineptr == NULL || n == NULL || stream == NULL || ferror(stream))
     {
         exit_code = __EXIT_REQUEST_NULL;
         return EOF;
@@ -22,14 +22,15 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     if (*lineptr == NULL || *n == 0)
     {
         *n = BUFFER_INIT_SIZE;
+        
+        if (!(*lineptr))
+            *lineptr = (char*)malloc(*n);
+        else
+            *lineptr = (char*)realloc(*lineptr, *n);
         if (!(*lineptr))
         {
-            *lineptr = (char*)malloc(*n);
-            if (!(*lineptr))
-            {
-                exit_code = __EXIT_MEM_ERROR;
-                return EOF;
-            }
+            exit_code = __EXIT_MEM_ERROR;
+            return EOF;
         }
     }
 
