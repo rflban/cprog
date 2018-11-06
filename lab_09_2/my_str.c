@@ -8,27 +8,31 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
         return EOF;
     }
 
-    // if (*n > __SIZE_MAX / 2)
-    // {
-    //     exit_code = __EXIT_SSIZE_OVERFLOW;
-    //     return EOF;
-    // }
-
     char *buffer;
     char read_ending = '\0';
     size_t buf_size = BUFFER_INIT_SIZE;
     ssize_t read_counter = 0;
 
+    // if (*lineptr == NULL || *n == 0)
+    // {
+    //     *n = BUFFER_INIT_SIZE;
+
+    //     if (!(*lineptr))
+    //         *lineptr = (char*)malloc(*n);
+    //     else
+    //         *lineptr = (char*)realloc(*lineptr, *n);
+
+    //     if (!(*lineptr))
+    //     {
+    //         exit_code = __EXIT_MEM_ERROR;
+    //         return EOF;
+    //     }
+    // }
+
     if (*lineptr == NULL || *n == 0)
     {
-        if (*n == 0)
-            *n = BUFFER_INIT_SIZE;
-
-        if (!(*lineptr))
-            *lineptr = (char*)malloc(*n);
-        else
-            *lineptr = (char*)realloc(*lineptr, *n);
-
+        *n = BUFFER_INIT_SIZE;
+        *lineptr = (char*)malloc(*n);
         if (!(*lineptr))
         {
             exit_code = __EXIT_MEM_ERROR;
