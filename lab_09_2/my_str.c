@@ -29,7 +29,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     //     }
     // }
 
-    if (*lineptr == NULL || *n == 0)
+    if (*lineptr == NULL && *n == 0)
     {
         *n = BUFFER_INIT_SIZE;
         *lineptr = (char*)malloc(*n);
