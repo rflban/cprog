@@ -2,7 +2,7 @@
 
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    if (lineptr == NULL || n == NULL || stream == NULL || ferror(stream))
+    if (lineptr == NULL || n == NULL || stream == NULL)
     {
         exit_code = __EXIT_REQUEST_NULL;
         return EOF;
@@ -50,7 +50,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
             if (read_counter + zero_ind + 1 > *n)
             {
-                *n = (read_counter + zero_ind) * 2;
+                *n = (read_counter + zero_ind + 1);
 
                 *lineptr = (char*)realloc(*lineptr, *n);
                 if (!(*lineptr))
@@ -60,10 +60,9 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
                     return EOF;
                 }
             }
+
             for (ssize_t i = 0; i < zero_ind; i++)
-            {
                 (*lineptr)[read_counter + i] = buffer[i];
-            }
                 
             read_counter += zero_ind;
             read_ending = buffer[zero_ind - 1];
@@ -74,13 +73,6 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
     (*lineptr)[read_counter] = '\0';
 
     free(buffer);
-
-    // *lineptr = (char*)realloc(*lineptr, (read_counter + 1) * sizeof(char));
-    // if (!(*lineptr))
-    // {
-    //     exit_code = __EXIT_MEM_ERROR;
-    //     return EOF;
-    // }
 
     return read_counter;
 }
@@ -108,7 +100,7 @@ char *str_replace(const char *source, const char *search, const char *replace)
     {
         int i, j;
 
-        res_len = 2 * src_len + 1;
+        res_len = src_len + rplc_len * (src_len + 1);
         res = (char*)malloc((res_len + 1) * sizeof(char));
         if (!res)
         {
@@ -129,7 +121,7 @@ char *str_replace(const char *source, const char *search, const char *replace)
             i++;
             j++;
         }
-        while (i < src_len);
+        while (i < src_len + 1);
 
         return res;
     }
