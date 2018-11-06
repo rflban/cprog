@@ -74,6 +74,9 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
     free(buffer);
 
+    if (read_counter == 0)
+        return EOF;
+
     return read_counter;
 }
 
