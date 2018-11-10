@@ -65,9 +65,12 @@ MATRIX find_max_followers(MATRIX matrix, int rows, int cols, int *n)
 {
     int max_foll;
     int max_foll_quan;
+    int people[cols];
     MATRIX max_foll_mtrx;
     
-    max_foll = 0;
+    for (int i = 0; i < rows; i++)
+        people[i] = 0;
+
     for (int i = 0; i < rows; i++)
     {
         int cur_foll = 0;
@@ -75,43 +78,24 @@ MATRIX find_max_followers(MATRIX matrix, int rows, int cols, int *n)
         for (int j = 0; j < cols; j++)
         {
             if (matrix[i][j])
-                cur_foll++;
+                people[j]++;
         }
-        
-        if (max_foll < cur_foll)
-            max_foll = cur_foll;
     }
+    
+    max_foll = people[0];
+    for (int i = 0; i < cols; i++)
+        if (max_foll < people[i])
+            max_foll = people[i];
     
     max_foll_quan = 0;
-    for (int i = 0; i < rows; i++)
-    {
-        int cur_foll = 0;
-        
-        for (int j = 0; j < cols; j++)
-        {
-            if (matrix[i][j])
-                cur_foll++;
-        }
-        
-        if (max_foll == cur_foll)
+    for (int i = 0; i < cols; i++)
+        if (max_foll == people[i])
             max_foll_quan++;
-    }
         
     max_foll_mtrx = matrix_allocate(max_foll_quan, 1);
-    
-    for (int i = 0, j = 0; i < rows; i++)
-    {
-        int cur_foll = 0;
-        
-        for (int j = 0; j < cols; j++)
-        {
-            if (matrix[i][j])
-                cur_foll++;
-        }
-        
-        if (max_foll == cur_foll)
+    for (int i = 0, j = 0; i < cols; i++)
+        if (max_foll == people[i])
             max_foll_mtrx[j][0] = i + 1;
-    }
     
     *n = max_foll_quan;
     
