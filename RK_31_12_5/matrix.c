@@ -10,7 +10,7 @@ MATRIX matrix_allocate(int rows, int cols)
     
     for (int i = 0; i < rows; i++)
     {
-        ptrs[i] = (double*)malloc(cols * sizeof(MATRIX_EL));
+        ptrs[i] = (MATRIX_EL*)malloc(cols * sizeof(MATRIX_EL));
         if (!ptrs[i])
         {
             matrix_free(ptrs, i);
@@ -59,4 +59,61 @@ void print_matrix(FILE *stream, MATRIX matrix, int rows, int cols)
         for (int j = 0; j < cols; j++)
             if (matrix[i][j] != 0)
                 fprintf(stream, "%d %d " EL_FORMAt "\n", i + 1, j + 1, matrix[i][j]);
+}
+
+MATRIX find_max_followers(MATRIX matrix, int rows, int cols, int *n)
+{
+    int max_foll;
+    int max_foll_quan;
+    MATRIX max_foll_mtrx;
+    
+    max_foll = 0;
+    for (int i = 0; i < rows; i++)
+    {
+        int cur_foll = 0;
+        
+        for (int j = 0; j < cols; j++)
+        {
+            if (matrix[i][j])
+                cur_foll++;
+        }
+        
+        if (max_foll < cur_foll)
+            max_foll = cur_foll;
+    }
+    
+    max_foll_quan = 0;
+    for (int i = 0; i < rows; i++)
+    {
+        int cur_foll = 0;
+        
+        for (int j = 0; j < cols; j++)
+        {
+            if (matrix[i][j])
+                cur_foll++;
+        }
+        
+        if (max_foll == cur_foll)
+            max_foll_quan++;
+    }
+        
+    max_foll_mtrx = matrix_allocate(max_foll_quan, 1);
+    
+    for (int i = 0, j = 0; i < rows; i++)
+    {
+        int cur_foll = 0;
+        
+        for (int j = 0; j < cols; j++)
+        {
+            if (matrix[i][j])
+                cur_foll++;
+        }
+        
+        if (max_foll == cur_foll)
+            max_foll_mtrx[j][0] = i + 1;
+    }
+    
+    *n = max_foll_quan;
+    
+    return max_foll_mtrx;
 }
