@@ -12,6 +12,7 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
         ssize_t read_res;
 
         str = (char*)malloc(str_size);
+
         if (!str)
         {
             exit_code = __EXIT_MEM_ERROR;
@@ -19,15 +20,18 @@ void rewrite(FILE *source, FILE *destination, const char *search, const char *re
         }
 
         read_res = my_getline(&str, &str_size, source);
+
         if (exit_code != __EXIT_SUCCESS)
         {
             free(str);
             return;
         }
+        
         if (read_res != EOF)
             read_counter += read_res;
 
         rewrited_str = str_replace(str, search, replace);
+        
         if (exit_code != __EXIT_SUCCESS)
         {
             free(str);

@@ -43,10 +43,6 @@ void exit_process(int leave)
             fprintf(stderr, "Null pointer request\n");
             __EXIT(exit_code, leave);
             break;
-        case __EXIT_SSIZE_OVERFLOW:
-            fprintf(stderr, "ssize overflow\n");
-            __EXIT(exit_code, leave);
-            break;
         case __EXIT_MEM_ERROR:
             fprintf(stderr, "Memory allocation error\n");
             __EXIT(exit_code, leave);

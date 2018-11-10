@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 
     usage_check(argc, argv);
     exit_process(1);
-    exit_process(1);
 
     FILE * inputf;
     FILE * outputf;

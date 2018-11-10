@@ -2,8 +2,8 @@
 #define __EXIT_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define __EXIT(exit_code, leave) ((leave) ? exit(exit_code) : (void)0)
@@ -15,8 +15,7 @@
 #define __EXIT_FCLOSE_ERROR 4
 #define __EXIT_READ_ERROR 5
 #define __EXIT_REQUEST_NULL 6
-#define __EXIT_SSIZE_OVERFLOW 7
-#define __EXIT_MEM_ERROR 8
+#define __EXIT_MEM_ERROR 7
 
 extern int exit_code;
 

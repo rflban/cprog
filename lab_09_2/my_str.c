@@ -88,12 +88,12 @@ char *str_replace(const char *source, const char *search, const char *replace)
         return NULL;
     }
 
+    char *res;
     int res_len;
     int src_len;
     int srch_len;
     int rplc_len;
     int srch_cnt;
-    char *res;
 
     for (src_len = 0; source[src_len] != '\0'; src_len++);
     for (srch_len = 0; search[srch_len] != '\0'; srch_len++);
@@ -101,44 +101,40 @@ char *str_replace(const char *source, const char *search, const char *replace)
 
     if (srch_len == 0)
     {
-        int i, j;
-
         res_len = src_len + rplc_len * (src_len + 1);
         res = (char*)malloc((res_len + 1) * sizeof(char));
+        
         if (!res)
         {
             exit_code = __EXIT_MEM_ERROR;
             return NULL;
         }
         res[res_len] = '\0';
-        
-        i = 0;
-        j = 0;
-        do
+
+        for (int i = 0, j = 0; i < src_len + 1; i++, j++)
         {
             for (int k = 0; k < rplc_len; k++, j++)
                 res[j] = replace[k];
 
             res[j] = source[i];
-
-            i++;
-            j++;
         }
-        while (i < src_len + 1);
 
         return res;
     }
 
     srch_cnt = 0;
     for (int i = 0; i < src_len; i++)
+    {
         if (str_find(&source[i], search) == &source[i])
         {
             i += srch_len - 1;
             srch_cnt++;
         }
+    }
 
     res_len = src_len - srch_cnt * (srch_len - rplc_len);
     res = (char*)malloc((res_len + 1) * sizeof(char));
+
     if (!res)
     {
         exit_code = __EXIT_MEM_ERROR;
