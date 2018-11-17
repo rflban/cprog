@@ -4,6 +4,9 @@ test:
     - testing-docker
   script:
     - testing
+  except:
+    - RK_31
+    - rk_31
   artifacts:
     paths: [report.txt.enc]
     when: always
