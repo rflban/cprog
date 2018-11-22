@@ -3,15 +3,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "exit.h"
 
-#define MATRIX int**
-#define MATRIX_EL int
-#define EL_FORMAt "%d"
+#ifndef DATA_TYPE
+#define DATA_TYPE int
+#endif
 
-MATRIX matrix_allocate(int rows, int cols);
-MATRIX matrix_read(FILE *stream, int *rows, int *cols);
-MATRIX find_max_followers(MATRIX matrix, int rows, int cols, int *n);
+#ifndef DATA_FORMAT
+#define DATA_FORMAT "%d"
+#endif
+
+#define MATRIX DATA_TYPE**
+
 void matrix_free(MATRIX matrix, int rows);
-void print_matrix(FILE *stream, MATRIX matrix, int rows, int cols);
+void matrix_print(FILE *stream, MATRIX matrix, int rows, int cols);
+MATRIX matrix_read(FILE *stream, int *rows, int *cols);
+MATRIX matrix_allocate(int rows, int cols);
+MATRIX find_max_followers(MATRIX matrix, int rows, int cols, int *n);
 
 #endif
