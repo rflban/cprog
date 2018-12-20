@@ -426,10 +426,13 @@ void test_remove_dups_dtnullptr(int *error_counter)
     printf("Test remove_duplicates. Null data case. ");
 
     node_t head;
+    node_t tail;
     node_t *head_ptr;
 
+    head.next = &tail;
     head.data = NULL;
-    head.next = NULL;
+    tail.next = NULL;
+    tail.data = NULL;
 
     head_ptr = &head;
 
