@@ -42,7 +42,7 @@ void* pop_back(node_t **head)
         parent_node->next = NULL;
     }
 
-    // free(actual_node);
+    free(actual_node);
 
     return poped_value;
 }
@@ -113,7 +113,7 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
         {
             previos_node->next = present_node->next;
 
-            // free(present_node);
+            free(present_node);
 
             present_node = previos_node;
         }
