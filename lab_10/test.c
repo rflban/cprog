@@ -10,6 +10,7 @@ void test_insert_nullptr(int *error_counter);
 
 void test_remove_dups_none_dups(int *error_counter);
 void test_remove_dups_with_dups(int *error_counter);
+void test_remove_dups_dtnullptr(int *error_counter);
 void test_remove_dups_rqnullptr(int *error_counter);
 
 void test_reverse_growing(int *error_counter);
@@ -28,6 +29,7 @@ int main(void)
 
     test_remove_dups_none_dups(&error_counter);
     test_remove_dups_with_dups(&error_counter);
+    test_remove_dups_dtnullptr(&error_counter);
     test_remove_dups_rqnullptr(&error_counter);
 
     test_reverse_growing(&error_counter);
@@ -45,7 +47,7 @@ void test_insert_to_head(int *error_counter)
     int is_failure = 0;
 
     int ind = 0;
-    int data[] = {1, 2};
+    int data[] = { 1, 2 };
     node_t elem;
     node_t head;
     node_t *head_ptr;
@@ -112,7 +114,7 @@ void test_insert_to_tail(int *error_counter)
     int is_failure = 0;
 
     int ind = 0;
-    int data[] = {1, 2, 3};
+    int data[] = { 1, 2, 3 };
     node_t elem;
     node_t head;
     node_t tail;
@@ -182,7 +184,7 @@ void test_insert_to_null(int *error_counter)
     int is_failure = 0;
 
     int ind = 0;
-    int data[] = {1, 2};
+    int data[] = { 1, 2 };
     node_t elem;
     node_t head;
     node_t *head_ptr;
@@ -259,9 +261,9 @@ void test_remove_dups_none_dups(int *error_counter)
 
     int i;
     int len;
-    int initial[5] = {1, 2, 3, 4, 5};
-    int expected[5] = {1, 2, 3, 4, 5};
-    int received[5] = {0};
+    int initial[5] = { 1, 2, 3, 4, 5 };
+    int expected[5] = { 1, 2, 3, 4, 5 };
+    int received[5] = { 0 };
     node_t *head;
     node_t *tail;
 
@@ -343,9 +345,9 @@ void test_remove_dups_with_dups(int *error_counter)
 
     int i;
     int len;
-    int initial[5] = {1, 1, 3, 4, 3};
-    int expected[3] = {1, 3, 4};
-    int received[5] = {0};
+    int initial[5] = { 1, 1, 3, 4, 3 };
+    int expected[3] = { 1, 3, 4 };
+    int received[5] = { 0 };
     node_t *head;
     node_t *tail;
 
@@ -419,6 +421,23 @@ void test_remove_dups_with_dups(int *error_counter)
     }
 }
 
+void test_remove_dups_dtnullptr(int *error_counter)
+{
+    printf("Test remove_duplicates. Null data case. ");
+
+    node_t head;
+    node_t *head_ptr;
+
+    head.data = NULL;
+    head.next = NULL;
+
+    head_ptr = &head;
+
+    remove_duplicates(&head_ptr, comparator_int);
+
+    printf("Success.\n");
+}
+
 void test_remove_dups_rqnullptr(int *error_counter)
 {
     printf("Test remove_duplicates. Null request case. ");
@@ -436,9 +455,9 @@ void test_reverse_growing(int *error_counter)
 
     int i;
     int len;
-    int initial[5] = {1, 2, 3, 4, 5};
-    int expected[5] = {5, 4, 3, 2, 1};
-    int received[5] = {0};
+    int initial[5] = { 1, 2, 3, 4, 5 };
+    int expected[5] = { 5, 4, 3, 2, 1 };
+    int received[5] = { 0 };
     node_t *head;
     node_t *tail;
 
@@ -529,9 +548,9 @@ void test_sort_decreasing(int *error_counter)
 
     int i;
     int len;
-    int initial[5] = {5, 4, 3, 2, 1};
-    int expected[5] = {1, 2, 3, 4, 5};
-    int received[5] = {0};
+    int initial[5] = { 5, 4, 3, 2, 1 };
+    int expected[5] = { 1, 2, 3, 4, 5 };
+    int received[5] = { 0 };
     node_t *head;
     node_t *tail;
 

@@ -3,12 +3,12 @@
 #include "my_list.h"
 #include "exit.h"
 
-int comparator_int(const void* pointer1, const void* pointer2)
+int comparator_int(const void *pointer1, const void *pointer2)
 {
     return (*(const int*)(pointer1) - *(const int*)(pointer2));
 }
 
-void* pop_back(node_t **head)
+void *pop_back(node_t **head)
 {
     exit_code = __EXIT_SUCCESS;
 
@@ -63,13 +63,18 @@ void insert(node_t **head, node_t *elem, node_t *before)
     parent_node = NULL;
     actual_node = *head;
 
-    while (actual_node != before)
+    while (actual_node != before && actual_node != NULL)
     {
         parent_node = actual_node;
         actual_node = actual_node->next;
     }
 
-    if (parent_node == NULL)    //  before == *head
+    if (actual_node == NULL)
+    {
+        return;
+    }
+
+    if (parent_node == NULL)
     {
         *head = elem;
     }
@@ -78,7 +83,7 @@ void insert(node_t **head, node_t *elem, node_t *before)
         parent_node->next = elem;
     }
 
-    elem->next =  before;    // actual_node <==> before
+    elem->next = before;
 }
 
 void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*))
@@ -151,7 +156,7 @@ node_t *reverse(node_t *head)
     return reverse_list;
 }
 
-void front_back_split(node_t* head, node_t** back)
+void front_back_split(node_t *head, node_t **back)
 {
     exit_code = __EXIT_SUCCESS;
     
