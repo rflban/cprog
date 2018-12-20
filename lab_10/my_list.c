@@ -239,7 +239,7 @@ node_t *sorted_merge(node_t **head_a, node_t **head_b, int (*comparator)(const v
     actual_b = *head_b;
     actual_a = *head_a;
 
-    while(actual_a->next != NULL && actual_b != NULL)
+    while (actual_a->next != NULL && actual_b != NULL)
     {
         node_t *temp;
 
@@ -249,7 +249,7 @@ node_t *sorted_merge(node_t **head_a, node_t **head_b, int (*comparator)(const v
             return NULL;
         }
 
-        compare_result = comparator(actual_a->data, actual_b->data);
+        compare_result = comparator(actual_a->next->data, actual_b->data);
 
         if (compare_result > 0)
         {
