@@ -425,18 +425,20 @@ void test_remove_dups_dtnullptr(int *error_counter)
 {
     printf("Test remove_duplicates. Null data case. ");
 
-    node_t head;
-    node_t tail;
-    node_t *head_ptr;
+    node_t *head = malloc(sizeof(node_t));
+    node_t *tail = malloc(sizeof(node_t));
 
-    head.next = &tail;
-    head.data = NULL;
-    tail.next = NULL;
-    tail.data = NULL;
+    int f = 2;
+    int d = 2;
 
-    head_ptr = &head;
+    head->next = tail;
+    head->data = &d;
+    tail->next = NULL;
+    tail->data = &f;
 
-    remove_duplicates(&head_ptr, comparator_int);
+    remove_duplicates(&head, comparator_int);
+
+    free(head);
 
     printf("Success.\n");
 }

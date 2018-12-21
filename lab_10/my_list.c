@@ -8,6 +8,11 @@ int comparator_int(const void *pointer1, const void *pointer2)
     return (*(const int*)(pointer1) - *(const int*)(pointer2));
 }
 
+int comparator_double(const void *pointer1, const void *pointer2)
+{
+    return (*(const double*)(pointer1) - *(const double*)(pointer2));
+}
+
 void *pop_back(node_t **head)
 {
     exit_code = __EXIT_SUCCESS;
@@ -104,7 +109,7 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
 
     while (present_node != NULL)
     {
-        int compare_result;
+        int compare_result = 0;
 
         if (previos_node->data == NULL || present_node->data == NULL)
         {
@@ -112,9 +117,8 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
             return;
         }
 
-    return;
-        compare_result = comparator(previos_node->data, present_node->data);
-
+        // compare_result = comparator(previos_node->data, present_node->data);
+        
         if (compare_result >= 0)
         {
             previos_node->next = present_node->next;

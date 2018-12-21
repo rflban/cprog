@@ -12,6 +12,7 @@ struct node
 };
 
 int comparator_int(const void *pointer1, const void *pointer2);
+int comparator_double(const void *pointer1, const void *pointer2);
 
 void insert(node_t **head, node_t *elem, node_t *before);
 void front_back_split(node_t *head, node_t **back);
