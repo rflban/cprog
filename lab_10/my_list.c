@@ -116,14 +116,14 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
             exit_code = __EXIT_NULLPTR;
             return;
         }
-
+exit(1);
         compare_result = comparator(previos_node->data, present_node->data);
         
         if (compare_result >= 0)
         {
             previos_node->next = present_node->next;
 
-            // free(present_node);
+            free(present_node);
 
             present_node = previos_node;
         }
