@@ -119,9 +119,6 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
 
         compare_result = comparator(previos_node->data, present_node->data);
 
-        if (previos_node == NULL || present_node == NULL)
-            exit(0);
-
         if (compare_result >= 0)
         {
             previos_node->next = present_node->next;

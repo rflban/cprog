@@ -3,6 +3,10 @@
 
 #include "my_list.h"
 
+void pop_back_head(int *error_counter);
+void pop_back_tail(int *error_counter);
+void pop_back_null(int *error_counter);
+
 void test_insert_to_head(int *error_counter);
 void test_insert_to_tail(int *error_counter);
 void test_insert_to_null(int *error_counter);
@@ -22,6 +26,10 @@ int main(void)
 {
     int error_counter = 0;
 
+    pop_back_head(&error_counter);
+    pop_back_tail(&error_counter);
+    pop_back_null(&error_counter);
+    
     test_insert_to_head(&error_counter);
     test_insert_to_tail(&error_counter);
     test_insert_to_null(&error_counter);
@@ -38,6 +46,77 @@ int main(void)
     test_sort_decreasing(&error_counter);
 
     return (0 == error_counter ? EXIT_SUCCESS : EXIT_FAILURE);
+}
+
+void pop_back_head(int *error_counter)
+{
+    printf("Test pop_back. Deletion head case. ");
+
+    int received;
+    int expected = 5;
+    node_t *head;
+
+    head = malloc(sizeof(node_t));
+    head->data = &expected;
+    head->next = NULL;
+
+    received = *(int*)pop_back(&head);
+
+    if (expected == received)
+    {
+        printf("Success.\n");
+        return;
+    }
+
+    *error_counter += 1;
+
+    printf("Failure.\n");
+
+    printf("Expected: %d\nReceived: %d\n", expected, received);
+}
+
+void pop_back_tail(int *error_counter)
+{
+    printf("Test pop_back. Deletion tail case. ");
+
+    int received;
+    int head_val = 4;
+    int expected = 5;
+    node_t *head;
+    node_t *tail;
+
+    head = malloc(sizeof(node_t));    
+    tail = malloc(sizeof(node_t));    
+
+    head->data = &head_val;
+    head->next = tail;
+    tail->data = &expected;
+    tail->next = NULL;
+
+    received = *(int*)pop_back(&head);
+
+    free(head);
+
+    if (expected == received)
+    {
+        printf("Success.\n");
+        return;
+    }
+
+    *error_counter += 1;
+
+    printf("Failure.\n");
+
+    printf("Expected: %d\nReceived: %d\n", expected, received);
+}
+
+void pop_back_null(int *error_counter)
+{
+    printf("Test pop_back. Deletion tail case. ");
+
+    pop_back(NULL);
+
+    printf("Success.\n");
 }
 
 void test_insert_to_head(int *error_counter)
