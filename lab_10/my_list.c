@@ -117,13 +117,13 @@ void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*
             return;
         }
 
-        // compare_result = comparator(previos_node->data, present_node->data);
+        compare_result = comparator(previos_node->data, present_node->data);
         
         if (compare_result >= 0)
         {
             previos_node->next = present_node->next;
 
-            free(present_node);
+            // free(present_node);
 
             present_node = previos_node;
         }
