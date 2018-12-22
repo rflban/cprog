@@ -12,10 +12,10 @@ void test_insert_to_tail(int *error_counter);
 void test_insert_to_null(int *error_counter);
 void test_insert_nullptr(int *error_counter);
 
-// void test_remove_dups_none_dups(int *error_counter);
-// void test_remove_dups_with_dups(int *error_counter);
-// void test_remove_dups_dtnullptr(int *error_counter);
-// void test_remove_dups_rqnullptr(int *error_counter);
+void test_remove_dups_none_dups(int *error_counter);
+void test_remove_dups_with_dups(int *error_counter);
+void test_remove_dups_dtnullptr(int *error_counter);
+void test_remove_dups_rqnullptr(int *error_counter);
 
 void test_reverse_growing(int *error_counter);
 void test_reverse_nullptr(int *error_counter);
@@ -35,10 +35,10 @@ int main(void)
     test_insert_to_null(&error_counter);
     test_insert_nullptr(&error_counter);
 
-    // test_remove_dups_none_dups(&error_counter);
-    // test_remove_dups_with_dups(&error_counter);
-    // test_remove_dups_dtnullptr(&error_counter);
-    // test_remove_dups_rqnullptr(&error_counter);
+    test_remove_dups_none_dups(&error_counter);
+    test_remove_dups_with_dups(&error_counter);
+    test_remove_dups_dtnullptr(&error_counter);
+    test_remove_dups_rqnullptr(&error_counter);
 
     test_reverse_growing(&error_counter);
     test_reverse_nullptr(&error_counter);
@@ -332,204 +332,204 @@ void test_insert_nullptr(int *error_counter)
     printf("Success.\n");
 }
 
-// void test_remove_dups_none_dups(int *error_counter)
-// {
-//     printf("Test remove_duplicates. Nu duplicates case. ");
+void test_remove_dups_none_dups(int *error_counter)
+{
+    printf("Test remove_duplicates. Nu duplicates case. ");
 
-//     int is_failure = 0;
+    int is_failure = 0;
 
-//     int i;
-//     int len;
-//     int initial[5] = { 1, 2, 3, 4, 5 };
-//     int expected[5] = { 1, 2, 3, 4, 5 };
-//     int received[5] = { 0 };
-//     node_t *head;
-//     node_t *tail;
+    int i;
+    int len;
+    int initial[5] = { 1, 2, 3, 4, 5 };
+    int expected[5] = { 1, 2, 3, 4, 5 };
+    int received[5] = { 0 };
+    node_t *head;
+    node_t *tail;
 
-//     head = malloc(sizeof(node_t));
-//     head->data = initial + 0;
-//     head->next = NULL;
-//     tail = head;
+    head = malloc(sizeof(node_t));
+    head->data = initial + 0;
+    head->next = NULL;
+    tail = head;
 
-//     for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
-//     {
-//         tail->next = malloc(sizeof(node_t));
+    for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
+    {
+        tail->next = malloc(sizeof(node_t));
 
-//         tail->next->data = initial + i;
-//         tail->next->next = NULL;
+        tail->next->data = initial + i;
+        tail->next->next = NULL;
 
-//         tail = tail->next;
-//     }
+        tail = tail->next;
+    }
 
-//     remove_duplicates(&head, comparator_int);
+    remove_duplicates(&head, comparator_int);
 
-//     tail = head;
-//     len = sizeof(expected) / sizeof(expected[0]);
+    tail = head;
+    len = sizeof(expected) / sizeof(expected[0]);
 
-//     for (i = 0; tail != NULL; i++)
-//     {
-//         node_t *temp;
+    for (i = 0; tail != NULL; i++)
+    {
+        node_t *temp;
 
-//         if (i >= len || expected[i] != *(int*)(tail->data))
-//         {
-//             is_failure = 1;
-//         }
+        if (i >= len || expected[i] != *(int*)(tail->data))
+        {
+            is_failure = 1;
+        }
         
-//         received[i] = *(int*)(tail->data);
+        received[i] = *(int*)(tail->data);
 
-//         temp = tail;
-//         tail = tail->next;
+        temp = tail;
+        tail = tail->next;
 
-//         free(temp);
-//     }
+        free(temp);
+    }
 
-//     if (is_failure)
-//     {
-//         *error_counter += 1;
+    if (is_failure)
+    {
+        *error_counter += 1;
 
-//         printf("Failure.\n");
+        printf("Failure.\n");
 
-//         printf("Initial:\n");
-//         for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
-//         {
-//             printf("%d ", initial[j]);
-//         }
-//         printf("\n");
+        printf("Initial:\n");
+        for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
+        {
+            printf("%d ", initial[j]);
+        }
+        printf("\n");
 
-//         printf("Expected:\n");
-//         for (int j = 0; j < len; j++)
-//         {
-//             printf("%d ", expected[j]);
-//         }
-//         printf("\n");
+        printf("Expected:\n");
+        for (int j = 0; j < len; j++)
+        {
+            printf("%d ", expected[j]);
+        }
+        printf("\n");
 
-//         printf("Received:\n");
-//         for (int j = 0; j < i; j++)
-//         {
-//             printf("%d ", received[j]);
-//         }
-//         printf("\n");
-//     }
-//     else
-//     {
-//         printf("Success.\n");
-//     }
-// }
+        printf("Received:\n");
+        for (int j = 0; j < i; j++)
+        {
+            printf("%d ", received[j]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("Success.\n");
+    }
+}
 
-// void test_remove_dups_with_dups(int *error_counter)
-// {
-//     printf("Test remove_duplicates. List with duplicates case. ");
+void test_remove_dups_with_dups(int *error_counter)
+{
+    printf("Test remove_duplicates. List with duplicates case. ");
 
-//     int is_failure = 0;
+    int is_failure = 0;
 
-//     int i;
-//     int len;
-//     double initial[5] = { 1, 1, 3, 4, 3 };
-//     double expected[3] = { 1, 3, 4 };
-//     double received[5] = { 0 };
-//     node_t *head;
-//     node_t *tail;
+    int i;
+    int len;
+    double initial[5] = { 1, 1, 3, 4, 3 };
+    double expected[3] = { 1, 3, 4 };
+    double received[5] = { 0 };
+    node_t *head;
+    node_t *tail;
 
-//     head = malloc(sizeof(node_t));
-//     head->data = initial + 0;
-//     head->next = NULL;
-//     tail = head;
+    head = malloc(sizeof(node_t));
+    head->data = initial + 0;
+    head->next = NULL;
+    tail = head;
 
-//     for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
-//     {
-//         tail->next = malloc(sizeof(node_t));
+    for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
+    {
+        tail->next = malloc(sizeof(node_t));
 
-//         tail->next->data = initial + i;
-//         tail->next->next = NULL;
+        tail->next->data = initial + i;
+        tail->next->next = NULL;
 
-//         tail = tail->next;
-//     }
+        tail = tail->next;
+    }
 
-//     remove_duplicates(&head, comparator_double);
+    remove_duplicates(&head, comparator_double);
 
-//     tail = head;
-//     len = sizeof(expected) / sizeof(expected[0]);
+    tail = head;
+    len = sizeof(expected) / sizeof(expected[0]);
 
-//     for (i = 0; tail != NULL; i++)
-//     {
-//         node_t *temp;
+    for (i = 0; tail != NULL; i++)
+    {
+        node_t *temp;
 
-//         if (i >= len || expected[i] != *(double*)(tail->data))
-//         {
-//             is_failure = 1;
-//         }
+        if (i >= len || expected[i] != *(double*)(tail->data))
+        {
+            is_failure = 1;
+        }
         
-//         received[i] = *(double*)(tail->data);
+        received[i] = *(double*)(tail->data);
 
-//         temp = tail;
-//         tail = tail->next;
+        temp = tail;
+        tail = tail->next;
 
-//         free(temp);
-//     }
+        free(temp);
+    }
 
-//     if (is_failure)
-//     {
-//         *error_counter += 1;
+    if (is_failure)
+    {
+        *error_counter += 1;
 
-//         printf("Failure.\n");
+        printf("Failure.\n");
 
-//         printf("Initial:\n");
-//         for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
-//         {
-//             printf("%lf ", initial[j]);
-//         }
-//         printf("\n");
+        printf("Initial:\n");
+        for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
+        {
+            printf("%lf ", initial[j]);
+        }
+        printf("\n");
 
-//         printf("Expected:\n");
-//         for (int j = 0; j < len; j++)
-//         {
-//             printf("%lf ", expected[j]);
-//         }
-//         printf("\n");
+        printf("Expected:\n");
+        for (int j = 0; j < len; j++)
+        {
+            printf("%lf ", expected[j]);
+        }
+        printf("\n");
 
-//         printf("Received:\n");
-//         for (int j = 0; j < i; j++)
-//         {
-//             printf("%lf ", received[j]);
-//         }
-//         printf("\n");
-//     }
-//     else
-//     {
-//         printf("Success.\n");
-//     }
-// }
+        printf("Received:\n");
+        for (int j = 0; j < i; j++)
+        {
+            printf("%lf ", received[j]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("Success.\n");
+    }
+}
 
-// void test_remove_dups_dtnullptr(int *error_counter)
-// {
-//     printf("Test remove_duplicates. Null data case. ");
+void test_remove_dups_dtnullptr(int *error_counter)
+{
+    printf("Test remove_duplicates. Null data case. ");
 
-//     node_t *head = malloc(sizeof(node_t));
-//     node_t *tail = malloc(sizeof(node_t));
+    node_t *head = malloc(sizeof(node_t));
+    node_t *tail = malloc(sizeof(node_t));
 
-//     int f = 2;
-//     int d = 2;
+    int f = 2;
+    int d = 2;
 
-//     head->next = tail;
-//     head->data = &d;
-//     tail->next = NULL;
-//     tail->data = &f;
+    head->next = tail;
+    head->data = &d;
+    tail->next = NULL;
+    tail->data = &f;
 
-//     remove_duplicates(&head, comparator_int);
+    remove_duplicates(&head, comparator_int);
 
-//     free(head);
+    free(head);
 
-//     printf("Success.\n");
-// }
+    printf("Success.\n");
+}
 
-// void test_remove_dups_rqnullptr(int *error_counter)
-// {
-//     printf("Test remove_duplicates. Null request case. ");
+void test_remove_dups_rqnullptr(int *error_counter)
+{
+    printf("Test remove_duplicates. Null request case. ");
 
-//     remove_duplicates(NULL, NULL);
+    remove_duplicates(NULL, NULL);
 
-//     printf("Success.\n");
-// }
+    printf("Success.\n");
+}
 
 void test_reverse_growing(int *error_counter)
 {

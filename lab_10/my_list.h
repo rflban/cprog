@@ -16,7 +16,7 @@ int comparator_double(const void *pointer1, const void *pointer2);
 
 void insert(node_t **head, node_t *elem, node_t *before);
 void front_back_split(node_t *head, node_t **back);
-// void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*));
+void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*));
 void *pop_back(node_t **head);
 
 node_t *sort(node_t *head, int (*comparator)(const void*, const void*));
