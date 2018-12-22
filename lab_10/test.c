@@ -515,6 +515,7 @@ void test_remove_dups_dtnullptr(int *error_counter)
     remove_duplicates(&head, comparator_int);
 
     free(head);
+    free(tail);
 
     printf("Success.\n");
 }
