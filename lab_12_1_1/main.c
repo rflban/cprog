@@ -34,7 +34,6 @@ int main(int argc, char **argv)
     void (*memory_check)(numb*, const int);
     void (*print_array)(FILE*, numb *const, numb *const);
     void (*mysort)(void*, size_t, size_t, int (*)(const void*, const void*));
-    // char *error;
 
     handle = dlopen("./libarray.so", RTLD_LAZY);
     if (handle == NULL)
@@ -42,13 +41,13 @@ int main(int argc, char **argv)
         exitcode_processing(stderr, EXIT_LIBLOAD_ERROR);
     }
 
-    key = (int (*)(const numb*, const numb*, numb**, numb**))dlsym(handle, "key");
-    read_array = (int (*)(FILE*, numb *const, numb *const))dlsym(handle, "read_array");
-    comparator = (int (*)(const void*, const void*))dlsym(handle, "comparator");
-    read_array_len = (int (*)(FILE*, int *const))dlsym(handle, "read_array_len");
-    memory_check = (void (*)(numb*, const int))dlsym(handle, "memory_check");
-    print_array = (void (*)(FILE*, numb *const, numb *const))dlsym(handle, "print_array");
-    mysort = (void (*)(void*, size_t, size_t, int (*)(const void*, const void*)))dlsym(handle, "mysort");
+    key = dlsym(handle, "key");
+    read_array = dlsym(handle, "read_array");
+    comparator = dlsym(handle, "comparator");
+    read_array_len = dlsym(handle, "read_array_len");
+    memory_check = dlsym(handle, "memory_check");
+    print_array = dlsym(handle, "print_array");
+    mysort = dlsym(handle, "mysort");
 
 #endif
 
