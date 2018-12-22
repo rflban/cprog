@@ -91,47 +91,47 @@ void insert(node_t **head, node_t *elem, node_t *before)
     elem->next = before;
 }
 
-void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*))
-{
-    exit_code = __EXIT_SUCCESS;
+// void remove_duplicates(node_t **head, int (*comparator)(const void*, const void*))
+// {
+//     exit_code = __EXIT_SUCCESS;
 
-    if ((head == NULL) || (*head == NULL) || (comparator == NULL))
-    {
-        exit_code = __EXIT_NULLPTR;
-        return;
-    }
+//     if ((head == NULL) || (*head == NULL) || (comparator == NULL))
+//     {
+//         exit_code = __EXIT_NULLPTR;
+//         return;
+//     }
 
-    node_t *previos_node;
-    node_t *present_node;
+//     node_t *previos_node;
+//     node_t *present_node;
 
-    previos_node = *head;
-    present_node = previos_node->next;
+//     previos_node = *head;
+//     present_node = previos_node->next;
 
-    while (present_node != NULL)
-    {
-        int compare_result = 0;
+//     while (present_node != NULL)
+//     {
+//         int compare_result = 0;
 
-        if (previos_node->data == NULL || present_node->data == NULL)
-        {
-            exit_code = __EXIT_NULLPTR;
-            return;
-        }
+//         if (previos_node->data == NULL || present_node->data == NULL)
+//         {
+//             exit_code = __EXIT_NULLPTR;
+//             return;
+//         }
 
-        compare_result = comparator(previos_node->data, present_node->data);
+//         compare_result = comparator(previos_node->data, present_node->data);
 
-        if (compare_result >= 0)
-        {
-            previos_node->next = present_node->next;
+//         if (compare_result >= 0)
+//         {
+//             previos_node->next = present_node->next;
 
-            free(present_node);
+//             free(present_node);
 
-            present_node = previos_node;
-        }
+//             present_node = previos_node;
+//         }
 
-        previos_node = present_node;
-        present_node = previos_node->next;
-    }
-}
+//         previos_node = present_node;
+//         present_node = previos_node->next;
+//     }
+// }
 
 node_t *reverse(node_t *head)
 {

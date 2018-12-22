@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -std=c99 -ggdb -Wall #-Werror -pedantic
+CFLAGS := -std=c99 -ggdb -Wall -Werror -pedantic
 
 PNAME := app.exe
 TNAME := test.exe
