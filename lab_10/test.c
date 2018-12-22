@@ -507,13 +507,10 @@ void test_remove_dups_dtnullptr(int *error_counter)
     node_t *head = malloc(sizeof(node_t));
     node_t *tail = malloc(sizeof(node_t));
 
-    int f = 2;
-    int d = 2;
-
     head->next = tail;
-    head->data = &d;
+    head->data = NULL;
     tail->next = NULL;
-    tail->data = &f;
+    tail->data = NULL;
 
     remove_duplicates(&head, comparator_int);
 
