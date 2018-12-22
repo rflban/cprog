@@ -424,7 +424,7 @@ void test_remove_dups_with_dups(int *error_counter)
 
     int i;
     int len;
-    double initial[5] = { 1, 1, 3, 4, 3 };
+    double initial[5] = { 1, 1, 3, 4, 5 };
     double expected[3] = { 1, 3, 4 };
     double received[5] = { 0 };
     node_t *head;
