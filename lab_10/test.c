@@ -21,6 +21,10 @@ void test_reverse_growing(int *error_counter);
 void test_reverse_nullptr(int *error_counter);
 
 void test_sort_decreasing(int *error_counter);
+void test_sort_increasing(int *error_counter);
+void test_sort_noelemlist(int *error_counter);
+void test_sort_onelemlist(int *error_counter);
+void test_sort_nullptrreq(int *error_counter);
 
 int main(void)
 {
@@ -29,21 +33,30 @@ int main(void)
     pop_back_head(&error_counter);
     pop_back_tail(&error_counter);
     pop_back_null(&error_counter);
+    printf("\n");
     
     test_insert_to_head(&error_counter);
     test_insert_to_tail(&error_counter);
     test_insert_to_null(&error_counter);
     test_insert_nullptr(&error_counter);
+    printf("\n");
 
     test_remove_dups_none_dups(&error_counter);
     test_remove_dups_with_dups(&error_counter);
     test_remove_dups_dtnullptr(&error_counter);
     test_remove_dups_rqnullptr(&error_counter);
+    printf("\n");
 
     test_reverse_growing(&error_counter);
     test_reverse_nullptr(&error_counter);
+    printf("\n");
 
     test_sort_decreasing(&error_counter);
+    test_sort_increasing(&error_counter);
+    test_sort_noelemlist(&error_counter);
+    test_sort_onelemlist(&error_counter);
+    test_sort_nullptrreq(&error_counter);
+    printf("\n");
 
     return (0 == error_counter ? EXIT_SUCCESS : EXIT_FAILURE);
 }
@@ -425,7 +438,7 @@ void test_remove_dups_with_dups(int *error_counter)
     int i;
     int len;
     double initial[5] = { 1, 1, 3, 4, 5 };
-    double expected[3] = { 1, 3, 4 };
+    double expected[4] = { 1, 3, 4, 5 };
     double received[5] = { 0 };
     node_t *head;
     node_t *tail;
@@ -704,4 +717,121 @@ void test_sort_decreasing(int *error_counter)
     {
         printf("Success.\n");
     }   
+}
+
+void test_sort_increasing(int *error_counter)
+{
+    printf("Test sort. Increasing (sorted) sequence case. ");
+
+    int is_failure = 0;
+
+    int i;
+    int len;
+    int initial[5] = { 1, 2, 3, 4, 5 };
+    int expected[5] = { 1, 2, 3, 4, 5 };
+    int received[5] = { 0 };
+    node_t *head;
+    node_t *tail;
+
+    head = malloc(sizeof(node_t));
+    head->data = initial + 0;
+    head->next = NULL;
+    tail = head;
+
+    for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
+    {
+        tail->next = malloc(sizeof(node_t));
+
+        tail->next->data = initial + i;
+        tail->next->next = NULL;
+
+        tail = tail->next;
+    }
+
+    head = sort(head, comparator_int);
+
+    tail = head;
+    len = sizeof(expected) / sizeof(expected[0]);
+
+    for (i = 0; tail != NULL; i++)
+    {
+        node_t *temp;
+
+        if (i >= len || expected[i] != *(int*)(tail->data))
+        {
+            is_failure = 1;
+        }
+        
+        received[i] = *(int*)(tail->data);
+
+        temp = tail;
+        tail = tail->next;
+
+        free(temp);
+    }
+
+    if (is_failure)
+    {
+        *error_counter += 1;
+
+        printf("Failure.\n");
+
+        printf("Initial:\n");
+        for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
+        {
+            printf("%d ", initial[j]);
+        }
+        printf("\n");
+
+        printf("Expected:\n");
+        for (int j = 0; j < len; j++)
+        {
+            printf("%d ", expected[j]);
+        }
+        printf("\n");
+
+        printf("Received:\n");
+        for (int j = 0; j < i; j++)
+        {
+            printf("%d ", received[j]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("Success.\n");
+    }   
+}
+
+void test_sort_noelemlist(int *error_counter)
+{
+    printf("Test sort. Empty list case. ");
+
+    sort(NULL, comparator_int);
+
+    printf("Success.\n");
+}
+
+void test_sort_onelemlist(int *error_counter)
+{
+    printf("Test sort. List of one element case. ");
+
+    int value = 1;
+    node_t head;
+
+    head.data = &value;
+    head.next = NULL;
+
+    sort(&head, comparator_int);
+
+    printf("Success.\n");
+}
+
+void test_sort_nullptrreq(int *error_counter)
+{
+    printf("Test sort. Empty list case. ");
+
+    sort(NULL, NULL);
+
+    printf("Success.\n");
 }
