@@ -20,8 +20,15 @@ void test_remove_dups_rqnullptr(int *error_counter);
 void test_reverse_growing(int *error_counter);
 void test_reverse_nullptr(int *error_counter);
 
+void test_sorted_merge_aempty(int *error_counter);
+void test_sorted_merge_bempty(int *error_counter);
+void test_sorted_merge_0data1(int *error_counter);
+void test_sorted_merge_0data2(int *error_counter);
+void test_sorted_merge_nullrq(int *error_counter);
+
 void test_sort_decreasing(int *error_counter);
 void test_sort_increasing(int *error_counter);
+void test_sort_randomlist(int *error_counter);
 void test_sort_noelemlist(int *error_counter);
 void test_sort_onelemlist(int *error_counter);
 void test_sort_nullptrreq(int *error_counter);
@@ -51,8 +58,16 @@ int main(void)
     test_reverse_nullptr(&error_counter);
     printf("\n");
 
+    test_sorted_merge_aempty(&error_counter);
+    test_sorted_merge_bempty(&error_counter);
+    test_sorted_merge_0data1(&error_counter);
+    test_sorted_merge_0data2(&error_counter);
+    test_sorted_merge_nullrq(&error_counter);
+    printf("\n");
+
     test_sort_decreasing(&error_counter);
     test_sort_increasing(&error_counter);
+    test_sort_randomlist(&error_counter);
     test_sort_noelemlist(&error_counter);
     test_sort_onelemlist(&error_counter);
     test_sort_nullptrreq(&error_counter);
@@ -635,6 +650,118 @@ void test_reverse_nullptr(int *error_counter)
     printf("Success.\n");
 }
 
+void test_sorted_merge_aempty(int *error_counter)
+{
+    printf("Test sorted_merge. Parameter head_a is null case. ");
+
+    node_t *head_a;
+    node_t *head_b;
+
+    head_a = NULL;
+
+    head_b = malloc(sizeof(node_t));
+    head_b->next = NULL;
+
+    head_b = sorted_merge(&head_a, &head_b, comparator_int);
+
+    free(head_b);
+
+    printf("Success.\n");
+}
+
+void test_sorted_merge_bempty(int *error_counter)
+{
+    printf("Test sorted_merge. Parameter head_b is null case. ");
+
+    node_t *head_a;
+    node_t *head_b;
+
+    head_a = malloc(sizeof(node_t));
+    head_a->next = NULL;
+
+    head_b = NULL;
+
+    head_a = sorted_merge(&head_a, &head_b, comparator_int);
+
+    free(head_a);
+
+    printf("Success.\n");
+}
+
+void test_sorted_merge_0data1(int *error_counter)
+{
+
+    printf("Test sorted_merge. First elements of list data is null case. ");
+
+    node_t *head_a;
+    node_t *head_b;
+    node_t *temp_a;
+    node_t *temp_b;
+
+    head_a = malloc(sizeof(node_t));
+    head_a->data = NULL;
+    head_a->next = NULL;
+    temp_a = head_a;
+
+    head_b = malloc(sizeof(node_t));
+    head_b->data = NULL;
+    head_b->next = NULL;
+    temp_b = head_b;
+
+    sorted_merge(&head_a, &head_b, comparator_int);
+
+    free(temp_a);
+    free(temp_b);
+
+    printf("Success.\n");
+}
+
+void test_sorted_merge_0data2(int *error_counter)
+{
+
+    printf("Test sorted_merge. Last elements of list data is null case. ");
+
+    int value_a = 1;
+    int value_b = 2;
+    node_t *head_a;
+    node_t *head_b;
+    node_t *tail_a;
+    node_t *tail_b;
+
+
+    tail_a = malloc(sizeof(node_t));
+    tail_a->data = NULL;
+    tail_a->next = NULL;
+    head_a = malloc(sizeof(node_t));
+    head_a->data = &value_a;
+    head_a->next = tail_a;
+
+    tail_b = malloc(sizeof(node_t));
+    tail_b->data = NULL;
+    tail_b->next = NULL;
+    head_b = malloc(sizeof(node_t));
+    head_a->data = &value_b;
+    head_b->next = tail_b;
+
+    sorted_merge(&head_a, &head_b, comparator_int);
+
+    free(head_a);
+    free(head_b);
+    free(tail_a);
+    free(tail_b);
+
+    printf("Success.\n");
+}
+
+void test_sorted_merge_nullrq(int *error_counter)
+{
+    printf("Test sorted_merge. Null request case. ");
+
+    sorted_merge(NULL, NULL, NULL);
+
+    printf("Success.\n");
+}
+
 void test_sort_decreasing(int *error_counter)
 {
     printf("Test sort. Decreasing sequence case. ");
@@ -728,6 +855,90 @@ void test_sort_increasing(int *error_counter)
     int i;
     int len;
     int initial[5] = { 1, 2, 3, 4, 5 };
+    int expected[5] = { 1, 2, 3, 4, 5 };
+    int received[5] = { 0 };
+    node_t *head;
+    node_t *tail;
+
+    head = malloc(sizeof(node_t));
+    head->data = initial + 0;
+    head->next = NULL;
+    tail = head;
+
+    for (i = 1, len = sizeof(initial) / sizeof(initial[0]); i < len; i++)
+    {
+        tail->next = malloc(sizeof(node_t));
+
+        tail->next->data = initial + i;
+        tail->next->next = NULL;
+
+        tail = tail->next;
+    }
+
+    head = sort(head, comparator_int);
+
+    tail = head;
+    len = sizeof(expected) / sizeof(expected[0]);
+
+    for (i = 0; tail != NULL; i++)
+    {
+        node_t *temp;
+
+        if (i >= len || expected[i] != *(int*)(tail->data))
+        {
+            is_failure = 1;
+        }
+        
+        received[i] = *(int*)(tail->data);
+
+        temp = tail;
+        tail = tail->next;
+
+        free(temp);
+    }
+
+    if (is_failure)
+    {
+        *error_counter += 1;
+
+        printf("Failure.\n");
+
+        printf("Initial:\n");
+        for (int j = 0; j < sizeof(initial) / sizeof(initial[0]); j++)
+        {
+            printf("%d ", initial[j]);
+        }
+        printf("\n");
+
+        printf("Expected:\n");
+        for (int j = 0; j < len; j++)
+        {
+            printf("%d ", expected[j]);
+        }
+        printf("\n");
+
+        printf("Received:\n");
+        for (int j = 0; j < i; j++)
+        {
+            printf("%d ", received[j]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("Success.\n");
+    }   
+}
+
+void test_sort_randomlist(int *error_counter)
+{
+    printf("Test sort. random case. ");
+
+    int is_failure = 0;
+
+    int i;
+    int len;
+    int initial[5] = { 1, 3, 4, 2, 5 };
     int expected[5] = { 1, 2, 3, 4, 5 };
     int received[5] = { 0 };
     node_t *head;
