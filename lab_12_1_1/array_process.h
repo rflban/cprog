@@ -84,4 +84,32 @@ int comparator(const void*, const void*);
 */
 void memory_check(numb *target, const int exit_code);
 
+/*!
+Загружает функции данной библиотеки при использовании динамической загрузки (!).
+*/
+#define __LOAD__LIBARRAY() \
+\
+    void *handle; \
+    int (*key)(const numb*, const numb*, numb**, numb**); \
+    int (*read_array)(FILE*, numb *const, numb *const); \
+    int (*comparator)(const void*, const void*); \
+    int (*read_array_len)(FILE*, int *const); \
+    void (*memory_check)(numb*, const int); \
+    void (*print_array)(FILE*, numb *const, numb *const); \
+    void (*mysort)(void*, size_t, size_t, int (*)(const void*, const void*)); \
+\
+    handle = dlopen("libarray.so", RTLD_LAZY); \
+    if (handle == NULL) \
+    { \
+        return 2; \
+    } \
+\
+    key = dlsym(handle, "key"); \
+    read_array = dlsym(handle, "read_array"); \
+    comparator = dlsym(handle, "comparator"); \
+    read_array_len = dlsym(handle, "read_array_len"); \
+    memory_check = dlsym(handle, "memory_check"); \
+    print_array = dlsym(handle, "print_array"); \
+    mysort = dlsym(handle, "mysort")
+
 #endif

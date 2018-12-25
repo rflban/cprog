@@ -14,6 +14,16 @@ void test_key_many_extremas();
 
 int main(void)
 {
+
+#if defined (__STATIC__LIB)
+#elif defined (__DYNAMIC__LINK__LIB)
+#elif defined (__DYNAMIC__LOAD__LIB)
+
+#include <dlfcn.h> 
+__LOAD__LIBARRAY();
+
+#endif
+
     setbuf(stdout, NULL);
 
     test_mysort_sorted_array();
@@ -145,6 +155,8 @@ void test_key_first_max()
     int *rr_pb, *rr_pe;
     int expected_result[] = { 4, 3, 2 };
 
+    rr_pb = malloc(sizeof(initial));
+
     key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
@@ -183,6 +195,8 @@ void test_key_first_min()
     int *rr_pb, *rr_pe;
     int expected_result[] = { 2, 3, 4 };
 
+    rr_pb = malloc(sizeof(initial));
+
     key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)
     {
@@ -220,6 +234,8 @@ void test_key_many_extremas()
     int n = 2;
     int *rr_pb, *rr_pe;
     int expected_result[] = { 1, 3 };
+
+    rr_pb = malloc(sizeof(initial));
 
     key(&initial[0], &initial[sizeof(initial) / sizeof(initial[0])], &rr_pb, &rr_pe);
     for (int i = 0; i < n; i++)

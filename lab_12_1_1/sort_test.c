@@ -16,6 +16,16 @@ void array_fill(numb *array, int len, int state);
 
 int main(int argc, char **argv)
 {
+
+#if defined (__STATIC__LIB)
+#elif defined (__DYNAMIC__LINK__LIB)
+#elif defined (__DYNAMIC__LOAD__LIB)
+
+#include <dlfcn.h> 
+__LOAD__LIBARRAY();
+
+#endif
+
     int state = 0;
     FILE *out1, *out2;
     numb *array = malloc(sizeof(numb) * FINISH);

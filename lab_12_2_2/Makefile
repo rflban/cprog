@@ -6,6 +6,7 @@ LIBNAME := libmyarray.so
 
 $(LIBNAME): my_array_lib.o
 	ld -shared $< -o $@
+	mv ./$@ /usr/lib/
 
 %.o: %.c *.h
 	$(CC) $(CFLAGS) $< -c

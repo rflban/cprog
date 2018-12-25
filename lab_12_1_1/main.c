@@ -21,33 +21,11 @@ int main(int argc, char **argv)
 {
 
 #if defined (__STATIC__LIB)
-#elif defined __DYNAMIC__LINK__LIB
-#elif defined __DYNAMIC__LOAD__LIB
+#elif defined (__DYNAMIC__LINK__LIB)
+#elif defined (__DYNAMIC__LOAD__LIB)
 
-    #include <dlfcn.h>
-
-    void *handle;
-    int (*key)(const numb*, const numb*, numb**, numb**);
-    int (*read_array)(FILE*, numb *const, numb *const);
-    int (*comparator)(const void*, const void*);
-    int (*read_array_len)(FILE*, int *const);
-    void (*memory_check)(numb*, const int);
-    void (*print_array)(FILE*, numb *const, numb *const);
-    void (*mysort)(void*, size_t, size_t, int (*)(const void*, const void*));
-
-    handle = dlopen("./libarray.so", RTLD_LAZY);
-    if (handle == NULL)
-    {
-        exitcode_processing(stderr, EXIT_LIBLOAD_ERROR);
-    }
-
-    key = dlsym(handle, "key");
-    read_array = dlsym(handle, "read_array");
-    comparator = dlsym(handle, "comparator");
-    read_array_len = dlsym(handle, "read_array_len");
-    memory_check = dlsym(handle, "memory_check");
-    print_array = dlsym(handle, "print_array");
-    mysort = dlsym(handle, "mysort");
+#include <dlfcn.h> 
+__LOAD__LIBARRAY();
 
 #endif
 

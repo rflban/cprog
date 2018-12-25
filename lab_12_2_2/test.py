@@ -1,7 +1,7 @@
 import ctypes
 
 
-lib = ctypes.CDLL('./libmyarray.so')
+lib = ctypes.CDLL('libmyarray.so')
 
 __fill_fiboncci = lib.fill_fiboncci
 __fill_fiboncci.argtypes = (ctypes.POINTER(ctypes.c_int), ctypes.c_int)
