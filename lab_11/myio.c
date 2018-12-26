@@ -38,7 +38,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
             if (*actual_char == 'h')
             {
-                char *_str;
+                char *str_value;
                 short int value;
 
                 actual_char++;
@@ -96,28 +96,47 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                                 pch_counter++;
                             }
                         }
-
                         break;
 
                     case 's':
-                        _str = va_arg(vl, char*);
+                        str_value = va_arg(vl, char*);
                         
-                        while ((*_str != '\0') && (pch_counter + 1 < (int)size))
+                        while ((*str_value != '\0') && (pch_counter + 1 < (int)size))
                         {
-                            str[pch_counter] = *_str;
+                            str[pch_counter] = *str_value;
 
-                            _str++;
+                            str_value++;
                             pch_counter++;
                         }
                         break;
 
                     default:
+                        str[pch_counter] = '%';
+                        pch_counter++;
+
+                        if (!(pch_counter + 1 < (int)size))
+                        {
+                            break_loop = 1;
+                            break;
+                        }
+
+                        str[pch_counter] = 'h';
+                        pch_counter++;
+
+                        if (!(pch_counter + 1 < (int)size))
+                        {
+                            break_loop = 1;
+                            break;
+                        }
+
+                        str[pch_counter] = *actual_char;
+                        pch_counter++;
                         break;
                 }
             }
             else
             {
-                char *_str;
+                char *str_value;
                 int value;
 
                 switch (*actual_char)
@@ -173,22 +192,23 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                                 pch_counter++;
                             }
                         }
-
                         break;
 
                     case 's':
-                        _str = va_arg(vl, char*);
+                        str_value = va_arg(vl, char*);
                         
-                        while ((*_str != '\0') && (pch_counter + 1 < (int)size))
+                        while ((*str_value != '\0') && (pch_counter + 1 < (int)size))
                         {
-                            str[pch_counter] = *_str;
+                            str[pch_counter] = *str_value;
 
-                            _str++;
+                            str_value++;
                             pch_counter++;
                         }
                         break;
 
                     default:
+                        str[pch_counter] = '%';
+                        pch_counter++;
                         break;
                 }
             }
