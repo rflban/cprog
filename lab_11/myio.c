@@ -21,7 +21,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
     while ((*actual_char != '\0') && (pch_counter + 1 < (int)size))
     {
-        printf("%%\n");
         if (*actual_char != '%')
         {
             str[pch_counter] = *actual_char;
@@ -97,7 +96,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                             }
                         }
                         break;
-
                     case 's':
                         str_value = va_arg(vl, char*);
                         
@@ -109,7 +107,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                             pch_counter++;
                         }
                         break;
-
                     default:
                         str[pch_counter] = '%';
                         pch_counter++;
@@ -193,7 +190,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                             }
                         }
                         break;
-
                     case 's':
                         str_value = va_arg(vl, char*);
                         
@@ -205,7 +201,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                             pch_counter++;
                         }
                         break;
-
                     default:
                         str[pch_counter] = '%';
                         pch_counter++;
