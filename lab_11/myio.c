@@ -58,7 +58,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
             if (*actual_char == 'h')
             {
-                // char *str_value;
                 short int value;
 
                 actual_char++;
@@ -132,24 +131,6 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                             }
                         }
                         break;
-                    // case 's':
-                    //     str_value = va_arg(vl, char*);
-                        
-                    //     while (*str_value != '\0')
-                    //     {
-                    //         rc = update_container(buffer, &buf_size, pch_counter);
-
-                    //         if (rc != 0)
-                    //         {
-                    //             return EOF;
-                    //         }
-
-                    //         buffer[pch_counter] = *str_value;
-
-                    //         str_value++;
-                    //         pch_counter++;
-                    //     }
-                    //     break;
                     default:
                         break;
                 }
