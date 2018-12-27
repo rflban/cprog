@@ -19,6 +19,7 @@ int main(int argc, char **argv)
     test_my_snprintf_nullptreq(&error_counter);
     test_my_snprintf_nonespecs(&error_counter);
     test_my_snprintf_onlyspecs(&error_counter);
+    test_my_snprintf_rndformat(&error_counter);
 
     return EXIT_SUCCESS;
 }
@@ -85,8 +86,8 @@ void test_my_snprintf_onlyspecs(int *error_counter)
     char expected[STR_SIZE];
     char recieved[STR_SIZE];
 
-    erc = snprintf(expected, STR_SIZE, MYFORMAT, 1, 2, 3, 4, "5");
-    rrc = my_snprintf(recieved, STR_SIZE, MYFORMAT, 1, 2, 3, 4, "5");
+    erc = snprintf(expected, STR_SIZE, MYFORMAT, 0, 2, 3, -4, "5");
+    rrc = my_snprintf(recieved, STR_SIZE, MYFORMAT, 0, 2, 3, -4, "5");
 
     cmp = strcmp(expected, recieved);
 
@@ -123,8 +124,8 @@ void test_my_snprintf_rndformat(int *error_counter)
     char expected[STR_SIZE];
     char recieved[STR_SIZE];
 
-    erc = snprintf(expected, STR_SIZE, MYFORMAT, 1, 2, 3, 4, "5");
-    rrc = my_snprintf(recieved, STR_SIZE, MYFORMAT, 1, 2, 3, 4, "5");
+    erc = snprintf(expected, STR_SIZE, MYFORMAT, 1, 0, -3, 4, "5");
+    rrc = my_snprintf(recieved, STR_SIZE, MYFORMAT, 1, 0, -3, 4, "5");
 
     cmp = strcmp(expected, recieved);
 
