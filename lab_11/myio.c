@@ -10,7 +10,6 @@ int update_container(char *container, int *capacity, int len);
 
 int my_snprintf(char *str, size_t size, const char *format, ...)
 {
-    // if ((str == NULL && size != 0) || (format == NULL))
     if (format == NULL)
     {
         return 0;
@@ -258,7 +257,7 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
     va_end(vl);
 
-    if (pch_counter + 1 <= (int)size)
+    if ((str != NULL) && (pch_counter + 1 <= (int)size))
     {
         for (int i = 0; i < pch_counter; i++)
         {
