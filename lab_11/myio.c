@@ -1,39 +1,61 @@
 #include "myio.h"
 
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+
+#define INIT_BUF_SIZE 120
+
+int update_container(char *container, int *capacity, int len);
 
 int my_snprintf(char *str, size_t size, const char *format, ...)
 {
-    if ((str == NULL) || (format == NULL))
+    // if ((str == NULL && size != 0) || (format == NULL))
+    if (format == NULL)
     {
         return 0;
     }
 
-    int pch_counter;
     va_list vl;
+
+    int rc;
+    int buf_size;
+    int pch_counter;
+    char *buffer;
     const char *actual_char;
+
+    buf_size = INIT_BUF_SIZE;
+    buffer = (char*)malloc(sizeof(char) * buf_size);
+
+    if (buffer == NULL)
+    {
+        return EOF;
+    }
 
     pch_counter = 0;
     actual_char = format;
 
     va_start(vl, format);
 
-    while ((*actual_char != '\0') && (pch_counter + 1 < (int)size))
+    while (*actual_char != '\0')
     {
         if (*actual_char != '%')
         {
-            str[pch_counter] = *actual_char;
+            rc = update_container(buffer, &buf_size, pch_counter);
+
+            if (rc != 0)
+            {
+                return EOF;
+            }
+
+            buffer[pch_counter] = *actual_char;
 
             actual_char++;
             pch_counter++;
         }
         else
         {
-            int break_loop = 0;
-
             actual_char++;
-
 
             if (*actual_char == 'h')
             {
@@ -50,7 +72,14 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
                         if (value == 0)
                         {
-                            str[pch_counter] = '0' + 0;
+                            rc = update_container(buffer, &buf_size, pch_counter);
+
+                            if (rc != 0)
+                            {
+                                return EOF;
+                            }
+                            
+                            buffer[pch_counter] = '0' + 0;
 
                             pch_counter++;
                         }
@@ -61,17 +90,18 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
                             if (value < 0)
                             {
+                                rc = update_container(buffer, &buf_size, pch_counter);
+
+                                if (rc != 0)
+                                {
+                                    return EOF;
+                                }
+
                                 value *= -1;
 
-                                str[pch_counter] = '-';
+                                buffer[pch_counter] = '-';
 
                                 pch_counter++;
-                            }
-
-                            if (!(pch_counter + 1 < (int)size))
-                            {
-                                break_loop = 1;
-                                break;
                             }
 
                             temp = value;
@@ -83,11 +113,18 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                                 temp /= 10;
                             }
 
-                            while ((cover > 0) && (pch_counter + 1 < (int)size))
+                            while (cover > 0)
                             {
+                                rc = update_container(buffer, &buf_size, pch_counter);
+
+                                if (rc != 0)
+                                {
+                                    return EOF;
+                                }
+
                                 int cur_digit = value / cover;
 
-                                str[pch_counter] = '0' + cur_digit;
+                                buffer[pch_counter] = '0' + cur_digit;
 
                                 value -= cur_digit * cover;
                                 cover /= 10;
@@ -99,35 +136,22 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                     case 's':
                         str_value = va_arg(vl, char*);
                         
-                        while ((*str_value != '\0') && (pch_counter + 1 < (int)size))
+                        while (*str_value != '\0')
                         {
-                            str[pch_counter] = *str_value;
+                            rc = update_container(buffer, &buf_size, pch_counter);
+
+                            if (rc != 0)
+                            {
+                                return EOF;
+                            }
+
+                            buffer[pch_counter] = *str_value;
 
                             str_value++;
                             pch_counter++;
                         }
                         break;
                     default:
-                        str[pch_counter] = '%';
-                        pch_counter++;
-
-                        if (!(pch_counter + 1 < (int)size))
-                        {
-                            break_loop = 1;
-                            break;
-                        }
-
-                        str[pch_counter] = 'h';
-                        pch_counter++;
-
-                        if (!(pch_counter + 1 < (int)size))
-                        {
-                            break_loop = 1;
-                            break;
-                        }
-
-                        str[pch_counter] = *actual_char;
-                        pch_counter++;
                         break;
                 }
             }
@@ -144,7 +168,14 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
                         if (value == 0)
                         {
-                            str[pch_counter] = '0' + 0;
+                            rc = update_container(buffer, &buf_size, pch_counter);
+
+                            if (rc != 0)
+                            {
+                                return EOF;
+                            }
+                            
+                            buffer[pch_counter] = '0' + 0;
 
                             pch_counter++;
                         }
@@ -155,17 +186,18 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
 
                             if (value < 0)
                             {
+                                rc = update_container(buffer, &buf_size, pch_counter);
+
+                                if (rc != 0)
+                                {
+                                    return EOF;
+                                }
+
                                 value *= -1;
 
-                                str[pch_counter] = '-';
+                                buffer[pch_counter] = '-';
 
                                 pch_counter++;
-                            }
-
-                            if (!(pch_counter + 1 < (int)size))
-                            {
-                                break_loop = 1;
-                                break;
                             }
 
                             temp = value;
@@ -177,11 +209,18 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                                 temp /= 10;
                             }
 
-                            while ((cover > 0) && (pch_counter + 1 < (int)size))
+                            while (cover > 0)
                             {
+                                rc = update_container(buffer, &buf_size, pch_counter);
+
+                                if (rc != 0)
+                                {
+                                    return EOF;
+                                }
+
                                 int cur_digit = value / cover;
 
-                                str[pch_counter] = '0' + cur_digit;
+                                buffer[pch_counter] = '0' + cur_digit;
 
                                 value -= cur_digit * cover;
                                 cover /= 10;
@@ -193,34 +232,59 @@ int my_snprintf(char *str, size_t size, const char *format, ...)
                     case 's':
                         str_value = va_arg(vl, char*);
                         
-                        while ((*str_value != '\0') && (pch_counter + 1 < (int)size))
+                        while (*str_value != '\0')
                         {
-                            str[pch_counter] = *str_value;
+                            rc = update_container(buffer, &buf_size, pch_counter);
+
+                            if (rc != 0)
+                            {
+                                return EOF;
+                            }
+
+                            buffer[pch_counter] = *str_value;
 
                             str_value++;
                             pch_counter++;
                         }
                         break;
                     default:
-                        str[pch_counter] = '%';
-                        pch_counter++;
                         break;
                 }
-            }
-
-            if (break_loop)
-            {
-                break;
             }
 
             actual_char++;
         }
     }
 
-    if ((*actual_char == '\0') || (pch_counter + 1 <= (int)size))
+    va_end(vl);
+
+    if (pch_counter + 1 <= (int)size)
     {
+        for (int i = 0; i < pch_counter; i++)
+        {
+            str[i] = buffer[i];
+        }
+
         str[pch_counter] = '\0';
     }
+    
+    free(buffer);
 
     return pch_counter;
+}
+
+int update_container(char *container, int *capacity, int len)
+{
+    if (len >= *capacity)
+    {
+        *capacity *= 2;
+        container = (char*)realloc(container, *capacity);
+
+        if (container == NULL)
+        {
+            return EOF;
+        }
+    }
+
+    return 0;
 }
