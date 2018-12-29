@@ -1,6 +1,6 @@
 CC := gcc
-CFLAGS := -std=c99 -ggdb -Wall #-Werror -pedantic
-LFLAGS :=
+CFLAGS := -std=c99 -ggdb -Wall -Werror -pedantic -fprofile-arcs -ftest-coverage
+LFLAGS := -lgcov --coverage
 
 PNAME := app.exe
 TNAME := test.exe
@@ -17,7 +17,14 @@ $(TNAME): $(OBJS.$(TNAME))
 %.o: %.c *.h
 	$(CC) $< $(CFLAGS) -c
 
+call-gcov:
+	./$(TNAME) > /dev/null
+	gcov mylib.c
+
 clean:
+	rm *.gcda -f
+	rm *.gcno -f
+	rm *.gcov -f
 	rm $(PNAME) -f
 	rm $(TNAME) -f
 	rm $(OBJS.$(PNAME)) -f

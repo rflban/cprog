@@ -83,7 +83,7 @@ int find_max_temperature(struct list_head *head, int year)
     if (head == NULL)
     {
         exit_code = __EXIT_NULLPTR;
-        return;
+        return 0;
     }
 
     int maxt;
@@ -126,7 +126,7 @@ int find_min_temperature(struct list_head *head, int year)
     if (head == NULL)
     {
         exit_code = __EXIT_NULLPTR;
-        return;
+        return 0;
     }
 
     int mint;
