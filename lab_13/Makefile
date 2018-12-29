@@ -4,6 +4,7 @@ LFLAGS := -lgcov --coverage
 
 PNAME := app.exe
 TNAME := test.exe
+TSCRIPT := test.sh
 
 OBJS.$(PNAME) = main.o mylib.o exit.o
 OBJS.$(TNAME) = test.o mylib.o exit.o
@@ -16,6 +17,10 @@ $(TNAME): $(OBJS.$(TNAME))
 
 %.o: %.c *.h
 	$(CC) $< $(CFLAGS) -c
+
+func-tests:
+	@chmod +x $(TSCRIPT)
+	@./$(TSCRIPT)
 
 call-gcov:
 	./$(TNAME) > /dev/null
