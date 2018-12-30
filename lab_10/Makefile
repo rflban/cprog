@@ -6,7 +6,7 @@ TNAME := test.exe
 
 build: $(PNAME)
 
-$(PNAME): main.o my_list.o exit.o
+$(PNAME): main.o my_list.o trie.o exit.o
 	$(CC) $^ -o $@
 
 $(TNAME): test.o my_list.o exit.o

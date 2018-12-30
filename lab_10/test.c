@@ -12,19 +12,8 @@ void test_insert_to_tail(int *error_counter);
 void test_insert_to_null(int *error_counter);
 void test_insert_nullptr(int *error_counter);
 
-void test_remove_dups_none_dups(int *error_counter);
-void test_remove_dups_with_dups(int *error_counter);
-void test_remove_dups_dtnullptr(int *error_counter);
-void test_remove_dups_rqnullptr(int *error_counter);
-
 void test_reverse_growing(int *error_counter);
 void test_reverse_nullptr(int *error_counter);
-
-void test_sorted_merge_aempty(int *error_counter);
-void test_sorted_merge_bempty(int *error_counter);
-void test_sorted_merge_0data1(int *error_counter);
-void test_sorted_merge_0data2(int *error_counter);
-void test_sorted_merge_nullrq(int *error_counter);
 
 void test_sort_decreasing(int *error_counter);
 void test_sort_increasing(int *error_counter);
@@ -32,6 +21,20 @@ void test_sort_randomlist(int *error_counter);
 void test_sort_noelemlist(int *error_counter);
 void test_sort_onelemlist(int *error_counter);
 void test_sort_nullptrreq(int *error_counter);
+
+void test_sorted_merge_aempty(int *error_counter);
+void test_sorted_merge_bempty(int *error_counter);
+void test_sorted_merge_0data1(int *error_counter);
+void test_sorted_merge_0data2(int *error_counter);
+void test_sorted_merge_nullrq(int *error_counter);
+
+void test_front_back_split_null(int *error_counter);
+
+void test_remove_dups_none_dups(int *error_counter);
+void test_remove_dups_with_dups(int *error_counter);
+void test_remove_dups_dtnullptr(int *error_counter);
+void test_remove_dups_rqnullptr(int *error_counter);
+
 
 int main(void)
 {
@@ -48,14 +51,16 @@ int main(void)
     test_insert_nullptr(&error_counter);
     printf("\n");
 
-    test_remove_dups_none_dups(&error_counter);
-    test_remove_dups_with_dups(&error_counter);
-    test_remove_dups_dtnullptr(&error_counter);
-    test_remove_dups_rqnullptr(&error_counter);
-    printf("\n");
-
     test_reverse_growing(&error_counter);
     test_reverse_nullptr(&error_counter);
+    printf("\n");
+
+    test_sort_decreasing(&error_counter);
+    test_sort_increasing(&error_counter);
+    test_sort_randomlist(&error_counter);
+    test_sort_noelemlist(&error_counter);
+    test_sort_onelemlist(&error_counter);
+    test_sort_nullptrreq(&error_counter);
     printf("\n");
 
     test_sorted_merge_aempty(&error_counter);
@@ -65,12 +70,13 @@ int main(void)
     test_sorted_merge_nullrq(&error_counter);
     printf("\n");
 
-    test_sort_decreasing(&error_counter);
-    test_sort_increasing(&error_counter);
-    test_sort_randomlist(&error_counter);
-    test_sort_noelemlist(&error_counter);
-    test_sort_onelemlist(&error_counter);
-    test_sort_nullptrreq(&error_counter);
+    test_front_back_split_null(&error_counter);
+    printf("\n");
+
+    test_remove_dups_none_dups(&error_counter);
+    test_remove_dups_with_dups(&error_counter);
+    test_remove_dups_dtnullptr(&error_counter);
+    test_remove_dups_rqnullptr(&error_counter);
     printf("\n");
 
     return (0 == error_counter ? EXIT_SUCCESS : EXIT_FAILURE);
@@ -650,6 +656,15 @@ void test_reverse_nullptr(int *error_counter)
     printf("Success.\n");
 }
 
+void test_front_back_split_null(int *error_counter)
+{
+    printf("Test front_back_split. Null request case. ");
+
+    front_back_split(NULL, NULL);
+
+    printf("Success.\n");
+}
+
 void test_sorted_merge_aempty(int *error_counter)
 {
     printf("Test sorted_merge. Parameter head_a is null case. ");
@@ -690,7 +705,6 @@ void test_sorted_merge_bempty(int *error_counter)
 
 void test_sorted_merge_0data1(int *error_counter)
 {
-
     printf("Test sorted_merge. First elements of list data is null case. ");
 
     node_t *head_a;
@@ -718,7 +732,6 @@ void test_sorted_merge_0data1(int *error_counter)
 
 void test_sorted_merge_0data2(int *error_counter)
 {
-
     printf("Test sorted_merge. Last elements of list data is null case. ");
 
     int value_a = 1;
@@ -740,7 +753,7 @@ void test_sorted_merge_0data2(int *error_counter)
     tail_b->data = NULL;
     tail_b->next = NULL;
     head_b = malloc(sizeof(node_t));
-    head_a->data = &value_b;
+    head_b->data = &value_b;
     head_b->next = tail_b;
 
     sorted_merge(&head_a, &head_b, comparator_int);
