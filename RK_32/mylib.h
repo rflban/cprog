@@ -23,8 +23,8 @@ str_t *str_create();
 int str_search(str_t *str, char *srch);
 
 void str_delete(str_t *str);
-void str_insert(str_t *str, int pos);
 void str_remove(str_t *str, int pos);
+void str_insert(str_t *str, int pos, char c);
 
 #endif
 
