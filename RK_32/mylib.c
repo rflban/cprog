@@ -74,7 +74,8 @@ void str_insert(str_t *str, int pos, char c)
 		i++;
 	}
 
-	__list_add(&chr->list, it, it->next); 
+	__list_add(&chr->list, it, it->next);
+	str->len += 1;
 }
 
 void str_remove(str_t *str, int pos)
@@ -110,5 +111,74 @@ void str_remove(str_t *str, int pos)
 	it->next->prev = it->prev;
 
 	free(chr);
+	str->len -= 1;
+}
+
+int str_search(str_t *str, char *srch)
+{
+	if (str == NULL || srch == NULL)
+	{
+		return -1;
+	}
+
+	int i = 0;
+	int j = 0;
+	int ind;
+	int same = 0;
+	int finded = 0;
+	int srch_len;
+	chr_t *chr;
+	struct list_head *it;
+	struct list_head *temp;
+
+	for (srch_len = 0; srch[srch_len] != '\0'; srch_len++);
+
+	if (srch_len == 0)
+	{
+		return 0;
+	}
+
+	list_for_each_safe(it, temp, &str->str_head)
+	{
+		chr = list_entry(it, chr_t, list);
+
+		if (same)
+		{
+			if (chr->chr == srch[j])
+			{
+				j++;
+			}
+			else
+			{
+				j = 0;
+				same = 0;
+			}
+		}
+		else
+		{
+			if (chr->chr == srch[j])
+			{
+				j++;
+				same = 1;
+			}
+		}
+
+		if (j >= srch_len)
+		{
+			finded = 1;
+			ind = i - j + 1;
+
+			break;
+		}
+
+		i++;
+	}
+	
+	if (!finded)
+	{
+		return -1;
+	}
+
+	return ind;
 }
 
