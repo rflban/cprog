@@ -1,22 +1,22 @@
 CC := gcc
-CFLAGS := -std=c99 -Wall -Werror -pedantic -ggdb
-PNAME := app.exe
+CFLAGS := -std=c99 -Wall -ggdb
+LFLAGS :=
 
-INPUTF := SPB.csv
+pname := app.exe
+OBJS.$(pname) = main.o mylib.o
 
-build: $(PNAME)
+build: $(pname)
 
 run:
-	./$(PNAME) -i $(INPUTF)
+	./$(pname)
 
-$(PNAME): main.o my_lib.o
+$(pname): $(OBJS.$(pname))
 	$(CC) $^ -o $@
 
 %.o: %.c *.h
-	$(CC) $(CFLAGS) $< -c
-	
+	$(CC) $< $(CFLAGS) -c
+
 clean:
-	rm *.o -f
-	rm *.gch -f
-	rm *.exe -f
-	rm *.out -f
+	rm $(pname) -f
+	rm $(OBJS.$(pname)) -f
+
